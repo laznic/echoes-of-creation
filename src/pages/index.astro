@@ -1,10 +1,12 @@
 ---
 import Layout from "../layouts/Layout.astro";
 
+import "splitting/dist/splitting.css";
+import "splitting/dist/splitting-cells.css";
 
 ---
 <Layout title="Home">
-	<main class="container mx-auto">
+	<main class="container mx-auto max-w-4xl">
 		<header>
 			<h1 class="text-2xl">Identity Crisis</h1>
 			<p>By Niklas Lepistö & Jani Reijonen</p>
@@ -137,6 +139,12 @@ import Layout from "../layouts/Layout.astro";
 				Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, alias odit eligendi, tempora magni animi, aspernatur dolorum sint laboriosam illo ipsam rerum ducimus reiciendis aut ullam voluptatum deleniti praesentium repudiandae.
 			</p>
 			<img src="https://picsum.photos/320/320" alt="Identity Crisis 1">
+		</section>
+
+		<section class="flex items-center justify-center gap-8">
+			<h2 class="text-xl" data-splitting>
+				What is going on 
+			</h2>
 		</section>
 		
 		<section class="flex items-center justify-center gap-8">
@@ -271,6 +279,9 @@ import Layout from "../layouts/Layout.astro";
 	import Lenis from '@studio-freight/lenis'
 	import gsap from 'gsap'
 	import ScrollTrigger from 'gsap/ScrollTrigger'
+	import Splitting from 'splitting'
+
+	Splitting()
 
 	const lenis = new Lenis()
 
@@ -283,33 +294,76 @@ import Layout from "../layouts/Layout.astro";
 	gsap.ticker.lagSmoothing(0)
 	gsap.registerPlugin(ScrollTrigger)
 
-	document.addEventListener('pointermove', (e) => {
-		// tilt link cards based on how close the mouse is to the card
-		// use gsap to animate the tilt
-		const cards = document.querySelectorAll('section')
-		const { clientX, clientY } = e
-		const centerX = window.innerWidth / 2
-		const centerY = window.innerHeight / 2
+	// document.addEventListener('pointermove', (e) => {
+	// 	// tilt link cards based on how close the mouse is to the card
+	// 	// use gsap to animate the tilt
+	// 	const cards = document.querySelectorAll('section')
+	// 	const { clientX, clientY } = e
+	// 	const centerX = window.innerWidth / 2
+	// 	const centerY = window.innerHeight / 2
 
-		cards.forEach((card) => {
-			const rect = card.getBoundingClientRect()
-			const cardX = rect.left + rect.width / 2
-			const cardY = rect.top + rect.height / 2
-			const dx = clientX - cardX
-			const dy = clientY - cardY
-			const tiltX = (dy / centerY) * 15
-			const tiltY = -(dx / centerX) * 15
+	// 	cards.forEach((card) => {
+	// 		const rect = card.getBoundingClientRect()
+	// 		const cardX = rect.left + rect.width / 2
+	// 		const cardY = rect.top + rect.height / 2
+	// 		const dx = clientX - cardX
+	// 		const dy = clientY - cardY
+	// 		const tiltX = (dy / centerY) * 15
+	// 		const tiltY = -(dx / centerX) * 15
 
-			const xClamp = gsap.utils.clamp(-25, 25)
+	// 		const xClamp = gsap.utils.clamp(-15, 15)
 
-			gsap.to(card, {
-				rotateX: xClamp(tiltX),
-				rotateY: tiltY,
-				x: tiltY * 2,
-				y: tiltX * 2,
-				ease: 'power2.out'
+	// 		gsap.to(card, {
+	// 			rotateX: xClamp(tiltX),
+	// 			rotateY: tiltY,
+	// 			x: tiltY * 2,
+	// 			y: -tiltX * 2,
+	// 			ease: 'power2.out'
+	// 		})
+	// 	})
+	// })
+
+	const title = document.querySelector('h2')
+	const chars = title.querySelectorAll('.char')
+			
+	chars.forEach(char => gsap.set(char.parentNode, { perspective: 500 })); 
+
+		gsap.timeline()
+			.fromTo(title, {
+				'will-change': 'transform',
+				xPercent: -80
+			}, {
+				ease: 'none',
+				xPercent: 0,
+				scrollTrigger: {
+					trigger: title,
+					scrub: true,
+					start: 'top center',
+					end: '+=100%',
+					pin: title?.parentNode
+				}
 			})
-		})
-
-	})
+			.fromTo(chars, {
+				'will-change': 'opacity, transform', 
+            transformOrigin: '50% 50% -200px',
+            rotationZ: -120,
+						rotationX: 120,
+            opacity: 0,
+						y: 0,
+			},
+			{
+				ease: 'expo.inOut',
+				rotationZ: 0,
+				rotationX: 0,
+				z: 0,
+				opacity: 1,
+				stagger: -0.0375,
+				y: Math.random() * 10,
+				scrollTrigger: {
+						trigger: title,
+						start: 'center center',
+						end: '+=100%',
+						scrub: 1.2,
+				}
+      })
 </script>
