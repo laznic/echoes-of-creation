@@ -1,0 +1,26 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+
+---
+<Layout title="Home">
+	<h1>Astro</h1>
+</Layout>
+
+<script>
+	import Lenis from '@studio-freight/lenis'
+	import gsap from 'gsap'
+	import ScrollTrigger from 'gsap/ScrollTrigger'
+
+	const lenis = new Lenis()
+
+	lenis.on('scroll', ScrollTrigger.update)
+
+	gsap.ticker.add((time) => {
+		lenis.raf(time * 1000)
+	})
+
+	gsap.ticker.lagSmoothing(0)
+	gsap.registerPlugin(ScrollTrigger)
+	
+</script>
