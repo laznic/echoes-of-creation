@@ -4,6 +4,7 @@ import Layout from "../layouts/Layout.astro";
 import "splitting/dist/splitting.css";
 import "splitting/dist/splitting-cells.css";
 import ImageWithHole from "../components/ImageWithHole.astro";
+import ImageWithCuts from "../components/ImageWithCuts.astro";
 
 const gridOrder = [1, 2, 3, 4, 5, 6, 7, 8, 9] // [5, 8, 1, 9, 7, 4, 6, 3, 2]
 const shuffled = [...gridOrder]
@@ -51,7 +52,7 @@ function shuffle(array: number[]) {
 			<section data-cell={shuffled[1]}  class="opacity-0 fixed top-0 flex items-center justify-center gap-8 h-[100dvh] w-[100vw] p-24">
 				<div class="relative z-10">
 					<h2 class="font-black text-3xl">{shuffled[1]}</h2>
-					<img src="https://picsum.photos/320/320" alt="Identity Crisis 1">
+					<ImageWithCuts />
 					<p class="text-md">
 						Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, alias odit eligendi, tempora magni animi, aspernatur dolorum sint laboriosam illo ipsam rerum ducimus reiciendis aut ullam voluptatum deleniti praesentium repudiandae.
 					</p>
@@ -182,6 +183,32 @@ function shuffle(array: number[]) {
 	const timeline = gsap.timeline()
 	const sections = document.querySelectorAll('section')
 	const mainGrid = document.querySelector('#main-grid')
+	const sectionContent = document.querySelectorAll('section > div')
+
+	document.addEventListener('pointermove', (e) => {
+		const { clientX, clientY } = e
+		const centerX = window.innerWidth / 2
+		const centerY = window.innerHeight / 2
+
+		sectionContent.forEach((content) => {
+			const rect = content.getBoundingClientRect()
+			const cardX = rect.left + rect.width / 2
+			const cardY = rect.top + rect.height / 2
+			const dx = clientX - cardX
+			const dy = clientY - cardY
+			const tiltX = (dy / centerY) * -3
+			const tiltY = -(dx / centerX) * -3
+
+			gsap.to(content, {
+				rotateX: tiltX,
+				rotateY: tiltY,
+				x: tiltY,
+				y: tiltX,
+				ease: 'power2.out'
+			})
+		})
+
+	})
 
 	sections.forEach((section, index, sectionsArray) => {
 		// position sections in random order in a 9 point grid based in window size
