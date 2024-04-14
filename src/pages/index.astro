@@ -3,6 +3,7 @@ import Layout from "../layouts/Layout.astro";
 
 import "splitting/dist/splitting.css";
 import "splitting/dist/splitting-cells.css";
+import ImageWithHole from "../components/ImageWithHole.astro";
 
 const gridOrder = [1, 2, 3, 4, 5, 6, 7, 8, 9] // [5, 8, 1, 9, 7, 4, 6, 3, 2]
 const shuffled = [...gridOrder]
@@ -35,77 +36,104 @@ function shuffle(array: number[]) {
 			<button>Autoplay with narration</button>
 		</header>
 		
-		<div id="main-grid" class="w-[100vw] h-[2000dvh]">
-			<section data-cell={shuffled[0]} id="section-1"  class="opacity-0 fixed top-0 flex items-center justify-center gap-8 h-[100dvh] w-[100vw] p-24">
-				<h2 class="font-black text-3xl">{shuffled[0]}</h2>
-				<p class="text-md">
-					Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, alias odit eligendi, tempora magni animi, aspernatur dolorum sint laboriosam illo ipsam rerum ducimus reiciendis aut ullam voluptatum deleniti praesentium repudiandae.
-				</p>
-				<img src="https://picsum.photos/320/320" alt="Identity Crisis 1">
+		<div id="main-grid" class="w-[100vw] h-[1000dvh]">
+			<section data-cell={shuffled[0]}  class="opacity-0 fixed top-0 flex items-center justify-center gap-8 h-[100dvh] w-[100vw] p-24">
+				<div class="relative z-10">
+					<h2 class="font-black text-3xl">{shuffled[0]}</h2>
+					<p class="text-md">
+						Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, alias odit eligendi, tempora magni animi, aspernatur dolorum sint laboriosam illo ipsam rerum ducimus reiciendis aut ullam voluptatum deleniti praesentium repudiandae.
+					</p>
+					<ImageWithHole />
+				</div>
+				<div class="absolute -z-10 w-1/2 h-1/2 rounded-full bg-rose-400 blur-[300px]"></div>
 			</section>
 
-			<section data-cell={shuffled[1]} id="section-2"  class="opacity-0 fixed top-0 flex items-center justify-center gap-8 h-[100dvh] w-[100vw] p-24">
-				<h2 class="font-black text-3xl">{shuffled[1]}</h2>
-				<img src="https://picsum.photos/320/320" alt="Identity Crisis 1">
-				<p class="text-md">
-					Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, alias odit eligendi, tempora magni animi, aspernatur dolorum sint laboriosam illo ipsam rerum ducimus reiciendis aut ullam voluptatum deleniti praesentium repudiandae.
-				</p>
+			<section data-cell={shuffled[1]}  class="opacity-0 fixed top-0 flex items-center justify-center gap-8 h-[100dvh] w-[100vw] p-24">
+				<div class="relative z-10">
+					<h2 class="font-black text-3xl">{shuffled[1]}</h2>
+					<img src="https://picsum.photos/320/320" alt="Identity Crisis 1">
+					<p class="text-md">
+						Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, alias odit eligendi, tempora magni animi, aspernatur dolorum sint laboriosam illo ipsam rerum ducimus reiciendis aut ullam voluptatum deleniti praesentium repudiandae.
+					</p>
+				</div>
+				<div class="absolute -z-10 w-1/2 h-1/2 rounded-full bg-indigo-400 blur-[300px]"></div>
 			</section>
 
-			<section data-cell={shuffled[2]} id="section-3"  class="opacity-0 fixed top-0 flex items-center justify-center gap-8 h-[100dvh] w-[100vw] p-24">
-				<h2 class="font-black text-3xl">{shuffled[2]}</h2>
-				<p class="text-md">
-					Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, alias odit eligendi, tempora magni animi, aspernatur dolorum sint laboriosam illo ipsam rerum ducimus reiciendis aut ullam voluptatum deleniti praesentium repudiandae.
-				</p>
-				<img src="https://picsum.photos/320/320" alt="Identity Crisis 1">
+			<section data-cell={shuffled[2]}  class="opacity-0 fixed top-0 flex items-center justify-center gap-8 h-[100dvh] w-[100vw] p-24">
+				<div class="relative z-10">
+					<h2 class="font-black text-3xl">{shuffled[2]}</h2>
+					<p class="text-md">
+						Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, alias odit eligendi, tempora magni animi, aspernatur dolorum sint laboriosam illo ipsam rerum ducimus reiciendis aut ullam voluptatum deleniti praesentium repudiandae.
+					</p>
+					<img src="https://picsum.photos/320/320" alt="Identity Crisis 1">
+				</div>
+				<div class="absolute -z-10 w-1/2 h-1/2 rounded-full bg-emerald-400 blur-[300px]"></div>
 			</section>
 
-			<section data-cell={shuffled[3]} id="section-4"  class="opacity-0 fixed top-0 flex items-center justify-center gap-8 h-[100dvh] w-[100vw] p-24">
-				<h2 class="font-black text-3xl">{shuffled[3]}</h2>
-				<img src="https://picsum.photos/320/320" alt="Identity Crisis 1">
-				<p class="text-md">
-					Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, alias odit eligendi, tempora magni animi, aspernatur dolorum sint laboriosam illo ipsam rerum ducimus reiciendis aut ullam voluptatum deleniti praesentium repudiandae.
-				</p>
+			<section data-cell={shuffled[3]}  class="opacity-0 fixed top-0 flex items-center justify-center gap-8 h-[100dvh] w-[100vw] p-24">
+				<div class="relative z-10">
+					<h2 class="font-black text-3xl">{shuffled[3]}</h2>
+					<img src="https://picsum.photos/320/320" alt="Identity Crisis 1">
+					<p class="text-md">
+						Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, alias odit eligendi, tempora magni animi, aspernatur dolorum sint laboriosam illo ipsam rerum ducimus reiciendis aut ullam voluptatum deleniti praesentium repudiandae.
+					</p>
+				</div>
+				<div class="absolute -z-10 w-1/2 h-1/2 rounded-full bg-amber-400 blur-[300px]"></div>
 			</section>
 
-			<section data-cell={shuffled[4]} id="section-5"  class="opacity-0 fixed top-0 flex items-center justify-center gap-8 h-[100dvh] w-[100vw] p-24">
-				<h2 class="font-black text-3xl">{shuffled[4]}</h2>
-				<p class="text-md">
-					Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, alias odit eligendi, tempora magni animi, aspernatur dolorum sint laboriosam illo ipsam rerum ducimus reiciendis aut ullam voluptatum deleniti praesentium repudiandae.
-				</p>
-				<img src="https://picsum.photos/320/320" alt="Identity Crisis 1">
+			<section data-cell={shuffled[4]} class="opacity-0 fixed top-0 flex items-center justify-center gap-8 h-[100dvh] w-[100vw] p-24">
+				<div class="relative z-10">
+					<h2 class="font-black text-3xl">{shuffled[4]}</h2>
+					<p class="text-md">
+						Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, alias odit eligendi, tempora magni animi, aspernatur dolorum sint laboriosam illo ipsam rerum ducimus reiciendis aut ullam voluptatum deleniti praesentium repudiandae.
+					</p>
+					<img src="https://picsum.photos/320/320" alt="Identity Crisis 1">
+				</div>
+				<div class="absolute -z-10 w-1/2 h-1/2 rounded-full bg-slate-400 blur-[300px]"></div>
 			</section>
 
-			<section data-cell={shuffled[5]} id="section-6"  class="opacity-0 fixed top-0 flex items-center justify-center gap-8 h-[100dvh] w-[100vw] p-24">
-				<h2 class="font-black text-3xl">{shuffled[5]}</h2>
-				<img src="https://picsum.photos/320/320" alt="Identity Crisis 1">
-				<p class="text-md">
-					Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, alias odit eligendi, tempora magni animi, aspernatur dolorum sint laboriosam illo ipsam rerum ducimus reiciendis aut ullam voluptatum deleniti praesentium repudiandae.
-				</p>
+			<section data-cell={shuffled[5]}  class="opacity-0 fixed top-0 flex items-center justify-center gap-8 h-[100dvh] w-[100vw] p-24">
+				<div class="relative z-10">
+					<h2 class="font-black text-3xl">{shuffled[5]}</h2>
+					<img src="https://picsum.photos/320/320" alt="Identity Crisis 1">
+					<p class="text-md">
+						Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, alias odit eligendi, tempora magni animi, aspernatur dolorum sint laboriosam illo ipsam rerum ducimus reiciendis aut ullam voluptatum deleniti praesentium repudiandae.
+					</p>
+				</div>
+				<div class="absolute -z-10 w-1/2 h-1/2 rounded-full bg-lime-400 blur-[300px]"></div>
 			</section>
 
-			<section data-cell={shuffled[6]} id="section-7"  class="opacity-0 fixed top-0 flex items-center justify-center gap-8 h-[100dvh] w-[100vw] p-24">
-				<h2 class="font-black text-3xl">{shuffled[6]}</h2>
-				<p class="text-md">
-					Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, alias odit eligendi, tempora magni animi, aspernatur dolorum sint laboriosam illo ipsam rerum ducimus reiciendis aut ullam voluptatum deleniti praesentium repudiandae.
-				</p>
-				<img src="https://picsum.photos/320/320" alt="Identity Crisis 1">
+			<section data-cell={shuffled[6]}  class="opacity-0 fixed top-0 flex items-center justify-center gap-8 h-[100dvh] w-[100vw] p-24">
+				<div class="relative z-10">
+					<h2 class="font-black text-3xl">{shuffled[6]}</h2>
+					<p class="text-md">
+						Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, alias odit eligendi, tempora magni animi, aspernatur dolorum sint laboriosam illo ipsam rerum ducimus reiciendis aut ullam voluptatum deleniti praesentium repudiandae.
+					</p>
+					<img src="https://picsum.photos/320/320" alt="Identity Crisis 1">
+				</div>
+				<div class="absolute -z-10 w-1/2 h-1/2 rounded-full bg-cyan-400 blur-[300px]"></div>
 			</section>
 
-			<section data-cell={shuffled[7]} id="section-8"  class="opacity-0 fixed top-0 flex items-center justify-center gap-8 h-[100dvh] w-[100vw] p-24">
-				<h2 class="font-black text-3xl">{shuffled[7]}</h2>
-				<img src="https://picsum.photos/320/320" alt="Identity Crisis 1">
-				<p class="text-md">
-					Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, alias odit eligendi, tempora magni animi, aspernatur dolorum sint laboriosam illo ipsam rerum ducimus reiciendis aut ullam voluptatum deleniti praesentium repudiandae.
-				</p>
+			<section data-cell={shuffled[7]}  class="opacity-0 fixed top-0 flex items-center justify-center gap-8 h-[100dvh] w-[100vw] p-24">
+				<div class="relative z-10">
+					<h2 class="font-black text-3xl">{shuffled[7]}</h2>
+					<img src="https://picsum.photos/320/320" alt="Identity Crisis 1">
+					<p class="text-md">
+						Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, alias odit eligendi, tempora magni animi, aspernatur dolorum sint laboriosam illo ipsam rerum ducimus reiciendis aut ullam voluptatum deleniti praesentium repudiandae.
+					</p>
+				</div>
+				<div class="absolute -z-10 w-1/2 h-1/2 rounded-full bg-violet-400 blur-[300px]"></div>
 			</section>
 
-			<section data-cell={shuffled[8]} id="section-9"  class="opacity-0 fixed top-0 flex items-center justify-center gap-8 h-[100dvh] w-[100vw] p-24">
-				<h2 class="font-black text-3xl">{shuffled[8]}</h2>
-				<p class="text-md">
-					Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, alias odit eligendi, tempora magni animi, aspernatur dolorum sint laboriosam illo ipsam rerum ducimus reiciendis aut ullam voluptatum deleniti praesentium repudiandae.
-				</p>
-				<img src="https://picsum.photos/320/320" alt="Identity Crisis 1">
+			<section data-cell={shuffled[8]}  class="opacity-0 fixed top-0 flex items-center justify-center gap-8 h-[100dvh] w-[100vw] p-24">
+				<div class="relative z-10">
+					<h2 class="font-black text-3xl">{shuffled[8]}</h2>
+					<p class="text-md">
+						Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, alias odit eligendi, tempora magni animi, aspernatur dolorum sint laboriosam illo ipsam rerum ducimus reiciendis aut ullam voluptatum deleniti praesentium repudiandae.
+					</p>
+					<img src="https://picsum.photos/320/320" alt="Identity Crisis 1">
+				</div>
+				<div class="absolute -z-10 w-1/2 h-1/2 rounded-full bg-sky-400 blur-[300px]"></div>
 			</section>
 		</div>
 	</main>
@@ -151,8 +179,9 @@ function shuffle(array: number[]) {
 			
 	// chars.forEach(char => gsap.set(char.parentNode, { perspective: 500 })); 
 
-	const timeline = gsap.timeline().pause()
+	const timeline = gsap.timeline()
 	const sections = document.querySelectorAll('section')
+	const mainGrid = document.querySelector('#main-grid')
 
 	sections.forEach((section, index, sectionsArray) => {
 		// position sections in random order in a 9 point grid based in window size
@@ -467,7 +496,7 @@ function shuffle(array: number[]) {
 				ease: 'none',
 				xPercent: 100,
 				opacity: 0,
-				rotateY: 90,
+				rotateY: 120,
 				scrollTrigger: {
 					scrub: true,
 					start: (self) => window.innerHeight * (index + 1), // self.previous().end,
@@ -477,7 +506,7 @@ function shuffle(array: number[]) {
 			.fromTo(nextCellElement, {
 				'will-change': 'transform opacity',
 				xPercent: -100,
-				rotateY: -90,
+				rotateY: -120,
 				opacity: 0,
 			}, {
 				ease: 'none',
@@ -502,7 +531,7 @@ function shuffle(array: number[]) {
 				ease: 'none',
 				xPercent: -100,
 				opacity: 0,
-				rotateY: -90,
+				rotateY: -120,
 				scrollTrigger: {
 					scrub: true,
 					start: (self) => window.innerHeight * (index + 1), // self.previous().end,
@@ -513,7 +542,7 @@ function shuffle(array: number[]) {
 				'will-change': 'transform opacity',
 				xPercent: 100,
 				opacity: 0,
-				rotateY: 90,
+				rotateY: 120,
 			}, {
 				ease: 'none',
 				xPercent: 0,
