@@ -4,6 +4,26 @@ import Layout from "../layouts/Layout.astro";
 import "splitting/dist/splitting.css";
 import "splitting/dist/splitting-cells.css";
 
+const gridOrder = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+const shuffled = [...gridOrder]
+shuffle(shuffled)
+
+function shuffle(array: number[]) {
+  let currentIndex = array.length;
+
+  // While there remain elements to shuffle...
+  while (currentIndex != 0) {
+
+    // Pick a remaining element...
+    let randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex], array[currentIndex]];
+  }
+}
+
 ---
 <Layout title="Home">
 	<main>
@@ -15,68 +35,79 @@ import "splitting/dist/splitting-cells.css";
 			<button>Autoplay with narration</button>
 		</header>
 		
-		<section data-cell="5" id="section-1"  class="border border-red-500 flex items-center justify-center gap-8 h-[100dvh]">
-			<p class="text-md">
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, alias odit eligendi, tempora magni animi, aspernatur dolorum sint laboriosam illo ipsam rerum ducimus reiciendis aut ullam voluptatum deleniti praesentium repudiandae.
-			</p>
-			<img src="https://picsum.photos/320/320" alt="Identity Crisis 1">
-		</section>
+		<div id="main-grid" class="w-[100vw] h-[2000dvh] border border-red-500">
+			<section data-cell={shuffled[0]} id="section-1"  class="opacity-0 fixed top-0 border border-blue-500 flex items-center justify-center gap-8 h-[100dvh] w-[100vw] p-24">
+				<h2 class="font-black text-3xl">{shuffled[0]}</h2>
+				<p class="text-md">
+					Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, alias odit eligendi, tempora magni animi, aspernatur dolorum sint laboriosam illo ipsam rerum ducimus reiciendis aut ullam voluptatum deleniti praesentium repudiandae.
+				</p>
+				<img src="https://picsum.photos/320/320" alt="Identity Crisis 1">
+			</section>
 
-		<section data-cell="8" id="section-2"  class="border border-red-500 flex items-center justify-center gap-8 h-[100dvh]">
-			<img src="https://picsum.photos/320/320" alt="Identity Crisis 1">
-			<p class="text-md">
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, alias odit eligendi, tempora magni animi, aspernatur dolorum sint laboriosam illo ipsam rerum ducimus reiciendis aut ullam voluptatum deleniti praesentium repudiandae.
-			</p>
-		</section>
+			<section data-cell={shuffled[1]} id="section-2"  class="opacity-0 fixed top-0 border border-blue-500 flex items-center justify-center gap-8 h-[100dvh] w-[100vw] p-24">
+				<h2 class="font-black text-3xl">{shuffled[1]}</h2>
+				<img src="https://picsum.photos/320/320" alt="Identity Crisis 1">
+				<p class="text-md">
+					Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, alias odit eligendi, tempora magni animi, aspernatur dolorum sint laboriosam illo ipsam rerum ducimus reiciendis aut ullam voluptatum deleniti praesentium repudiandae.
+				</p>
+			</section>
 
-		<section data-cell="3" id="section-3"  class="border border-red-500 flex items-center justify-center gap-8 h-[100dvh]">
-			<p class="text-md">
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, alias odit eligendi, tempora magni animi, aspernatur dolorum sint laboriosam illo ipsam rerum ducimus reiciendis aut ullam voluptatum deleniti praesentium repudiandae.
-			</p>
-			<img src="https://picsum.photos/320/320" alt="Identity Crisis 1">
-		</section>
+			<section data-cell={shuffled[2]} id="section-3"  class="opacity-0 fixed top-0 border border-blue-500 flex items-center justify-center gap-8 h-[100dvh] w-[100vw] p-24">
+				<h2 class="font-black text-3xl">{shuffled[2]}</h2>
+				<p class="text-md">
+					Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, alias odit eligendi, tempora magni animi, aspernatur dolorum sint laboriosam illo ipsam rerum ducimus reiciendis aut ullam voluptatum deleniti praesentium repudiandae.
+				</p>
+				<img src="https://picsum.photos/320/320" alt="Identity Crisis 1">
+			</section>
 
-		<section data-cell="1" id="section-4"  class="border border-red-500 flex items-center justify-center gap-8 h-[100dvh]">
-			<img src="https://picsum.photos/320/320" alt="Identity Crisis 1">
-			<p class="text-md">
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, alias odit eligendi, tempora magni animi, aspernatur dolorum sint laboriosam illo ipsam rerum ducimus reiciendis aut ullam voluptatum deleniti praesentium repudiandae.
-			</p>
-		</section>
+			<section data-cell={shuffled[3]} id="section-4"  class="opacity-0 fixed top-0 border border-blue-500 flex items-center justify-center gap-8 h-[100dvh] w-[100vw] p-24">
+				<h2 class="font-black text-3xl">{shuffled[3]}</h2>
+				<img src="https://picsum.photos/320/320" alt="Identity Crisis 1">
+				<p class="text-md">
+					Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, alias odit eligendi, tempora magni animi, aspernatur dolorum sint laboriosam illo ipsam rerum ducimus reiciendis aut ullam voluptatum deleniti praesentium repudiandae.
+				</p>
+			</section>
 
-		<section data-cell="4" id="section-5"  class="border border-red-500 flex items-center justify-center gap-8 h-[100dvh]">
-			<p class="text-md">
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, alias odit eligendi, tempora magni animi, aspernatur dolorum sint laboriosam illo ipsam rerum ducimus reiciendis aut ullam voluptatum deleniti praesentium repudiandae.
-			</p>
-			<img src="https://picsum.photos/320/320" alt="Identity Crisis 1">
-		</section>
+			<section data-cell={shuffled[4]} id="section-5"  class="opacity-0 fixed top-0 border border-blue-500 flex items-center justify-center gap-8 h-[100dvh] w-[100vw] p-24">
+				<h2 class="font-black text-3xl">{shuffled[4]}</h2>
+				<p class="text-md">
+					Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, alias odit eligendi, tempora magni animi, aspernatur dolorum sint laboriosam illo ipsam rerum ducimus reiciendis aut ullam voluptatum deleniti praesentium repudiandae.
+				</p>
+				<img src="https://picsum.photos/320/320" alt="Identity Crisis 1">
+			</section>
 
-		<section data-cell="7" id="section-6"  class="border border-red-500 flex items-center justify-center gap-8 h-[100dvh]">
-			<img src="https://picsum.photos/320/320" alt="Identity Crisis 1">
-			<p class="text-md">
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, alias odit eligendi, tempora magni animi, aspernatur dolorum sint laboriosam illo ipsam rerum ducimus reiciendis aut ullam voluptatum deleniti praesentium repudiandae.
-			</p>
-		</section>
+			<section data-cell={shuffled[5]} id="section-6"  class="opacity-0 fixed top-0 border border-blue-500 flex items-center justify-center gap-8 h-[100dvh] w-[100vw] p-24">
+				<h2 class="font-black text-3xl">{shuffled[5]}</h2>
+				<img src="https://picsum.photos/320/320" alt="Identity Crisis 1">
+				<p class="text-md">
+					Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, alias odit eligendi, tempora magni animi, aspernatur dolorum sint laboriosam illo ipsam rerum ducimus reiciendis aut ullam voluptatum deleniti praesentium repudiandae.
+				</p>
+			</section>
 
-		<section data-cell="2" id="section-7"  class="border border-red-500 flex items-center justify-center gap-8 h-[100dvh]">
-			<p class="text-md">
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, alias odit eligendi, tempora magni animi, aspernatur dolorum sint laboriosam illo ipsam rerum ducimus reiciendis aut ullam voluptatum deleniti praesentium repudiandae.
-			</p>
-			<img src="https://picsum.photos/320/320" alt="Identity Crisis 1">
-		</section>
+			<section data-cell={shuffled[6]} id="section-7"  class="opacity-0 fixed top-0 border border-blue-500 flex items-center justify-center gap-8 h-[100dvh] w-[100vw] p-24">
+				<h2 class="font-black text-3xl">{shuffled[6]}</h2>
+				<p class="text-md">
+					Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, alias odit eligendi, tempora magni animi, aspernatur dolorum sint laboriosam illo ipsam rerum ducimus reiciendis aut ullam voluptatum deleniti praesentium repudiandae.
+				</p>
+				<img src="https://picsum.photos/320/320" alt="Identity Crisis 1">
+			</section>
 
-		<section data-cell="6" id="section-8"  class="border border-red-500 flex items-center justify-center gap-8 h-[100dvh]">
-			<img src="https://picsum.photos/320/320" alt="Identity Crisis 1">
-			<p class="text-md">
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, alias odit eligendi, tempora magni animi, aspernatur dolorum sint laboriosam illo ipsam rerum ducimus reiciendis aut ullam voluptatum deleniti praesentium repudiandae.
-			</p>
-		</section>
+			<section data-cell={shuffled[7]} id="section-8"  class="opacity-0 fixed top-0 border border-blue-500 flex items-center justify-center gap-8 h-[100dvh] w-[100vw] p-24">
+				<h2 class="font-black text-3xl">{shuffled[7]}</h2>
+				<img src="https://picsum.photos/320/320" alt="Identity Crisis 1">
+				<p class="text-md">
+					Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, alias odit eligendi, tempora magni animi, aspernatur dolorum sint laboriosam illo ipsam rerum ducimus reiciendis aut ullam voluptatum deleniti praesentium repudiandae.
+				</p>
+			</section>
 
-		<section data-cell="9" id="section-9"  class="border border-red-500 flex items-center justify-center gap-8 h-[100dvh]">
-			<p class="text-md">
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, alias odit eligendi, tempora magni animi, aspernatur dolorum sint laboriosam illo ipsam rerum ducimus reiciendis aut ullam voluptatum deleniti praesentium repudiandae.
-			</p>
-			<img src="https://picsum.photos/320/320" alt="Identity Crisis 1">
-		</section>
+			<section data-cell={shuffled[8]} id="section-9"  class="opacity-0 fixed top-0 border border-blue-500 flex items-center justify-center gap-8 h-[100dvh] w-[100vw] p-24">
+				<h2 class="font-black text-3xl">{shuffled[8]}</h2>
+				<p class="text-md">
+					Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, alias odit eligendi, tempora magni animi, aspernatur dolorum sint laboriosam illo ipsam rerum ducimus reiciendis aut ullam voluptatum deleniti praesentium repudiandae.
+				</p>
+				<img src="https://picsum.photos/320/320" alt="Identity Crisis 1">
+			</section>
+		</div>
 	</main>
 </Layout>
 
@@ -122,7 +153,6 @@ import "splitting/dist/splitting-cells.css";
 	const sections = document.querySelectorAll('section')
 
 	sections.forEach((section, index, sectionsArray) => {
-		gsap.set(section, { perspective: 1000 })
 		// position sections in random order in a 9 point grid based in window size
 		// each grid cell is the full width and height of the window
 		// 1 2 3
@@ -140,220 +170,363 @@ import "splitting/dist/splitting-cells.css";
 		const nextCell = parseInt(sectionsArray[index + 1]?.dataset.cell)
 		// get the direction of the next section in relation to the current one
 		// should be one of the following: down, up, left, right, down-left, down-right, up-left, up-right
-
-		function getNextDirection (current: number, next: number) {
-			const grid = 3
-			const x = current % grid
-			const y = Math.floor(current / grid)
-			const nextX = next % grid
-			const nextY = Math.floor(next / grid)
-
-			if (nextX > x && nextY === y) {
-				return 'right'
-			} else if (nextX < x && nextY === y) {
-				return 'left'
-			} else if (nextY > y && nextX === x) {
-				return 'down'
-			} else if (nextY < y && nextX === x) {
-				return 'up'
-			} else if (nextX > x && nextY > y) {
-				return 'down-left'
-			} else if (nextX < x && nextY > y) {
-				return 'down-right'
-			} else if (nextX > x && nextY < y) {
-				return 'up-left'
-			} else if (nextX < x && nextY < y) {
-				return 'up-right'
-			}
-		}
-
 		const nextDirection = getNextDirection(cell, nextCell)
-		console.log('nextDirection', nextDirection)
+		const nextCellElement = sectionsArray[index + 1]
 
-		function getPreviousDirection(current: number, previous: number) {
-			const grid = 3
-			const x = current % grid
-			const y = Math.floor(current / grid)
-			const previousX = previous % grid
-			const previousY = Math.floor(previous / grid)
-
-			if (previousX > x && previousY === y) {
-				return 'right'
-			} else if (previousX < x && previousY === y) {
-				return 'left'
-			} else if (previousY > y && previousX === x) {
-				return 'down'
-			} else if (previousY < y && previousX === x) {
-				return 'up'
-			} else if (previousX > x && previousY > y) {
-				return 'up-left'
-			} else if (previousX < x && previousY > y) {
-				return 'up-right'
-			} else if (previousX > x && previousY < y) {
-				return 'down-left'
-			} else if (previousX < x && previousY < y) {
-				return 'down-right'
-			}
-		}
-
-		const previousCell = parseInt(sectionsArray[index - 1]?.dataset.cell)
-		const previousDirection = getPreviousDirection(cell, previousCell)
-		console.log('previousDirection', previousDirection)
-
-		// kikkaile transformeilla niin, että seuraava slaidi on positiotu edellisen perusteella
-		// että horisontaaliset skrollit tapahtuu samasta kohtaa
+		gsap.set(section, { perspective: 500, opacity: 0 })
 
 		if (index === 0) {
 			timeline.fromTo(section, {
 				'will-change': 'transform scale opacity',
+				force3D: true,
 				opacity: 0,
-				scale: 1.5,
-				rotateX: -75,
+				rotateX: -30,
 			}, {
 				ease: 'none',
 				opacity: 1,
-				scale: 1,
 				rotateX: 0,
 				scrollTrigger: {
+					// markers: true,
 					trigger: section,
 					scrub: true,
-					start: 'top center',
-					end: '0%',
-				}
-			})
-		}
-
-		if (previousDirection === 'up') {
-			timeline.fromTo(section, {
-				'will-change': 'scale opacity',
-				opacity: 0,
-			}, {
-				ease: 'none',
-				opacity: 1,
-				scrollTrigger: {
-					trigger: section,
-					scrub: true,
-					start: 'top center',
-					end: '0%',
+					start: 10,
+					end: window.innerHeight,
 				}
 			})
 		}
 
 		if (nextDirection === 'up-right') {
+			timeline
+				.fromTo(section, {
+					'will-change': 'transform scale opacity',
+					opacity: 0
+				}, {
+					ease: 'none',
+					opacity: 1,
+					scrollTrigger: {
+						trigger: section,
+						scrub: true,
+						start: (self) => self.previous().end,
+						end: '+=100%',
+					}
+				})
+				.fromTo(section, {
+					'will-change': 'transform scale opacity',
+					xPercent: 0,
+					scale: 1,
+					opacity: 1
+				}, {
+					ease: 'none',
+					xPercent: -100,
+					scale: 2,
+					opacity: 0,
+					scrollTrigger: {
+						trigger: section,
+						scrub: true,
+						start: (self) => self.previous().end,
+						end: '+=100%',
+					}
+				})
+				.fromTo(nextCellElement, {
+					'will-change': 'transform scale opacity',
+					xPercent: 100,
+					opacity: 0,
+					scale: 0.5
+				}, {
+					ease: 'none',
+					xPercent: 0,
+					scale: 1,
+					opacity: 1,
+					scrollTrigger: {
+						trigger: nextCellElement,
+						scrub: true,
+						start: (self) => self.previous().end,
+						end: '+=100%',
+					}
+				})
+		}
+
+		if (nextDirection === 'up-left') {
 			timeline.fromTo(section, {
 				'will-change': 'transform scale opacity',
-				rotateY: 0,
-				opacity: 1,
 				xPercent: 0,
+				opacity: 1
 			}, {
 				ease: 'none',
-				rotateY: 90,
+				xPercent: 100,
 				opacity: 0,
-				xPercent: -60,
 				scrollTrigger: {
-					markers: true,
-					trigger: section,
 					scrub: true,
-					start: '90% 90%',
-					end: '+=20%',
+					start: (self) => self.previous().end,
+					end: '+=100%',
+				}
+			})
+			.fromTo(nextCellElement, {
+				'will-change': 'transform scale opacity',
+				xPercent: -100,
+				opacity: 0,
+				scale: 0.5
+			}, {
+				ease: 'none',
+				xPercent: 0,
+				scale: 1,
+				opacity: 1,
+				scrollTrigger: {
+					trigger: nextCellElement,
+					scrub: true,
+					start: (self) => self.previous().end,
+					end: '+=100%',
 				}
 			})
 		}
 
-		// if (nextDirection ===)
+		if (nextDirection === 'down') {
+			timeline.fromTo(section, {
+					'will-change': 'transform scale opacity',
+					yPercent: 0,
+					opacity: 1
+				}, {
+					ease: 'none',
+					yPercent: -100,
+					opacity: 0,
+					scrollTrigger: {
+						trigger: section,
+						scrub: true,
+						start: (self) => self.previous().end,
+						end: '+=100%',
+					}
+				})
+				.fromTo(nextCellElement, {
+					'will-change': 'transform scale opacity',
+					yPercent: 100,
+					opacity: 0,
+				}, {
+					ease: 'none',
+					yPercent: 0,
+					opacity: 1,
+					scrollTrigger: {
+						trigger: nextCellElement,
+						scrub: true,
+						start: (self) => self.previous().end,
+						end: '+=100%',
+					}
+				})
+		}
 
+		if (nextDirection === 'down-left') {
+			timeline.fromTo(section, {
+				'will-change': 'transform scale opacity',
+				xPercent: 0,
+				opacity: 1
+			}, {
+				ease: 'none',
+				xPercent: 100,
+				opacity: 0,
+				scrollTrigger: {
+					trigger: section,
+					scrub: true,
+					start: (self) => self.previous().end,
+					end: '+=100%',
+				}
+			})
+			.fromTo(nextCellElement, {
+				'will-change': 'transform scale opacity',
+				xPercent: -100,
+				opacity: 0,
+			}, {
+				ease: 'none',
+				xPercent: 0,
+				opacity: 1,
+				scrollTrigger: {
+					trigger: nextCellElement,
+					scrub: true,
+					start: (self) => self.previous().end,
+					end: '+=100%',
+				}
+			})
+		}
 
-		// get the window size
-		// const windowWidth = window.innerWidth
-		// const windowHeight = window.innerHeight
+		if (nextDirection === 'down-right') {
+			timeline.fromTo(section, {
+				'will-change': 'transform scale opacity',
+				xPercent: 0,
+				opacity: 1
+			}, {
+				ease: 'none',
+				xPercent: -100,
+				opacity: 0,
+				scrollTrigger: {
+					trigger: section,
+					scrub: true,
+					start: (self) => self.previous().end,
+					end: '+=100%',
+				}
+			})
+			.fromTo(nextCellElement, {
+				'will-change': 'transform scale opacity',
+				xPercent: 100,
+				opacity: 0,
+			}, {
+				ease: 'none',
+				xPercent: 0,
+				opacity: 1,
+				scrollTrigger: {
+					trigger: nextCellElement,
+					scrub: true,
+					start: (self) => self.previous().end,
+					end: '+=100%',
+				}
+			})
+		}
 
-		// const grid = 3
-		// const x = index % grid
-		// const y = Math.floor(index / grid)
-		// const offsetX = windowWidth
-		// const offsetY = windowHeight
-		// const xPosition = x * offsetX
-		// const yPosition = y * offsetY
+		if (nextDirection === 'left') {
+			timeline.fromTo(section, {
+				'will-change': 'transform scale opacity',
+				xPercent: 0,
+				opacity: 1
+			}, {
+				ease: 'none',
+				xPercent: 100,
+				opacity: 0,
+				scrollTrigger: {
+					trigger: section,
+					scrub: true,
+					start: (self) => self.previous().end,
+					end: '+=100%',
+				}
+			})
+			.fromTo(nextCellElement, {
+				'will-change': 'transform scale opacity',
+				xPercent: -100,
+				opacity: 0,
+			}, {
+				ease: 'none',
+				xPercent: 0,
+				opacity: 1,
+				scrollTrigger: {
+					trigger: nextCellElement,
+					scrub: true,
+					start: (self) => self.previous().end,
+					end: '+=100%',
+				}
+			})
+		}
 
-		// // gsap.set(section, {
-		// // 	x: xPosition,
-		// // 	y: yPosition
-		// // })
+		if (nextDirection === 'right') {
+			timeline.fromTo(section, {
+				'will-change': 'transform scale opacity',
+				xPercent: 0,
+				opacity: 1
+			}, {
+				ease: 'none',
+				xPercent: -100,
+				opacity: 0,
+				scrollTrigger: {
+					trigger: section,
+					scrub: true,
+					start: (self) => self.previous().end,
+					end: '+=100%',
+				}
+			})
+			.fromTo(nextCellElement, {
+				'will-change': 'transform scale opacity',
+				xPercent: 100,
+				opacity: 0,
+			}, {
+				ease: 'none',
+				xPercent: 0,
+				opacity: 1,
+				scrollTrigger: {
+					trigger: nextCellElement,
+					scrub: true,
+					start: (self) => self.previous().end,
+					end: '+=100%',
+				}
+			})
+		}
 
-		// timeline.fromTo(section, {
-		// 	'will-change': 'transform',
-		// 	xPercent: -80,
-		// 	opacity: 0,
-		// 	rotateY: -90
-		// }, {
-		// 	ease: 'none',
-		// 	xPercent: 0,
-		// 	opacity: 1,
-		// 	rotateY: 0,
-		// 	scrollTrigger: {
-		// 		markers: true,
-		// 		trigger: section,
-		// 		scrub: true,
-		// 		start: 'top center',
-		// 		end: '0%',
-		// 	}
-		// }).fromTo(section, {
-		// 	'will-change': 'transform',
-		// 	xPercent: 0,
-		// 	opacity: 1,
-		// 	rotateY: 0
-		// }, {
-		// 	ease: 'none',
-		// 	xPercent: 80,
-		// 	opacity: 0,
-		// 	rotateY: 90,
-		// 	scrollTrigger: {
-		// 		markers: true,
-		// 		trigger: section,
-		// 		scrub: true,
-		// 		start: 'bottom center',
-		// 		end: '100%',
-		// 	}
-		
-		// })
+		if (nextDirection === 'up') {
+			timeline.fromTo(section, {
+				'will-change': 'transform scale opacity',
+				scale: 1,
+				opacity: 1
+			}, {
+				ease: 'none',
+				scale: 1.5,
+				opacity: 0,
+				scrollTrigger: {
+					trigger: section,
+					scrub: true,
+					start: (self) => self.previous().end,
+					end: '+=100%',
+				}
+			})
+			.fromTo(nextCellElement, {
+				'will-change': 'transform scale opacity',
+				scale: 0,
+				opacity: 0,
+			}, {
+				ease: 'none',
+				scale: 1,
+				opacity: 1,
+				scrollTrigger: {
+					trigger: nextCellElement,
+					scrub: true,
+					start: (self) => self.previous().end,
+					end: '+=100%',
+				}
+			})
+		}
 	})
 
-		// gsap.timeline()
-		// 	.fromTo(title, {
-		// 		'will-change': 'transform',
-		// 		xPercent: -80
-		// 	}, {
-		// 		ease: 'none',
-		// 		xPercent: 0,
-		// 		scrollTrigger: {
-		// 			trigger: title,
-		// 			scrub: true,
-		// 			start: 'top center',
-		// 			end: '+=100%',
-		// 			pin: title?.parentNode
-		// 		}
-		// 	})
-		// 	.fromTo(chars, {
-		// 		'will-change': 'opacity, transform', 
-    //         transformOrigin: '50% 50% -200px',
-    //         rotationZ: -120,
-		// 				rotationX: 120,
-    //         opacity: 0,
-		// 				y: 0,
-		// 	},
-		// 	{
-		// 		ease: 'expo.inOut',
-		// 		rotationZ: 0,
-		// 		rotationX: 0,
-		// 		z: 0,
-		// 		opacity: 1,
-		// 		stagger: -0.0375,
-		// 		y: Math.random() * 10,
-		// 		scrollTrigger: {
-		// 				trigger: title,
-		// 				start: 'center center',
-		// 				end: '+=100%',
-		// 				scrub: 1.2,
-		// 		}
-    //   })
+	function getNextDirection (current: number, next: number) {
+		const grid = 3
+		const x = current % grid
+		const y = Math.floor(current / grid)
+		const nextX = next % grid
+		const nextY = Math.floor(next / grid)
+
+		if (nextX > x && nextY === y) {
+			return 'right'
+		} else if (nextX < x && nextY === y) {
+			return 'left'
+		} else if (nextY > y && nextX === x) {
+			return 'down'
+		} else if (nextY < y && nextX === x) {
+			return 'up'
+		} else if (nextX > x && nextY > y) {
+			return 'down-left'
+		} else if (nextX < x && nextY > y) {
+			return 'down-right'
+		} else if (nextX > x && nextY < y) {
+			return 'up-left'
+		} else if (nextX < x && nextY < y) {
+			return 'up-right'
+		}
+	}
+	function getPreviousDirection(current: number, previous: number) {
+		const grid = 3
+		const x = current % grid
+		const y = Math.floor(current / grid)
+		const previousX = previous % grid
+		const previousY = Math.floor(previous / grid)
+
+		if (previousX > x && previousY === y) {
+			return 'right'
+		} else if (previousX < x && previousY === y) {
+			return 'left'
+		} else if (previousY > y && previousX === x) {
+			return 'down'
+		} else if (previousY < y && previousX === x) {
+			return 'up'
+		} else if (previousX > x && previousY > y) {
+			return 'up-left'
+		} else if (previousX < x && previousY > y) {
+			return 'up-right'
+		} else if (previousX > x && previousY < y) {
+			return 'down-left'
+		} else if (previousX < x && previousY < y) {
+			return 'down-right'
+		}
+	}
 </script>
