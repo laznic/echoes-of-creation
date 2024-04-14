@@ -535,29 +535,4 @@ function shuffle(array: number[]) {
 			return 'up-right'
 		}
 	}
-	function getPreviousDirection(current: number, previous: number) {
-		const grid = 3
-		const x = current % grid
-		const y = Math.floor(current / grid)
-		const previousX = previous % grid
-		const previousY = Math.floor(previous / grid)
-
-		if (previousX > x && previousY === y) {
-			return 'right'
-		} else if (previousX < x && previousY === y) {
-			return 'left'
-		} else if (previousY > y && previousX === x) {
-			return 'down'
-		} else if (previousY < y && previousX === x) {
-			return 'up'
-		} else if (previousX > x && previousY > y) {
-			return 'up-left'
-		} else if (previousX < x && previousY > y) {
-			return 'up-right'
-		} else if (previousX > x && previousY < y) {
-			return 'down-left'
-		} else if (previousX < x && previousY < y) {
-			return 'down-right'
-		}
-	}
 </script>
