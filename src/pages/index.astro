@@ -4,7 +4,7 @@ import Layout from "../layouts/Layout.astro";
 import "splitting/dist/splitting.css";
 import "splitting/dist/splitting-cells.css";
 
-const gridOrder = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+const gridOrder = [1, 2, 3, 4, 5, 6, 7, 8, 9] // [5, 8, 1, 9, 7, 4, 6, 3, 2]
 const shuffled = [...gridOrder]
 shuffle(shuffled)
 
@@ -133,7 +133,9 @@ function shuffle(array: number[]) {
 
 	Splitting()
 
-	const lenis = new Lenis()
+	const lenis = new Lenis({
+		lerp: 0.0375,
+	})
 
 	lenis.on('scroll', ScrollTrigger.update)
 
@@ -188,7 +190,47 @@ function shuffle(array: number[]) {
 					start: 0,
 					end: window.innerHeight,
 				}
-			})
+			}, '<')
+		}
+
+		
+		if (nextDirection === 'up') {
+			timeline.fromTo(section, {
+				'will-change': 'scale opacity transform',
+				scale: 1,
+				opacity: 1,
+				rotateX: 0,
+				yPercent: 0,
+			}, {
+				ease: 'none',
+				scale: 2,
+				opacity: 0,
+				rotateX: 90,
+				yPercent: 20,
+				scrollTrigger: {
+					scrub: true,
+					start: (self) => window.innerHeight * (index + 1), // self.previous().end,
+					end: '+=100%',
+				}
+			}, '<')
+			.fromTo(nextCellElement, {
+				'will-change': 'scale opacity transform',
+				scale: 0,
+				opacity: 0,
+				rotateX: 90,
+				yPercent: -20,
+			}, {
+				ease: 'none',
+				scale: 1,
+				opacity: 1,
+				rotateX: 0,
+				yPercent: 0,
+				scrollTrigger: {
+					scrub: true,
+					start: (self) => window.innerHeight * (index + 1), // self.previous().end,
+					end: '+=100%',
+				}
+			}, '<')
 		}
 
 		if (nextDirection === 'up-right') {
@@ -210,10 +252,10 @@ function shuffle(array: number[]) {
 				opacity: 0,
 				scrollTrigger: {
 					scrub: true,
-					start: (self) => self.previous().end,
+					start: (self) => window.innerHeight * (index + 1), // self.previous().end,
 					end: '+=100%',
 				}
-			})
+			}, '<')
 			.fromTo(nextCellElement, {
 				'will-change': 'transform scale opacity',
 				xPercent: 100,
@@ -222,7 +264,7 @@ function shuffle(array: number[]) {
 				yPercent: -100,
 				rotateX: -90,
 				rotateY: -120,
-				rotateZ: -45,
+				rotateZ: 45,
 			}, {
 				ease: 'none',
 				xPercent: 0,
@@ -234,14 +276,15 @@ function shuffle(array: number[]) {
 				opacity: 1,
 				scrollTrigger: {
 					scrub: true,
-					start: (self) => self.previous().end,
+					start: (self) => window.innerHeight * (index + 1), // self.previous().end,
 					end: '+=100%',
 				}
-			})
+			}, '<')
 		}
 
 		if (nextDirection === 'up-left') {
-			timeline.fromTo(section, {
+			timeline
+			.fromTo(section, {
 				'will-change': 'transform scale opacity',
 				xPercent: 0,
 				yPercent: 0,
@@ -259,10 +302,10 @@ function shuffle(array: number[]) {
 				opacity: 0,
 				scrollTrigger: {
 					scrub: true,
-					start: (self) => self.previous().end,
+					start: (self) => window.innerHeight * (index + 1), // self.previous().end,
 					end: '+=100%',
 				}
-			})
+			}, '<')
 			.fromTo(nextCellElement, {
 				'will-change': 'transform scale opacity',
 				xPercent: -100,
@@ -283,10 +326,10 @@ function shuffle(array: number[]) {
 				opacity: 1,
 				scrollTrigger: {
 					scrub: true,
-					start: (self) => self.previous().end,
-					end: '+=100%',
+					start: (self) => window.innerHeight * (index + 1), // self.previous().end,
+					end: '+=100%'
 				}
-			})
+			}, '<')
 		}
 
 		if (nextDirection === 'down') {
@@ -300,10 +343,10 @@ function shuffle(array: number[]) {
 					opacity: 0,
 					scrollTrigger: {
 						scrub: true,
-						start: (self) => self.previous().end,
+						start: (self) => window.innerHeight * (index + 1), // self.previous().end,
 						end: '+=100%',
 					}
-				})
+				}, '<')
 				.fromTo(nextCellElement, {
 					'will-change': 'transform opacity',
 					yPercent: 100,
@@ -314,10 +357,10 @@ function shuffle(array: number[]) {
 					opacity: 1,
 					scrollTrigger: {
 						scrub: true,
-						start: (self) => self.previous().end,
+						start: (self) => window.innerHeight * (index + 1), // self.previous().end,
 						end: '+=100%',
 					}
-				})
+				}, '<')
 		}
 
 		if (nextDirection === 'down-right') {
@@ -339,10 +382,10 @@ function shuffle(array: number[]) {
 				rotateZ: -45,
 				scrollTrigger: {
 					scrub: true,
-					start: (self) => self.previous().end,
+					start: (self) => window.innerHeight * (index + 1), // self.previous().end,
 					end: '+=100%',
 				}
-			})
+			}, '<')
 			.fromTo(nextCellElement, {
 				'will-change': 'transform opacity',
 				xPercent: 100,
@@ -361,10 +404,10 @@ function shuffle(array: number[]) {
 				rotateZ: 0,
 				scrollTrigger: {
 					scrub: true,
-					start: (self) => self.previous().end,
-					end: '+=100%',
+					start: (self) => window.innerHeight * (index + 1), // self.previous().end,
+					end: '+=100%'
 				}
-			})
+			}, '<')
 		}
 
 		if (nextDirection === 'down-left') {
@@ -386,10 +429,10 @@ function shuffle(array: number[]) {
 				rotateZ: 45,
 				scrollTrigger: {
 					scrub: true,
-					start: (self) => self.previous().end,
+					start: (self) => window.innerHeight * (index + 1), // self.previous().end,
 					end: '+=100%',
 				}
-			})
+			}, '<')
 			.fromTo(nextCellElement, {
 				'will-change': 'transform opacity',
 				xPercent: -100,
@@ -408,103 +451,80 @@ function shuffle(array: number[]) {
 				rotateZ: 0,
 				scrollTrigger: {
 					scrub: true,
-					start: (self) => self.previous().end,
+					start: (self) => window.innerHeight * (index + 1), // self.previous().end,
 					end: '+=100%',
 				}
-			})
+			}, '<')
 		}
 
 		if (nextDirection === 'left') {
 			timeline.fromTo(section, {
 				'will-change': 'transform opacity',
 				xPercent: 0,
+				rotateY: 0,
 				opacity: 1
 			}, {
 				ease: 'none',
 				xPercent: 100,
 				opacity: 0,
+				rotateY: 90,
 				scrollTrigger: {
 					scrub: true,
-					start: (self) => self.previous().end,
+					start: (self) => window.innerHeight * (index + 1), // self.previous().end,
 					end: '+=100%',
 				}
-			})
+			}, '<')
 			.fromTo(nextCellElement, {
 				'will-change': 'transform opacity',
 				xPercent: -100,
+				rotateY: -90,
 				opacity: 0,
 			}, {
 				ease: 'none',
 				xPercent: 0,
 				opacity: 1,
+				rotateY: 0,
 				scrollTrigger: {
 					scrub: true,
-					start: (self) => self.previous().end,
+					start: (self) => window.innerHeight * (index + 1), // self.previous().end,
 					end: '+=100%',
 				}
-			})
+			}, '<')
 		}
 
 		if (nextDirection === 'right') {
 			timeline.fromTo(section, {
 				'will-change': 'transform opacity',
 				xPercent: 0,
+				rotateY: 0,
 				opacity: 1
 			}, {
 				ease: 'none',
 				xPercent: -100,
 				opacity: 0,
+				rotateY: -90,
 				scrollTrigger: {
 					scrub: true,
-					start: (self) => self.previous().end,
+					start: (self) => window.innerHeight * (index + 1), // self.previous().end,
 					end: '+=100%',
 				}
-			})
+			}, '<')
 			.fromTo(nextCellElement, {
 				'will-change': 'transform opacity',
 				xPercent: 100,
 				opacity: 0,
+				rotateY: 90,
 			}, {
 				ease: 'none',
 				xPercent: 0,
 				opacity: 1,
+				rotateY: 0,
 				scrollTrigger: {
 					scrub: true,
-					start: (self) => self.previous().end,
+					start: (self) => window.innerHeight * (index + 1), // self.previous().end,
 					end: '+=100%',
 				}
-			})
-		}
-
-		if (nextDirection === 'up') {
-			timeline.fromTo(section, {
-				'will-change': 'scale opacity',
-				scale: 1,
-				opacity: 1
-			}, {
-				ease: 'none',
-				scale: 1.5,
-				opacity: 0,
-				scrollTrigger: {
-					scrub: true,
-					start: (self) => self.previous().end,
-					end: '+=100%',
-				}
-			})
-			.fromTo(nextCellElement, {
-				'will-change': 'scale opacity',
-				scale: 0,
-				opacity: 0,
-			}, {
-				ease: 'none',
-				scale: 1,
-				opacity: 1,
-				scrollTrigger: {
-					scrub: true,
-					start: (self) => self.previous().end,
-					end: '+=100%',
-				}
-			})
+			}, '<')
 		}
 
 		gsap.set(section, { perspective: 500, opacity: 0 })
