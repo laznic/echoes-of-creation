@@ -5,10 +5,14 @@ import "splitting/dist/splitting.css";
 import "splitting/dist/splitting-cells.css";
 import ImageWithHole from "../components/ImageWithHole.astro";
 import ImageWithCuts from "../components/ImageWithCuts.astro";
+import ThoughtBlob from "../components/ThoughtBlob.astro";
+import ExpandingImage from "../components/ExpandingImage.astro";
 
 const gridOrder = [1, 2, 3, 4, 5, 6, 7, 8, 9] // [5, 8, 1, 9, 7, 4, 6, 3, 2]
 const shuffled = [...gridOrder]
 shuffle(shuffled)
+
+const testing = new Array(64).fill(null)
 
 function shuffle(array: number[]) {
   let currentIndex = array.length;
@@ -30,112 +34,28 @@ function shuffle(array: number[]) {
 <Layout title="Home">
 	<main>
 		<header>
-			<h1 class="text-2xl">Identity Crisis</h1>
+			<h1 class="text-2xl">Echoes of Creation: Tradition and Innovation</h1>
 			<p>By Niklas Lepistö & Jani Reijonen</p>
+			<p>Welcome to "Echoes of Creation: Tradition and Innovation," where we dive into artistry in a tech-driven world. Follow our protagonist's emotional journey as generative AI shakes up the art scene. Explore how tradition and innovation collide, revealing the timeless struggles and triumphs of creativity in today's landscape.</p>
 			
 			<button>Toggle sound</button>
 			<button>Autoplay with narration</button>
 		</header>
-		
-		<div id="main-grid" class="w-[100vw] h-[1000dvh]">
-			<section data-cell={shuffled[0]}  class="opacity-0 fixed top-0 flex items-center justify-center gap-8 h-[100dvh] w-[100vw] p-24">
-				<div class="relative z-10">
-					<h2 class="font-black text-3xl">{shuffled[0]}</h2>
-					<p class="text-md">
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, alias odit eligendi, tempora magni animi, aspernatur dolorum sint laboriosam illo ipsam rerum ducimus reiciendis aut ullam voluptatum deleniti praesentium repudiandae.
-					</p>
-					<ImageWithHole />
-				</div>
-				<div class="absolute -z-10 w-1/2 h-1/2 rounded-full bg-rose-400 blur-[300px]"></div>
-			</section>
-
-			<section data-cell={shuffled[1]}  class="opacity-0 fixed top-0 flex items-center justify-center gap-8 h-[100dvh] w-[100vw] p-24">
-				<div class="relative z-10">
-					<h2 class="font-black text-3xl">{shuffled[1]}</h2>
-					<ImageWithCuts />
-					<p class="text-md">
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, alias odit eligendi, tempora magni animi, aspernatur dolorum sint laboriosam illo ipsam rerum ducimus reiciendis aut ullam voluptatum deleniti praesentium repudiandae.
-					</p>
-				</div>
-				<div class="absolute -z-10 w-1/2 h-1/2 rounded-full bg-indigo-400 blur-[300px]"></div>
-			</section>
-
-			<section data-cell={shuffled[2]}  class="opacity-0 fixed top-0 flex items-center justify-center gap-8 h-[100dvh] w-[100vw] p-24">
-				<div class="relative z-10">
-					<h2 class="font-black text-3xl">{shuffled[2]}</h2>
-					<p class="text-md">
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, alias odit eligendi, tempora magni animi, aspernatur dolorum sint laboriosam illo ipsam rerum ducimus reiciendis aut ullam voluptatum deleniti praesentium repudiandae.
-					</p>
-					<img src="https://picsum.photos/320/320" alt="Identity Crisis 1">
-				</div>
-				<div class="absolute -z-10 w-1/2 h-1/2 rounded-full bg-emerald-400 blur-[300px]"></div>
-			</section>
-
-			<section data-cell={shuffled[3]}  class="opacity-0 fixed top-0 flex items-center justify-center gap-8 h-[100dvh] w-[100vw] p-24">
-				<div class="relative z-10">
-					<h2 class="font-black text-3xl">{shuffled[3]}</h2>
-					<img src="https://picsum.photos/320/320" alt="Identity Crisis 1">
-					<p class="text-md">
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, alias odit eligendi, tempora magni animi, aspernatur dolorum sint laboriosam illo ipsam rerum ducimus reiciendis aut ullam voluptatum deleniti praesentium repudiandae.
-					</p>
-				</div>
-				<div class="absolute -z-10 w-1/2 h-1/2 rounded-full bg-amber-400 blur-[300px]"></div>
-			</section>
-
-			<section data-cell={shuffled[4]} class="opacity-0 fixed top-0 flex items-center justify-center gap-8 h-[100dvh] w-[100vw] p-24">
-				<div class="relative z-10">
-					<h2 class="font-black text-3xl">{shuffled[4]}</h2>
-					<p class="text-md">
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, alias odit eligendi, tempora magni animi, aspernatur dolorum sint laboriosam illo ipsam rerum ducimus reiciendis aut ullam voluptatum deleniti praesentium repudiandae.
-					</p>
-					<img src="https://picsum.photos/320/320" alt="Identity Crisis 1">
-				</div>
-				<div class="absolute -z-10 w-1/2 h-1/2 rounded-full bg-slate-400 blur-[300px]"></div>
-			</section>
-
-			<section data-cell={shuffled[5]}  class="opacity-0 fixed top-0 flex items-center justify-center gap-8 h-[100dvh] w-[100vw] p-24">
-				<div class="relative z-10">
-					<h2 class="font-black text-3xl">{shuffled[5]}</h2>
-					<img src="https://picsum.photos/320/320" alt="Identity Crisis 1">
-					<p class="text-md">
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, alias odit eligendi, tempora magni animi, aspernatur dolorum sint laboriosam illo ipsam rerum ducimus reiciendis aut ullam voluptatum deleniti praesentium repudiandae.
-					</p>
-				</div>
-				<div class="absolute -z-10 w-1/2 h-1/2 rounded-full bg-lime-400 blur-[300px]"></div>
-			</section>
-
-			<section data-cell={shuffled[6]}  class="opacity-0 fixed top-0 flex items-center justify-center gap-8 h-[100dvh] w-[100vw] p-24">
-				<div class="relative z-10">
-					<h2 class="font-black text-3xl">{shuffled[6]}</h2>
-					<p class="text-md">
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, alias odit eligendi, tempora magni animi, aspernatur dolorum sint laboriosam illo ipsam rerum ducimus reiciendis aut ullam voluptatum deleniti praesentium repudiandae.
-					</p>
-					<img src="https://picsum.photos/320/320" alt="Identity Crisis 1">
-				</div>
-				<div class="absolute -z-10 w-1/2 h-1/2 rounded-full bg-cyan-400 blur-[300px]"></div>
-			</section>
-
-			<section data-cell={shuffled[7]}  class="opacity-0 fixed top-0 flex items-center justify-center gap-8 h-[100dvh] w-[100vw] p-24">
-				<div class="relative z-10">
-					<h2 class="font-black text-3xl">{shuffled[7]}</h2>
-					<img src="https://picsum.photos/320/320" alt="Identity Crisis 1">
-					<p class="text-md">
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, alias odit eligendi, tempora magni animi, aspernatur dolorum sint laboriosam illo ipsam rerum ducimus reiciendis aut ullam voluptatum deleniti praesentium repudiandae.
-					</p>
-				</div>
-				<div class="absolute -z-10 w-1/2 h-1/2 rounded-full bg-violet-400 blur-[300px]"></div>
-			</section>
-
-			<section data-cell={shuffled[8]}  class="opacity-0 fixed top-0 flex items-center justify-center gap-8 h-[100dvh] w-[100vw] p-24">
-				<div class="relative z-10">
-					<h2 class="font-black text-3xl">{shuffled[8]}</h2>
-					<p class="text-md">
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, alias odit eligendi, tempora magni animi, aspernatur dolorum sint laboriosam illo ipsam rerum ducimus reiciendis aut ullam voluptatum deleniti praesentium repudiandae.
-					</p>
-					<img src="https://picsum.photos/320/320" alt="Identity Crisis 1">
-				</div>
-				<div class="absolute -z-10 w-1/2 h-1/2 rounded-full bg-sky-400 blur-[300px]"></div>
-			</section>
+		<ThoughtBlob />
+		<div id="main-grid" class="w-[100vw] h-[200dvh] relative">
+				{testing.map((yes) => (
+					<div class="absolute item rounded-md bg-white w-96 h-72 overflow-hidden">
+						<img src="https://picsum.photos/200/300" alt="random image" class="w-full h-full object-cover" />
+					</div>
+				))}
+				{testing.map((yes) => (
+					<div class="absolute item-right rounded-md bg-white w-96 h-72 overflow-hidden">
+						<img src="https://picsum.photos/200/300" alt="random image" class="w-full h-full object-cover" />
+					</div>
+				))}
+		</div>
+		<div class="second">
+			<ExpandingImage />
 		</div>
 	</main>
 </Layout>
@@ -164,6 +84,7 @@ function shuffle(array: number[]) {
 
 	const lenis = new Lenis({
 		lerp: 0.0375,
+		// smoothWheel: true
 	})
 
 	lenis.on('scroll', ScrollTrigger.update)
@@ -181,36 +102,128 @@ function shuffle(array: number[]) {
 	// chars.forEach(char => gsap.set(char.parentNode, { perspective: 500 })); 
 
 	const timeline = gsap.timeline()
-	const sections = document.querySelectorAll('section')
+	const firstSection = document.querySelector('.first-section')
 	const mainGrid = document.querySelector('#main-grid')
-	const sectionContent = document.querySelectorAll('section > div')
+	const second = document.querySelector('.second')
+	const items = mainGrid.querySelectorAll('.item')
+	const itemsRight = mainGrid.querySelectorAll('.item-right')
 
-	document.addEventListener('pointermove', (e) => {
-		const { clientX, clientY } = e
-		const centerX = window.innerWidth / 2
-		const centerY = window.innerHeight / 2
-
-		sectionContent.forEach((content) => {
-			const rect = content.getBoundingClientRect()
-			const cardX = rect.left + rect.width / 2
-			const cardY = rect.top + rect.height / 2
-			const dx = clientX - cardX
-			const dy = clientY - cardY
-			const tiltX = (dy / centerY) * -3
-			const tiltY = -(dx / centerX) * -3
-
-			gsap.to(content, {
-				rotateX: tiltX,
-				rotateY: tiltY,
-				x: tiltY,
-				y: tiltX,
-				ease: 'power2.out'
-			})
+	timeline
+		.set(mainGrid, { perspective: 200, perspectiveOrigin: '57.5% 30%' })
+		.set(itemsRight, { z: () => gsap.utils.random(-1, 1), scale: () => gsap.utils.random(0.5, 4) })
+		.set(items, { z: () => gsap.utils.random(-1, 1), scale: () => gsap.utils.random(0.5, 4) })
+		.fromTo(items, {
+			z: () => gsap.utils.random(20, -1),
+			x: () => gsap.utils.random(window.innerHeight * -2, window.innerHeight * -2 - 500),
+			y: () => gsap.utils.random(window.innerHeight * 2, -window.innerHeight),
+			filter: 'blur(30px)'
+		}, {
+			x: 0,
+			scale: 0,
+			z: -window.innerHeight,
+			y: 0,
+			filter: 'blur(0px)',
+			stagger: 0.02,
+			scrollTrigger: {
+				pin: mainGrid,
+				pinSpacing: false,
+				trigger: mainGrid,
+				scrub: true,
+				start: 'top top',
+				end: 'bottom center',
+			}
+		})
+		.fromTo(itemsRight, {
+			z: () => gsap.utils.random(20, -1),
+			x: () => gsap.utils.random(window.innerWidth * 2 + 500, window.innerWidth * 2),
+			y: () => gsap.utils.random(window.innerHeight * 2, -window.innerHeight),
+			filter: 'blur(30px)'
+		}, {
+			x: 0,
+			scale: 0,
+			z: -window.innerHeight,
+			y: 0,
+			filter: 'blur(0px)',
+			stagger: 0.02,
+			scrollTrigger: {
+				// markers: true,
+				trigger: mainGrid,
+				scrub: true,
+				start: 'top top',
+				end: 'bottom center',
+			}
+		})
+		.fromTo('.blob-circle', {
+			r: 10,
+		}, {
+			r: 0,
+			scrollTrigger: {
+				trigger: mainGrid,
+				scrub: true,
+				start: (self) => self.previous().end,
+				end: 'bottom-=5%',
+			}
+		})
+		.fromTo('.glow-circle', {
+			r: 0,
+		}, {
+			r: window.innerWidth,
+			scrollTrigger: {
+				markers: true,
+				pin: second,
+				trigger: second,
+				scrub: true,
+				start: 'top top',
+				end: 'bottom',
+			}
+		})
+		.fromTo('.hole-circle', {
+			r: 0,
+		}, {
+			r: window.innerWidth,
+			scrollTrigger: {
+				trigger: second,
+				scrub: true,
+				start: 'top top',
+				end: 'bottom',
+			}
 		})
 
-	})
+	// const sections = document.querySelectorAll('section')
+	// const act1Title = document.querySelector('.act-1-title')
+	// const act1TitleChars = act1Title?.querySelectorAll('.char')
+	
+	// act1TitleChars?.forEach(char => gsap.set(char.parentNode, { perspective: 500 }));
 
-	sections.forEach((section, index, sectionsArray) => {
+	// const sectionContent = document.querySelectorAll('.content')
+
+	// document.addEventListener('pointermove', handleContentTilting)
+
+	// function handleContentTilting(e: PointerEvent) {
+	// 	const { clientX, clientY } = e
+	// 	const centerX = window.innerWidth / 2
+	// 	const centerY = window.innerHeight / 2
+
+	// 	sectionContent.forEach((content) => {
+	// 		const rect = content.getBoundingClientRect()
+	// 		const cardX = rect.left + rect.width / 2
+	// 		const cardY = rect.top + rect.height / 2
+	// 		const dx = clientX - cardX
+	// 		const dy = clientY - cardY
+	// 		const tiltX = -(dy / centerY)
+	// 		const tiltY = (dx / centerX)
+
+	// 		gsap.to(content, {
+	// 			rotateX: tiltX,
+	// 			rotateY: tiltY,
+	// 			x: tiltY,
+	// 			y: tiltX,
+	// 			ease: 'power2.out'
+	// 		})
+	// 	})
+	// }
+
+	// sections.forEach((section, index, sectionsArray) => {
 		// position sections in random order in a 9 point grid based in window size
 		// each grid cell is the full width and height of the window
 		// 1 2 3
@@ -224,367 +237,413 @@ function shuffle(array: number[]) {
 		// if current section is 5 and next section is 6, it will be in the middle right
 		// get the direction of the next section in relation to the current one
 
-		const cell = parseInt(section.dataset.cell)
-		const nextCell = parseInt(sectionsArray[index + 1]?.dataset.cell)
-		// get the direction of the next section in relation to the current one
-		// should be one of the following: down, up, left, right, down-left, down-right, up-left, up-right
-		const nextDirection = getNextDirection(cell, nextCell)
-		const nextCellElement = sectionsArray[index + 1]
-		console.log('nextDirection', cell, nextDirection)
+		// const cell = parseInt(section.dataset.cell)
+		// const nextCell = parseInt(sectionsArray[index + 1]?.dataset.cell)
+		// // get the direction of the next section in relation to the current one
+		// // should be one of the following: down, up, left, right, down-left, down-right, up-left, up-right
+		// const nextDirection = getNextDirection(cell, nextCell)
+		// const nextCellElement = sectionsArray[index + 1]
+		// console.log('nextDirection', cell, nextDirection)
+		
 
-		if (index === 0) {
-			timeline.fromTo(section, {
-				'will-change': 'transform opacity',
-				opacity: 0,
-				rotateX: -30,
-			}, {
-				ease: 'none',
-				opacity: 1,
-				rotateX: 0,
-				scrollTrigger: {
-					scrub: true,
-					start: 0,
-					end: window.innerHeight,
-				}
-			}, '<')
-		}
+		// if (index === 0) {
+		// 	timeline
+		// 	.fromTo(act1TitleChars, {
+		// 		'will-change': 'opacity transform filter',
+		// 		opacity: 0,
+		// 		filter: 'blur(15px)',
+		// 		yPercent: 50
+		// 	}, {
+		// 		opacity: 1,
+		// 		filter: 'blur(0px)',
+		// 		yPercent: 0,
+		// 		stagger: 0.05,
+		// 		scrollTrigger: {
+		// 			scrub: true,
+		// 			start: window.innerHeight / 3,
+		// 			end: window.innerHeight + 600,
+		// 		}
+		// 	})
+		// 	.fromTo(section, {
+		// 		'will-change': 'transform opacity',
+		// 		y: 0,
+		// 	}, {
+		// 		ease: 'none',
+		// 		y: -window.innerHeight,
+		// 		scrollTrigger: {
+		// 			scrub: true,
+		// 			start: (self) => self.previous().end,
+		// 			end: (self) => {
+		// 				return self.previous().end + section.clientHeight 
+		// 			},
+		// 		}
+		// 	})
+			// .fromTo(section, {
+			// 	'will-change': 'transform opacity',
+			// 	opacity: 1,
+			// 	rotateX: -30,
+			// }, {
+			// 	ease: 'none',
+			// 	opacity: 1,
+			// 	rotateX: 0,
+			// 	scrollTrigger: {
+			// 		scrub: true,
+			// 		start: 100,
+			// 		end: window.innerHeight + 100,
+			// 	}
+			// }, '<')
+
+			// .fromTo(section, {
+			// 	'will-change': 'transform opacity',
+			// 	y: -window.innerHeight,
+			// }, {
+			// 	ease: 'none',
+			// 	y: -window.innerHeight * 2,
+			// 	scrollTrigger: {
+			// 		scrub: true,
+			// 		start: (self) => window.innerHeight * 2 + 100,
+			// 		end: (window.innerHeight + 100)  * 3,
+			// 	}
+			// })
+		// }
 
 		
-		if (nextDirection === 'up') {
-			timeline.fromTo(section, {
-				'will-change': 'scale opacity transform',
-				scale: 1,
-				opacity: 1,
-				rotateX: 0,
-				yPercent: 0,
-			}, {
-				ease: 'none',
-				scale: 2,
-				opacity: 0,
-				rotateX: 90,
-				yPercent: 20,
-				scrollTrigger: {
-					scrub: true,
-					start: (self) => window.innerHeight * (index + 1), // self.previous().end,
-					end: '+=100%',
-				}
-			}, '<')
-			.fromTo(nextCellElement, {
-				'will-change': 'scale opacity transform',
-				scale: 0,
-				opacity: 0,
-				rotateX: 90,
-				yPercent: -20,
-			}, {
-				ease: 'none',
-				scale: 1,
-				opacity: 1,
-				rotateX: 0,
-				yPercent: 0,
-				scrollTrigger: {
-					scrub: true,
-					start: (self) => window.innerHeight * (index + 1), // self.previous().end,
-					end: '+=100%',
-				}
-			}, '<')
-		}
+		// if (nextDirection === 'up') {
+		// 	timeline.fromTo(section, {
+		// 		'will-change': 'scale opacity transform',
+		// 		scale: 1,
+		// 		opacity: 1,
+		// 		rotateX: 0,
+		// 		yPercent: 0,
+		// 	}, {
+		// 		ease: 'none',
+		// 		scale: 2,
+		// 		opacity: 0,
+		// 		rotateX: 90,
+		// 		yPercent: -20,
+		// 		scrollTrigger: {
+		// 			scrub: true,
+		// 			start: (self) => section.clientHeight * (index + 1), // self.previous().end,
+		// 			end: '+=100%',
+		// 		}
+		// 	}, '<')
+		// 	.fromTo(nextCellElement, {
+		// 		'will-change': 'scale opacity transform',
+		// 		scale: 0,
+		// 		opacity: 0,
+		// 		rotateX: 90,
+		// 		yPercent: -20,
+		// 	}, {
+		// 		ease: 'none',
+		// 		scale: 1,
+		// 		opacity: 1,
+		// 		rotateX: 0,
+		// 		yPercent: 0,
+		// 		scrollTrigger: {
+		// 			scrub: true,
+		// 			start: (self) => section.clientHeight * (index + 1), // self.previous().end,
+		// 			end: '+=100%',
+		// 		}
+		// 	}, '<')
+		// }
 
-		if (nextDirection === 'up-right') {
-			timeline.fromTo(section, {
-				'will-change': 'transform scale opacity',
-				xPercent: 0,
-				yPercent: 0,
-				rotateX: 0,
-				rotateY: 0,
-				rotateZ: 0,
-				opacity: 1
-			}, {
-				ease: 'none',
-				xPercent: -100,
-				yPercent: 100,
-				rotateX: 90,
-				rotateY: 120,
-				rotateZ: -45,
-				opacity: 0,
-				scrollTrigger: {
-					scrub: true,
-					start: (self) => window.innerHeight * (index + 1), // self.previous().end,
-					end: '+=100%',
-				}
-			}, '<')
-			.fromTo(nextCellElement, {
-				'will-change': 'transform scale opacity',
-				xPercent: 100,
-				opacity: 0,
-				scale: 0.5,
-				yPercent: -100,
-				rotateX: -90,
-				rotateY: -120,
-				rotateZ: 45,
-			}, {
-				ease: 'none',
-				xPercent: 0,
-				yPercent: 0,
-				rotateX: 0,
-				rotateY: 0,
-				rotateZ: 0,
-				scale: 1,
-				opacity: 1,
-				scrollTrigger: {
-					scrub: true,
-					start: (self) => window.innerHeight * (index + 1), // self.previous().end,
-					end: '+=100%',
-				}
-			}, '<')
-		}
+		// if (nextDirection === 'up-right') {
+		// 	timeline.fromTo(section, {
+		// 		'will-change': 'transform scale opacity',
+		// 		xPercent: 0,
+		// 		yPercent: 0,
+		// 		rotateX: 0,
+		// 		rotateY: 0,
+		// 		rotateZ: 0,
+		// 		opacity: 1
+		// 	}, {
+		// 		ease: 'none',
+		// 		xPercent: -100,
+		// 		yPercent: 100,
+		// 		rotateX: 90,
+		// 		rotateY: 120,
+		// 		rotateZ: -45,
+		// 		opacity: 0,
+		// 		scrollTrigger: {
+		// 			scrub: true,
+		// 			start: (self) => section.clientHeight * (index + 1), // self.previous().end,
+		// 			end: '+=100%',
+		// 		}
+		// 	}, '<')
+		// 	.fromTo(nextCellElement, {
+		// 		'will-change': 'transform scale opacity',
+		// 		xPercent: 100,
+		// 		opacity: 0,
+		// 		scale: 0.5,
+		// 		yPercent: -100,
+		// 		rotateX: -90,
+		// 		rotateY: -120,
+		// 		rotateZ: 45,
+		// 	}, {
+		// 		ease: 'none',
+		// 		xPercent: 0,
+		// 		yPercent: 0,
+		// 		rotateX: 0,
+		// 		rotateY: 0,
+		// 		rotateZ: 0,
+		// 		scale: 1,
+		// 		opacity: 1,
+		// 		scrollTrigger: {
+		// 			scrub: true,
+		// 			start: (self) => section.clientHeight * (index + 1), // self.previous().end,
+		// 			end: '+=100%',
+		// 		}
+		// 	}, '<')
+		// }
 
-		if (nextDirection === 'up-left') {
-			timeline
-			.fromTo(section, {
-				'will-change': 'transform scale opacity',
-				xPercent: 0,
-				yPercent: 0,
-				rotateX: 0,
-				rotateY: 0,
-				rotateZ: 0,
-				opacity: 1
-			}, {
-				ease: 'none',
-				xPercent: 100,
-				yPercent: 100,
-				rotateX: 90,
-				rotateY: -120,
-				rotateZ: 45,
-				opacity: 0,
-				scrollTrigger: {
-					scrub: true,
-					start: (self) => window.innerHeight * (index + 1), // self.previous().end,
-					end: '+=100%',
-				}
-			}, '<')
-			.fromTo(nextCellElement, {
-				'will-change': 'transform scale opacity',
-				xPercent: -100,
-				opacity: 0,
-				scale: 0.5,
-				yPercent: -100,
-				rotateX: -90,
-				rotateY: 120,
-				rotateZ: -45,
-			}, {
-				ease: 'none',
-				xPercent: 0,
-				yPercent: 0,
-				rotateX: 0,
-				rotateY: 0,
-				rotateZ: 0,
-				scale: 1,
-				opacity: 1,
-				scrollTrigger: {
-					scrub: true,
-					start: (self) => window.innerHeight * (index + 1), // self.previous().end,
-					end: '+=100%'
-				}
-			}, '<')
-		}
+		// if (nextDirection === 'up-left') {
+		// 	timeline
+		// 	.fromTo(section, {
+		// 		'will-change': 'transform scale opacity',
+		// 		xPercent: 0,
+		// 		yPercent: 0,
+		// 		rotateX: 0,
+		// 		rotateY: 0,
+		// 		rotateZ: 0,
+		// 		opacity: 1
+		// 	}, {
+		// 		ease: 'none',
+		// 		xPercent: 100,
+		// 		yPercent: 100,
+		// 		rotateX: 90,
+		// 		rotateY: -120,
+		// 		rotateZ: 45,
+		// 		opacity: 0,
+		// 		scrollTrigger: {
+		// 			scrub: true,
+		// 			start: (self) => section.clientHeight * (index + 1), // self.previous().end,
+		// 			end: '+=100%',
+		// 		}
+		// 	}, '<')
+		// 	.fromTo(nextCellElement, {
+		// 		'will-change': 'transform scale opacity',
+		// 		xPercent: -100,
+		// 		opacity: 0,
+		// 		scale: 0.5,
+		// 		yPercent: -100,
+		// 		rotateX: -90,
+		// 		rotateY: 120,
+		// 		rotateZ: -45,
+		// 	}, {
+		// 		ease: 'none',
+		// 		xPercent: 0,
+		// 		yPercent: 0,
+		// 		rotateX: 0,
+		// 		rotateY: 0,
+		// 		rotateZ: 0,
+		// 		scale: 1,
+		// 		opacity: 1,
+		// 		scrollTrigger: {
+		// 			scrub: true,
+		// 			start: (self) => section.clientHeight * (index + 1), // self.previous().end,
+		// 			end: '+=100%'
+		// 		}
+		// 	}, '<')
+		// }
 
-		if (nextDirection === 'down') {
-			timeline.fromTo(section, {
-					'will-change': 'transform opacity',
-					yPercent: 0,
-					opacity: 1
-				}, {
-					ease: 'none',
-					yPercent: -100,
-					opacity: 0,
-					scrollTrigger: {
-						scrub: true,
-						start: (self) => window.innerHeight * (index + 1), // self.previous().end,
-						end: '+=100%',
-					}
-				}, '<')
-				.fromTo(nextCellElement, {
-					'will-change': 'transform opacity',
-					yPercent: 100,
-					opacity: 0,
-				}, {
-					ease: 'none',
-					yPercent: 0,
-					opacity: 1,
-					scrollTrigger: {
-						scrub: true,
-						start: (self) => window.innerHeight * (index + 1), // self.previous().end,
-						end: '+=100%',
-					}
-				}, '<')
-		}
+		// if (nextDirection === 'down') {
+		// 	timeline.fromTo(section, {
+		// 			'will-change': 'transform opacity',
+		// 			yPercent: 0,
+		// 			opacity: 1
+		// 		}, {
+		// 			ease: 'none',
+		// 			yPercent: -100,
+		// 			opacity: 0,
+		// 			scrollTrigger: {
+		// 				scrub: true,
+		// 				start: (self) => section.clientHeight * (index + 1), // self.previous().end,
+		// 				end: '+=100%',
+		// 			}
+		// 		}, '<')
+		// 		.fromTo(nextCellElement, {
+		// 			'will-change': 'transform opacity',
+		// 			yPercent: 100,
+		// 			opacity: 0,
+		// 		}, {
+		// 			ease: 'none',
+		// 			yPercent: 0,
+		// 			opacity: 1,
+		// 			scrollTrigger: {
+		// 				scrub: true,
+		// 				start: (self) => section.clientHeight * (index + 1), // self.previous().end,
+		// 				end: '+=100%',
+		// 			}
+		// 		}, '<')
+		// }
 
-		if (nextDirection === 'down-right') {
-			timeline.fromTo(section, {
-				'will-change': 'transform opacity',
-				xPercent: 0,
-				yPercent: 0,
-				opacity: 1,
-				rotateX: 0,
-				rotateY: 0,
-				rotateZ: 0,
-			}, {
-				ease: 'none',
-				xPercent: -100,
-				opacity: 0,
-				yPercent: -100,
-				rotateX: -90,
-				rotateY: 120,
-				rotateZ: -45,
-				scrollTrigger: {
-					scrub: true,
-					start: (self) => window.innerHeight * (index + 1), // self.previous().end,
-					end: '+=100%',
-				}
-			}, '<')
-			.fromTo(nextCellElement, {
-				'will-change': 'transform opacity',
-				xPercent: 100,
-				opacity: 0,
-				yPercent: 100,
-				rotateX: 90,
-				rotateY: -120,
-				rotateZ: 45,
-			}, {
-				ease: 'none',
-				xPercent: 0,
-				opacity: 1,
-				yPercent: 0,
-				rotateX: 0,
-				rotateY: 0,
-				rotateZ: 0,
-				scrollTrigger: {
-					scrub: true,
-					start: (self) => window.innerHeight * (index + 1), // self.previous().end,
-					end: '+=100%'
-				}
-			}, '<')
-		}
+		// if (nextDirection === 'down-right') {
+		// 	timeline.fromTo(section, {
+		// 		'will-change': 'transform opacity',
+		// 		xPercent: 0,
+		// 		yPercent: 0,
+		// 		opacity: 1,
+		// 		rotateX: 0,
+		// 		rotateY: 0,
+		// 		rotateZ: 0,
+		// 	}, {
+		// 		ease: 'none',
+		// 		xPercent: -100,
+		// 		opacity: 0,
+		// 		yPercent: -100,
+		// 		rotateX: -90,
+		// 		rotateY: 120,
+		// 		rotateZ: -45,
+		// 		scrollTrigger: {
+		// 			scrub: true,
+		// 			start: (self) => section.clientHeight * (index + 1), // self.previous().end,
+		// 			end: '+=100%',
+		// 		}
+		// 	}, '<')
+		// 	.fromTo(nextCellElement, {
+		// 		'will-change': 'transform opacity',
+		// 		xPercent: 100,
+		// 		opacity: 0,
+		// 		yPercent: 100,
+		// 		rotateX: 90,
+		// 		rotateY: -120,
+		// 		rotateZ: 45,
+		// 	}, {
+		// 		ease: 'none',
+		// 		xPercent: 0,
+		// 		opacity: 1,
+		// 		yPercent: 0,
+		// 		rotateX: 0,
+		// 		rotateY: 0,
+		// 		rotateZ: 0,
+		// 		scrollTrigger: {
+		// 			scrub: true,
+		// 			start: (self) => section.clientHeight * (index + 1), // self.previous().end,
+		// 			end: '+=100%'
+		// 		}
+		// 	}, '<')
+		// }
 
-		if (nextDirection === 'down-left') {
-			timeline.fromTo(section, {
-				'will-change': 'transform opacity',
-				xPercent: 0,
-				yPercent: 0,
-				opacity: 1,
-				rotateX: 0,
-				rotateY: 0,
-				rotateZ: 0,
-			}, {
-				ease: 'none',
-				xPercent: 100,
-				opacity: 0,
-				yPercent: -100,
-				rotateX: 90,
-				rotateY: 120,
-				rotateZ: 45,
-				scrollTrigger: {
-					scrub: true,
-					start: (self) => window.innerHeight * (index + 1), // self.previous().end,
-					end: '+=100%',
-				}
-			}, '<')
-			.fromTo(nextCellElement, {
-				'will-change': 'transform opacity',
-				xPercent: -100,
-				opacity: 0,
-				yPercent: 100,
-				rotateX: 90,
-				rotateY: 120,
-				rotateZ: -45,
-			}, {
-				ease: 'none',
-				xPercent: 0,
-				opacity: 1,
-				yPercent: 0,
-				rotateX: 0,
-				rotateY: 0,
-				rotateZ: 0,
-				scrollTrigger: {
-					scrub: true,
-					start: (self) => window.innerHeight * (index + 1), // self.previous().end,
-					end: '+=100%',
-				}
-			}, '<')
-		}
+		// if (nextDirection === 'down-left') {
+		// 	timeline.fromTo(section, {
+		// 		'will-change': 'transform opacity',
+		// 		xPercent: 0,
+		// 		yPercent: 0,
+		// 		opacity: 1,
+		// 		rotateX: 0,
+		// 		rotateY: 0,
+		// 		rotateZ: 0,
+		// 	}, {
+		// 		ease: 'none',
+		// 		xPercent: 100,
+		// 		opacity: 0,
+		// 		yPercent: -100,
+		// 		rotateX: 90,
+		// 		rotateY: 120,
+		// 		rotateZ: 45,
+		// 		scrollTrigger: {
+		// 			scrub: true,
+		// 			start: (self) => section.clientHeight * (index + 1), // self.previous().end,
+		// 			end: '+=100%',
+		// 		}
+		// 	}, '<')
+		// 	.fromTo(nextCellElement, {
+		// 		'will-change': 'transform opacity',
+		// 		xPercent: -100,
+		// 		opacity: 0,
+		// 		yPercent: 100,
+		// 		rotateX: 90,
+		// 		rotateY: 120,
+		// 		rotateZ: -45,
+		// 	}, {
+		// 		ease: 'none',
+		// 		xPercent: 0,
+		// 		opacity: 1,
+		// 		yPercent: 0,
+		// 		rotateX: 0,
+		// 		rotateY: 0,
+		// 		rotateZ: 0,
+		// 		scrollTrigger: {
+		// 			scrub: true,
+		// 			start: (self) => section.clientHeight * (index + 1), // self.previous().end,
+		// 			end: '+=100%',
+		// 		}
+		// 	}, '<')
+		// }
 
-		if (nextDirection === 'left') {
-			timeline.fromTo(section, {
-				'will-change': 'transform opacity',
-				xPercent: 0,
-				rotateY: 0,
-				opacity: 1
-			}, {
-				ease: 'none',
-				xPercent: 100,
-				opacity: 0,
-				rotateY: 120,
-				scrollTrigger: {
-					scrub: true,
-					start: (self) => window.innerHeight * (index + 1), // self.previous().end,
-					end: '+=100%',
-				}
-			}, '<')
-			.fromTo(nextCellElement, {
-				'will-change': 'transform opacity',
-				xPercent: -100,
-				rotateY: -120,
-				opacity: 0,
-			}, {
-				ease: 'none',
-				xPercent: 0,
-				opacity: 1,
-				rotateY: 0,
-				scrollTrigger: {
-					scrub: true,
-					start: (self) => window.innerHeight * (index + 1), // self.previous().end,
-					end: '+=100%',
-				}
-			}, '<')
-		}
+		// if (nextDirection === 'left') {
+		// 	timeline.fromTo(section, {
+		// 		'will-change': 'transform opacity',
+		// 		xPercent: 0,
+		// 		rotateY: 0,
+		// 		opacity: 1
+		// 	}, {
+		// 		ease: 'none',
+		// 		xPercent: 100,
+		// 		opacity: 0,
+		// 		rotateY: 120,
+		// 		scrollTrigger: {
+		// 			scrub: true,
+		// 			start: (self) => section.clientHeight * (index + 1), // self.previous().end,
+		// 			end: '+=100%',
+		// 		}
+		// 	}, '<')
+		// 	.fromTo(nextCellElement, {
+		// 		'will-change': 'transform opacity',
+		// 		xPercent: -100,
+		// 		rotateY: -120,
+		// 		opacity: 0,
+		// 	}, {
+		// 		ease: 'none',
+		// 		xPercent: 0,
+		// 		opacity: 1,
+		// 		rotateY: 0,
+		// 		scrollTrigger: {
+		// 			scrub: true,
+		// 			start: (self) => section.clientHeight * (index + 1), // self.previous().end,
+		// 			end: '+=100%',
+		// 		}
+		// 	}, '<')
+		// }
 
-		if (nextDirection === 'right') {
-			timeline.fromTo(section, {
-				'will-change': 'transform opacity',
-				xPercent: 0,
-				rotateY: 0,
-				opacity: 1
-			}, {
-				ease: 'none',
-				xPercent: -100,
-				opacity: 0,
-				rotateY: -120,
-				scrollTrigger: {
-					scrub: true,
-					start: (self) => window.innerHeight * (index + 1), // self.previous().end,
-					end: '+=100%',
-				}
-			}, '<')
-			.fromTo(nextCellElement, {
-				'will-change': 'transform opacity',
-				xPercent: 100,
-				opacity: 0,
-				rotateY: 120,
-			}, {
-				ease: 'none',
-				xPercent: 0,
-				opacity: 1,
-				rotateY: 0,
-				scrollTrigger: {
-					scrub: true,
-					start: (self) => window.innerHeight * (index + 1), // self.previous().end,
-					end: '+=100%',
-				}
-			}, '<')
-		}
+		// if (nextDirection === 'right') {
+		// 	timeline.fromTo(section, {
+		// 		'will-change': 'transform opacity',
+		// 		xPercent: 0,
+		// 		rotateY: 0,
+		// 		opacity: 1
+		// 	}, {
+		// 		ease: 'none',
+		// 		xPercent: -100,
+		// 		opacity: 0,
+		// 		rotateY: -120,
+		// 		scrollTrigger: {
+		// 			scrub: true,
+		// 			start: (self) => section.clientHeight * (index + 1), // self.previous().end,
+		// 			end: '+=100%',
+		// 		}
+		// 	}, '<')
+		// 	.fromTo(nextCellElement, {
+		// 		'will-change': 'transform opacity',
+		// 		xPercent: 100,
+		// 		opacity: 0,
+		// 		rotateY: 120,
+		// 	}, {
+		// 		ease: 'none',
+		// 		xPercent: 0,
+		// 		opacity: 1,
+		// 		rotateY: 0,
+		// 		scrollTrigger: {
+		// 			scrub: true,
+		// 			start: (self) => section.clientHeight * (index + 1), // self.previous().end,
+		// 			end: '+=100%',
+		// 		}
+		// 	}, '<')
+		// }
 
-		gsap.set(section, { perspective: 500, opacity: 0 })
-	})
+		// if (index === 0) return
+		// gsap.set(section, { perspective: 500, opacity: 0 })
+	// })
 
 	function getNextDirection (current: number, next: number) {
 		const grid = 3
