@@ -54,8 +54,75 @@ function shuffle(array: number[]) {
 					</div>
 				))}
 		</div>
-		<div class="second">
-			<ExpandingImage />
+		
+		<div class="flash-container h-12">
+			 <div class="flash w-full h-[100dvh] fixed top-0 bg-white opacity-0"></div>
+		</div>
+
+		<div class="second h-[100dvh] relative overflow-visible">
+		</div>
+
+		<ExpandingImage />
+
+		<div class="third h-[100dvh] z-100">
+			<!-- <div class="images grid gap-8"> -->
+				<!-- <div class="flex items-center gap-8 top-images">
+					<img src="https://picsum.photos/800/600" class="h-auto w-full" />
+					<img src="https://picsum.photos/800/600" class="h-auto w-full" />
+					<img src="https://picsum.photos/800/600" class="h-auto w-full" />
+					<img src="https://picsum.photos/800/600" class="h-auto w-full" />
+				</div> -->
+				
+				<img src="https://picsum.photos/800/600" class="main-image h-auto w-full relative" style="filter: url(#pixelate);" />
+				<svg>
+					<filter id="pixelate" x="0" y="0">
+						<feFlood x="4" y="4" height="2" width="2">
+							<animate
+								attributeName="height"
+								values="2; 1; 2"
+								dur="1s"
+								repeatCount="indefinite"
+								/>
+							<animate
+								attributeName="width"
+								values="2; 1; 2"
+								dur="1s"
+								repeatCount="indefinite"
+								/>
+						</feFlood>
+						<feComposite width="10" height="10">
+							<animate
+							attributeName="width"
+							values="10; 1; 10"
+							dur="1s"
+							repeatCount="indefinite"
+							/>
+							<animate
+							attributeName="height"
+							values="10; 1; 10"
+							dur="1s"
+							repeatCount="indefinite"
+							/>
+						</feComposite>
+						<feTile result="a"/>
+						<feComposite in="SourceGraphic" in2="a" operator="in"/>
+						<feMorphology operator="dilate" radius="5">
+							<animate
+							attributeName="radius"
+							values="5; 0; 5"
+							dur="1s"
+							repeatCount="indefinite"
+							/>
+						</feMorphology>
+					</filter>
+				</svg>
+				<!-- <div class="flex items-center gap-8 bottom-images">
+					<img src="https://picsum.photos/800/600" class="h-auto w-full" />
+					<img src="https://picsum.photos/800/600" class="h-auto w-full" />
+					<img src="https://picsum.photos/800/600" class="h-auto w-full" />
+					<img src="https://picsum.photos/800/600" class="h-auto w-full" />
+				</div> -->
+			<!-- </div> -->
 		</div>
 	</main>
 </Layout>
@@ -105,6 +172,7 @@ function shuffle(array: number[]) {
 	const firstSection = document.querySelector('.first-section')
 	const mainGrid = document.querySelector('#main-grid')
 	const second = document.querySelector('.second')
+	const third = document.querySelector('.third')
 	const items = mainGrid.querySelectorAll('.item')
 	const itemsRight = mainGrid.querySelectorAll('.item-right')
 
@@ -112,6 +180,9 @@ function shuffle(array: number[]) {
 		.set(mainGrid, { perspective: 200, perspectiveOrigin: '57.5% 30%' })
 		.set(itemsRight, { z: () => gsap.utils.random(-1, 1), scale: () => gsap.utils.random(0.5, 4) })
 		.set(items, { z: () => gsap.utils.random(-1, 1), scale: () => gsap.utils.random(0.5, 4) })
+		.set('.flash', { opacity: 0 })
+		.set('.second', { perspective: 1000 })
+		.set('.third', { perspective: 1000 })
 		.fromTo(items, {
 			z: () => gsap.utils.random(20, -1),
 			x: () => gsap.utils.random(window.innerHeight * -2, window.innerHeight * -2 - 500),
@@ -146,7 +217,7 @@ function shuffle(array: number[]) {
 			filter: 'blur(0px)',
 			stagger: 0.02,
 			scrollTrigger: {
-				// markers: true,
+				pinSpacing: false,
 				trigger: mainGrid,
 				scrub: true,
 				start: 'top top',
@@ -159,22 +230,82 @@ function shuffle(array: number[]) {
 			r: 0,
 			scrollTrigger: {
 				trigger: mainGrid,
+				pinSpacing: false,
 				scrub: true,
 				start: (self) => self.previous().end,
 				end: 'bottom-=5%',
 			}
 		})
-		.fromTo('.glow-circle', {
-			r: 0,
-		}, {
-			r: window.innerWidth,
+		.fromTo('.flash', 
+		{
+			opacity: 0
+		},
+		{
+			opacity: 0.5,
 			scrollTrigger: {
-				markers: true,
+				trigger: '.flash-container',
+				pinSpacing: false,
+				scrub: true,
+				start: (self) => self.previous().end,
+				end: 'bottom-=150%',
+			}
+		})
+		.fromTo('.flash', 
+		{
+			opacity: 0.5
+		},
+		{
+			opacity: 0,
+			scrollTrigger: {
+				trigger: '.flash-container',
+				pinSpacing: false,
+				scrub: true,
+				start: (self) => self.previous().end,
+				end: 'bottom+=1000%',
+			}
+		})
+		.fromTo('.actual-expanding-image', {
+			filter: 'blur(20px)',
+			scale: 5,
+			// y: window.innerHeight * -1.5,
+			// transformOrigin: 'center center'
+		}, {
+			scale: 1,
+			filter: 'blur(0px)',
+			scrollTrigger: {
 				pin: second,
 				trigger: second,
 				scrub: true,
 				start: 'top top',
-				end: 'bottom',
+				end: 'bottom-=50%',
+			}
+		})
+		.fromTo('.glow-circle', {
+			r: 0,
+			cx: window.innerWidth / 2,
+			cy: window.innerHeight / 2,
+		}, {
+			r: window.innerWidth,
+			scrollTrigger: {
+				pinSpacing: false,
+				trigger: second,
+				scrub: true,
+				start: 'top top',
+				end: 'bottom-=50%',
+			}
+		})
+		.fromTo('.hole-circle', {
+			r: 0,
+			cx: window.innerWidth / 2,
+			cy: window.innerHeight / 2,
+		}, {
+			r: window.innerWidth,
+			scrollTrigger: {
+				trigger: second,
+				pinSpacing: false,
+				scrub: true,
+				start: 'top top',
+				end: 'bottom-=50%',
 			}
 		})
 		.fromTo('.hole-circle', {
@@ -182,12 +313,105 @@ function shuffle(array: number[]) {
 		}, {
 			r: window.innerWidth,
 			scrollTrigger: {
+				pin: false,
 				trigger: second,
+				pinSpacing: false,
 				scrub: true,
 				start: 'top top',
+				end: 'bottom-=50%',
+			}
+		})
+		.fromTo('.hole-circle', {
+			opacity: 1,
+		}, {
+			opacity: 0,
+			scrollTrigger: {
+				trigger: second,
+				pinSpacing: true,
+				scrub: true,
+				start: (self) => self.previous().end,
+				end: (self) => self.previous().end,
+			}
+		})
+		.fromTo('.expanding-image', {
+			scale: 1,
+		}, {
+			scale: 0.75,
+			scrollTrigger: {
+				pin: third,
+				trigger: third,
+				scrub: true,
+				start: 'top bottom',
 				end: 'bottom',
 			}
 		})
+		// .fromTo('.expanding-image', {
+		// 	height: '100dvh',
+		// 	scale: 1,
+		// 	// y: window.innerHeight * -1.5,
+		// 	// transformOrigin: 'center center'
+		// }, {
+		// 	height: window.innerHeight * 0.75,
+		// 	scale: 0.5,
+		// 	scrollTrigger: {
+		// 		pin: second,
+		// 		markers: true,
+		// 		trigger: second,
+		// 		scrub: true,
+		// 		start: (self) => self.previous().end,
+		// 		end: 'bottom',
+		// 	}
+		// })
+		// .fromTo('.expanding-image', {
+		// 	opacity: 1,
+		// }, {
+		// 	opacity: 0,
+		// 	scrollTrigger: {
+		// 		markers: true,
+		// 		trigger: third,
+		// 		scrub: true,
+		// 		start: (self) => self.previous().end,
+		// 		end: (self) => self.previous().end,
+		// 	}
+		// })
+		// .fromTo('.main-image', {
+		// 	opacity: 0,
+		// 	scale: 0
+		// }, {
+		// 	opacity: 1,
+		// 	scale: 0.5,
+		// 	scrollTrigger: {
+		// 		// markers: true,
+		// 		pin: third,
+		// 		pinSpacing: true,
+		// 		trigger: third,
+		// 		scrub: true,
+		// 		start: 'top top',
+		// 		end: 'bottom-=50%'
+		// 	}
+		// })
+		// .fromTo('.top-images', {
+		// 	opacity: 0,
+		// }, {
+		// 	opacity: 1,
+		// 	scrollTrigger: {
+		// 		trigger: third,
+		// 		scrub: true,
+		// 		start: (self) => self.previous().end,
+		// 		end: 'bottom+=100%',
+		// 	}
+		// })
+		// .fromTo('.bottom-images', {
+		// 	opacity: 0,
+		// }, {
+		// 	opacity: 1,
+		// 	scrollTrigger: {
+		// 		trigger: third,
+		// 		scrub: true,
+		// 		start: (self) => self.previous().end,
+		// 		end: 'bottom+=100%',
+		// 	}
+		// })
 
 	// const sections = document.querySelectorAll('section')
 	// const act1Title = document.querySelector('.act-1-title')
