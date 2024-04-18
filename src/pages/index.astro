@@ -59,70 +59,66 @@ function shuffle(array: number[]) {
 			 <div class="flash w-full h-[100dvh] fixed top-0 bg-white opacity-0"></div>
 		</div>
 
-		<div class="second h-[100dvh] relative overflow-visible">
-		</div>
+		<div class="second h-[100dvh] relative overflow-visible"></div>
 
 		<ExpandingImage />
 
-		<div class="third h-[100dvh] z-100">
-			<!-- <div class="images grid gap-8"> -->
-				<!-- <div class="flex items-center gap-8 top-images">
-					<img src="https://picsum.photos/800/600" class="h-auto w-full" />
-					<img src="https://picsum.photos/800/600" class="h-auto w-full" />
-					<img src="https://picsum.photos/800/600" class="h-auto w-full" />
-					<img src="https://picsum.photos/800/600" class="h-auto w-full" />
-				</div> -->
-				
-				<img src="https://picsum.photos/800/600" class="main-image h-auto w-full relative" style="filter: url(#pixelate);" />
-				<svg>
-					<filter id="pixelate" x="0" y="0">
-						<feFlood x="4" y="4" height="2" width="2">
-							<animate
-								attributeName="height"
-								values="2; 1; 2"
-								dur="1s"
-								repeatCount="indefinite"
-								/>
-							<animate
-								attributeName="width"
-								values="2; 1; 2"
-								dur="1s"
-								repeatCount="indefinite"
-								/>
-						</feFlood>
-						<feComposite width="10" height="10">
-							<animate
-							attributeName="width"
-							values="10; 1; 10"
-							dur="1s"
-							repeatCount="indefinite"
-							/>
-							<animate
+		<div class="third h-[100dvh]"></div>
+
+		<div class="fourth h-[100dvh] relative grid content-center justify-center"></div>
+
+		<div class="main-images fixed top-0 left-0 w-full h-[100dvh] grid content-center items-center">
+			<img src="https://picsum.photos/800/600" class="main-image h-auto w-full absolute mx-auto max-w-fit left-0 right-0" />
+			<img src="https://picsum.photos/800/600" class="main-image h-auto w-full absolute mx-auto max-w-fit left-0 right-0" />
+			<img src="https://picsum.photos/800/600" class="main-image h-auto w-full absolute mx-auto max-w-fit left-0 right-0" />
+			<img src="https://picsum.photos/800/600" class="main-image h-auto w-full absolute mx-auto max-w-fit left-0 right-0" />
+			<img src="https://picsum.photos/800/600" class="main-image h-auto w-full absolute mx-auto max-w-fit left-0 right-0" />
+			<img src="https://picsum.photos/800/600" class="main-image h-auto w-full absolute mx-auto max-w-fit left-0 right-0" />
+			<img src="https://picsum.photos/800/600" class="main-image h-auto w-full absolute mx-auto max-w-fit left-0 right-0" />
+			<img src="https://picsum.photos/800/600" class="main-image h-auto w-full absolute mx-auto max-w-fit left-0 right-0" />
+
+			<svg>
+				<filter id="pixelate" x="0" y="0">
+					<feFlood x="4" y="4" height="2" width="2">
+						<animate
 							attributeName="height"
-							values="10; 1; 10"
+							values="2; 1; 2"
 							dur="1s"
 							repeatCount="indefinite"
 							/>
-						</feComposite>
-						<feTile result="a"/>
-						<feComposite in="SourceGraphic" in2="a" operator="in"/>
-						<feMorphology operator="dilate" radius="5">
-							<animate
-							attributeName="radius"
-							values="5; 0; 5"
+						<animate
+							attributeName="width"
+							values="2; 1; 2"
 							dur="1s"
 							repeatCount="indefinite"
 							/>
-						</feMorphology>
-					</filter>
-				</svg>
-				<!-- <div class="flex items-center gap-8 bottom-images">
-					<img src="https://picsum.photos/800/600" class="h-auto w-full" />
-					<img src="https://picsum.photos/800/600" class="h-auto w-full" />
-					<img src="https://picsum.photos/800/600" class="h-auto w-full" />
-					<img src="https://picsum.photos/800/600" class="h-auto w-full" />
-				</div> -->
-			<!-- </div> -->
+					</feFlood>
+					<feComposite width="10" height="10">
+						<animate
+						attributeName="width"
+						values="10; 1; 10"
+						dur="1s"
+						repeatCount="indefinite"
+						/>
+						<animate
+						attributeName="height"
+						values="10; 1; 10"
+						dur="1s"
+						repeatCount="indefinite"
+						/>
+					</feComposite>
+					<feTile result="a"/>
+					<feComposite in="SourceGraphic" in2="a" operator="in"/>
+					<feMorphology operator="dilate" radius="5">
+						<animate
+						attributeName="radius"
+						values="5; 0; 5"
+						dur="1s"
+						repeatCount="indefinite"
+						/>
+					</feMorphology>
+				</filter>
+			</svg>
 		</div>
 	</main>
 </Layout>
@@ -343,6 +339,66 @@ function shuffle(array: number[]) {
 				scrub: true,
 				start: 'top bottom',
 				end: 'bottom',
+			}
+		})
+		.fromTo('.main-image', {
+			opacity: 0,
+			scale: 0,
+			yPercent: (index) => {
+				const position = index % 3
+
+				if (index === 3) {
+					return 0
+				}
+
+				if (index === 7) {
+					return -75
+				}
+
+				if (index < 3) {
+					if (position === 1) return -75
+					if (position === 0) return 75
+
+					return 0
+				}
+
+				if (position === 1) return 75
+				if (position === 0) return -75
+				return 75
+
+			},
+			xPercent: (index) => {
+				const position = index % 3
+
+				if (index === 3) {
+					return -75
+				}
+
+				if (index === 7) {
+					return 75
+				}
+
+				if (index < 3) {
+					if (position === 1) return -75
+					if (position === 0) return 0
+					return 75
+				}
+
+
+				if (position === 1) return -75
+				if (position === 0) return 0
+				return 75
+			},
+		}, {
+			opacity: 1,
+			scale: 0.75,
+			stagger: 0.2,
+			scrollTrigger: {
+				pin: '.fourth',
+				trigger: '.fourth',
+				scrub: true,
+				start: 'top top',
+				end: 'bottom-=50%',
 			}
 		})
 		// .fromTo('.expanding-image', {
