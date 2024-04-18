@@ -7,6 +7,7 @@ import ImageWithHole from "../components/ImageWithHole.astro";
 import ImageWithCuts from "../components/ImageWithCuts.astro";
 import ThoughtBlob from "../components/ThoughtBlob.astro";
 import ExpandingImage from "../components/ExpandingImage.astro";
+import BadBlob from "../components/BadBlob.astro";
 
 const gridOrder = [1, 2, 3, 4, 5, 6, 7, 8, 9] // [5, 8, 1, 9, 7, 4, 6, 3, 2]
 const shuffled = [...gridOrder]
@@ -61,11 +62,75 @@ function shuffle(array: number[]) {
 
 		<div class="second h-[100dvh] relative overflow-visible"></div>
 
-		<ExpandingImage />
-
 		<div class="third h-[100dvh]"></div>
 
-		<div class="fourth h-[100dvh] relative grid content-center justify-center"></div>
+		<div class="fourth h-[100dvh]"></div>
+
+		<div class="fifth h-[100dvh] z-20">
+			<BadBlob />
+			<BadBlob />
+			<BadBlob />
+		</div>
+
+		<div class="sixth h-[100dvh]"></div>
+
+		<div class="seventh h-[400dvh]">
+			<div class="relative">
+				<h2 data-splitting class="what-the text-2xl font-bold">What the hell</h2>
+
+				<div class="black-hole-wrapper absolute -top-1/2 left-12 w-72 h-60">
+					<div class="w-1/2 h-1/2 rounded-full bg-indigo-300 absolute mix-blend-overlay blur-xl" />
+					<svg class="overflow-visible w-full h-full" >
+						<defs>
+							<radialGradient id="black-hole-gradient" >
+								<stop offset="10%" stop-color="#a5b4fc" />
+								<stop offset="50%" stop-color="transparent" />
+								<stop offset="75%" stop-color="#cbd5e1" />
+								<stop offset="100%" stop-color="transparent" />
+							</radialGradient>
+	
+							<filter id="black-hole-filter">
+								<feDiffuseLighting in="SourceGraphic" result="light" lighting-color="white">
+									<fePointLight x="25" y="20" z="10" />
+								</feDiffuseLighting>
+						
+								<feComposite
+									in="SourceGraphic"
+									in2="light"
+									operator="arithmetic"
+									k1="1"
+									k2="0"
+									k3="0"
+									k4="0"
+									result="lighting"
+									/>
+
+								<feTurbulence baseFrequency="0.02" numOctaves="1" type="fractalNoise" result="turbulence">
+									<animate
+										attributeName="baseFrequency"
+										values="0.1; 0.05; 0.03; 0.05; 0.1"
+										dur="5s"
+										repeatCount="indefinite"
+										/>
+								</feTurbulence>
+								<feDisplacementMap in="lighting" in2="turbulence" scale="10" result="displacement">
+									<animate
+										attributeName="scale"
+										values="50; 25; 50"
+										dur="5s"
+										repeatCount="indefinite"
+										/>
+								</feDisplacementMap>
+								<feMorphology operator="dilate" radius="0.5" />
+							</filter>
+						</defs>
+	
+						<circle class="black-hole-circle overflow-visible" cx="100" cy="50" r="50" fill="url(#black-hole-gradient)" filter="url(#black-hole-filter)" />
+					</svg>
+				</div>
+
+			</div>
+		</div>
 
 		<div class="main-images fixed top-0 left-0 w-full h-[100dvh] grid content-center items-center">
 			<img src="https://picsum.photos/800/600" class="main-image h-auto w-full absolute mx-auto max-w-fit left-0 right-0" />
@@ -121,69 +186,7 @@ function shuffle(array: number[]) {
 			</svg>
 		</div>
 
-		<div class="fixed z-100 w-full h-[100dvh] top-0 left-0">
-			<svg class="w-full h-full overflow-visible" preserveAspectRatio="none">
-				<defs>
-					<radialGradient id="radial">
-						<stop offset="0%" stop-color="#000" />
-						<stop offset="70%" stop-color="#4c0519" />
-						<stop offset="75%" stop-color="#500724" />
-						<stop offset="100%" stop-color="#f87171" />
-					</radialGradient>
-
-					<filter id="testing">
-						<feDiffuseLighting in="SourceGraphic" result="light" lighting-color="white">
-							<fePointLight x="0" y="50" z="20">
-								<animate
-									attributeName="x"
-									values="0; 50; 0"
-									dur="2s"
-									repeatCount="indefinite"
-								/>
-								<animate
-									attributeName="y"
-									values="50; 100; 50"
-									dur="5s"
-									repeatCount="indefinite"
-								/>
-								<animate
-									attributeName="z"
-									values="15; 30; 15"
-									dur="6s"
-									repeatCount="indefinite"
-								/>
-							</fePointLight>
-						</feDiffuseLighting>
-				
-						<feComposite
-							in="SourceGraphic"
-							in2="light"
-							operator="arithmetic"
-							k1="10"
-							k2="-2"
-							k3="0"
-							k4="-0.002"
-							result="lighting"
-							/>
-
-						<feTurbulence baseFrequency="0.2,0.0001" numOctaves="1" type="fractalNoise" result="turbulence" seed="347">
-							<animate
-								attributeName="baseFrequency"
-								values="0.2,0.0001; 0.1,0.2; 0.2,0.0001"
-								dur="3s"
-								repeatCount="indefinite"
-							/>
-						</feTurbulence>
-						<feDisplacementMap in="lighting" in2="turbulence" scale="20" result="displacement" />
-						<feGaussianBlur in="displacement" stdDeviation="0.75" />
-						<feMorphology operator="erode" radius="1" />
-					</filter>
-				</defs>
-				<g transform="scale(2)">
-					<circle cx="25" cy="25" r="25"  fill="url(#radial)" filter="url(#testing)">
-				</g>
-			</svg>
-		</div>
+		<ExpandingImage />
 	</main>
 </Layout>
 
@@ -235,6 +238,9 @@ function shuffle(array: number[]) {
 	const third = document.querySelector('.third')
 	const items = mainGrid.querySelectorAll('.item')
 	const itemsRight = mainGrid.querySelectorAll('.item-right')
+	const title = document.querySelector('.what-the')
+	const chars = title.querySelectorAll('.char')
+	chars.forEach(char => gsap.set(char.parentNode, { perspective: 1000 }));
 
 	timeline
 		.set(mainGrid, { perspective: 200, perspectiveOrigin: '57.5% 30%' })
@@ -243,6 +249,12 @@ function shuffle(array: number[]) {
 		.set('.flash', { opacity: 0 })
 		.set('.second', { perspective: 1000 })
 		.set('.third', { perspective: 1000 })
+		.set('.fourth', { perspective: 1000 })
+		.set('.fifth', { perspective: 1000 })
+		.set('.sixth', { perspective: 1000 })
+		.set('.seventh', { perspective: 1000 })
+		.set('.bad-blob', { scale: 0 })
+		.set('.bad-blob-wrapper', { y: window.innerHeight })
 		.fromTo(items, {
 			z: () => gsap.utils.random(20, -1),
 			x: () => gsap.utils.random(window.innerHeight * -2, window.innerHeight * -2 - 500),
@@ -465,6 +477,121 @@ function shuffle(array: number[]) {
 				end: 'bottom-=50%',
 			}
 		})
+		.fromTo('.bad-blob', {
+			scale: 0,
+		}, {
+			scale: 2.5,
+			stagger: 0.05,
+			scrollTrigger: {
+				pin: '.fifth',
+				trigger: '.fifth',
+				scrub: true,
+				start: 'top top',
+				end: 'bottom+=100%',
+			}
+		})
+		.fromTo('.bad-blob-wrapper', {
+			y: window.innerHeight,
+			x: 'random(200, 800)'
+		}, {
+			y: 'random(200, 500)',
+			stagger: 0.5,
+			scrollTrigger: {
+				trigger: '.fifth',
+				scrub: true,
+				start: 'top top',
+				end: 'bottom+=100%',
+			}
+		})
+		.fromTo('.expanding-image', {
+			yPercent: 0,
+		}, {
+			yPercent: -110,
+			scrollTrigger: {
+				trigger: '.sixth',
+				scrub: true,
+				start: 'top bottom',
+				end: 'bottom-=70%'
+			}
+		})
+		.fromTo('.main-images', {
+			yPercent: 0,
+		}, {
+			yPercent: -110,
+			scrollTrigger: {
+				trigger: '.sixth',
+				scrub: true,
+				start: 'top bottom',
+				end: 'bottom-=70%',
+			}
+		})
+		.fromTo(title, {
+				'will-change': 'transform',
+				xPercent: 30
+			}, {
+				ease: 'none',
+				xPercent: -10,
+				scrollTrigger: {
+					trigger: '.seventh',
+					// markers: true,
+					scrub: true,
+					start: 'top bottom',
+					end: 'bottom-=50%',
+				}
+			})
+			.fromTo(chars, {
+				'will-change': 'opacity, transform', 
+				transformOrigin: '50% 50% -50px',
+				rotationZ: 0,
+				rotationX: 0,
+				opacity: 1,
+			},
+			{
+				ease: 'expo.inOut',
+				rotationZ: -120,
+				rotationX: 120,
+				opacity: 0,
+				stagger: 0.0375,
+				scrollTrigger: {
+					trigger: '.seventh',
+					markers: true,
+					start: 'top bottom',
+					end: 'bottom-=75%',
+					scrub: true,
+				}
+      })
+			.fromTo('.black-hole-circle', {
+				r: 50,
+			},
+			{
+				r: 200,
+				scrollTrigger: {
+					trigger: '.seventh',
+					markers: true,
+					start: 'top bottom',
+					end: 'bottom-=75%',
+					scrub: true,
+				}
+      })
+			.fromTo('.black-hole-wrapper', {
+				scale: 0,
+				rotateY: 20,
+				rotateX: 10,
+				xPercent: 0
+			},
+			{
+				scale: 1,
+				rotateY: 90,
+				rotateX: 40,
+				xPercent: 20,
+				scrollTrigger: {
+					trigger: '.seventh',
+					markers: true,
+					start: 'top bottom',
+					end: 'bottom-=75%',
+					scrub: true,
+				}
+      })
 		// .fromTo('.expanding-image', {
 		// 	height: '100dvh',
 		// 	scale: 1,

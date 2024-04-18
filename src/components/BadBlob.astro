@@ -1,0 +1,66 @@
+---
+
+---
+
+<svg class="bad-blob-wrapper">
+  <defs>
+    <radialGradient id="radial">
+      <stop offset="0%" stop-color="#000" />
+      <stop offset="70%" stop-color="#4c0519" />
+      <stop offset="75%" stop-color="#500724" />
+      <stop offset="100%" stop-color="#f87171" />
+    </radialGradient>
+
+    <filter id="testing">
+      <feDiffuseLighting in="SourceGraphic" result="light" lighting-color="white">
+        <fePointLight x="0" y="50" z="20">
+          <animate
+            attributeName="x"
+            values="0; 50; 0"
+            dur="2s"
+            repeatCount="indefinite"
+          />
+          <animate
+            attributeName="y"
+            values="50; 100; 50"
+            dur="5s"
+            repeatCount="indefinite"
+          />
+          <animate
+            attributeName="z"
+            values="15; 30; 15"
+            dur="6s"
+            repeatCount="indefinite"
+          />
+        </fePointLight>
+      </feDiffuseLighting>
+  
+      <feComposite
+        in="SourceGraphic"
+        in2="light"
+        operator="arithmetic"
+        k1="10"
+        k2="-2"
+        k3="0"
+        k4="-0.002"
+        result="lighting"
+        />
+
+      <feTurbulence baseFrequency="0.2,0.0001" numOctaves="1" type="fractalNoise" result="turbulence" seed="347">
+        <animate
+          attributeName="baseFrequency"
+          values="0.2,0.0001; 0.1,0.2; 0.2,0.0001"
+          dur="3s"
+          repeatCount="indefinite"
+        />
+      </feTurbulence>
+      <feDisplacementMap in="lighting" in2="turbulence" scale="20" result="displacement" />
+      <feGaussianBlur in="displacement" stdDeviation="0.75" />
+      <feMorphology operator="erode" radius="1" />
+    </filter>
+  </defs>
+  
+  <g class="bad-blob" transform="scale(2)">
+    <circle cx="25" cy="25" r="25"  fill="url(#radial)" filter="url(#testing)">
+  </g>
+</svg>
