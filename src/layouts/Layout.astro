@@ -1,4 +1,6 @@
 ---
+import '@fontsource-variable/bricolage-grotesque';
+
 interface Props {
 	title: string;
 }
@@ -20,3 +22,9 @@ const { title } = Astro.props;
 		<slot />
 	</body>
 </html>
+
+<style>
+	body {
+		font-family: 'Bricolage Grotesque Variable', sans-serif;
+	}
+</style>

@@ -8,8 +8,9 @@ import ImageWithCuts from "../components/ImageWithCuts.astro";
 import ThoughtBlob from "../components/ThoughtBlob.astro";
 import ExpandingImage from "../components/ExpandingImage.astro";
 import BadBlob from "../components/BadBlob.astro";
+import supabase from "../utils/supabase";
 
-const gridOrder = [1, 2, 3, 4, 5, 6, 7, 8, 9] // [5, 8, 1, 9, 7, 4, 6, 3, 2]
+const gridOrder = [1, 2, 3, 4, 5, 6, 7, 8, 9] 
 const shuffled = [...gridOrder]
 shuffle(shuffled)
 
@@ -31,27 +32,52 @@ function shuffle(array: number[]) {
   }
 }
 
+const { data: artworks } = await supabase
+	.from('artworks')
+	.select('*')
+	.eq('thought_id', 1)
+
+const firstHalfArtworks = artworks.slice(0, Math.ceil(artworks.length / 2))
+const secondHalfArtWorks = artworks.slice(Math.ceil(artworks.length / 2), artworks.length)
+const mainImage = artworks?.find((artwork) => artwork.is_main)
+
 ---
 <Layout title="Home">
 	<main>
-		<header>
-			<h1 class="text-2xl">Echoes of Creation: Tradition and Innovation</h1>
-			<p>By Niklas Lepistö & Jani Reijonen</p>
-			<p>Welcome to "Echoes of Creation: Tradition and Innovation," where we dive into artistry in a tech-driven world. Follow our protagonist's emotional journey as generative AI shakes up the art scene. Explore how tradition and innovation collide, revealing the timeless struggles and triumphs of creativity in today's landscape.</p>
-			
-			<button>Toggle sound</button>
-			<button>Autoplay with narration</button>
+		<header class="h-[100dvh] relative grid content-center">
+			<div class="mx-auto max-w-[50vw] z-50 relative">
+				<h1 class="text-lg italic z-100 relative">
+					Ah, there it is—<strong>the spark of inspiration</strong>!
+					<br />
+					<br />
+					That fleeting moment of clarity when an idea takes shape in my mind. It's exhilarating, like catching a glimpse of something magical.
+				</h1>
+			</div>
+
+			<button class="absolute py-4 px-8 bottom-24 left-0 right-0 w-fit mx-auto cursor-pointer z-50 transition-all hover:scale-110 hover:-translate-y-2">
+				Start the journey
+			</button>
+
+			{artworks.map((artwork) => (
+				<div class="artwork pointer-events-none z-10">
+					<div class="artwork-inner">
+						<img src={artwork.image_url} alt={artwork.title} class="w-full h-full object-cover" />
+					</div>
+				</div>
+			))}
 		</header>
-		<ThoughtBlob />
+
+		<div class="first h-[200dvh]"></div>
+
 		<div id="main-grid" class="w-[100vw] h-[200dvh] relative">
-				{testing.map((yes) => (
-					<div class="absolute item rounded-md bg-white w-96 h-72 overflow-hidden">
-						<img src="https://picsum.photos/200/300" alt="random image" class="w-full h-full object-cover" />
+				{firstHalfArtworks.map((artwork) => (
+					<div class="absolute item-left rounded-md bg-white w-96 h-72 overflow-hidden">
+						<img src={artwork.image_url} alt={artwork.title} class="w-full h-full object-cover" />
 					</div>
 				))}
-				{testing.map((yes) => (
-					<div class="absolute item-right rounded-md bg-white w-96 h-72 overflow-hidden">
-						<img src="https://picsum.photos/200/300" alt="random image" class="w-full h-full object-cover" />
+				{secondHalfArtWorks.map((artwork) => (
+					<div class="absolute item-right rounded-md bg-white w-96 h-72 overflow-hidden image-container">
+						<img src={artwork.image_url} alt={artwork.title} class="w-full h-full object-cover" />
 					</div>
 				))}
 		</div>
@@ -132,7 +158,7 @@ function shuffle(array: number[]) {
 			</div>
 		</div>
 
-		<div class="main-images fixed top-0 left-0 w-full h-[100dvh] grid content-center items-center">
+		<div class="main-images fixed top-0 left-0 w-full h-[100dvh] grid content-center items-center pointer-events-none">
 			<img src="https://picsum.photos/800/600" class="main-image h-auto w-full absolute mx-auto max-w-fit left-0 right-0" />
 			<img src="https://picsum.photos/800/600" class="main-image h-auto w-full absolute mx-auto max-w-fit left-0 right-0" />
 			<img src="https://picsum.photos/800/600" class="main-image h-auto w-full absolute mx-auto max-w-fit left-0 right-0" />
@@ -186,7 +212,8 @@ function shuffle(array: number[]) {
 			</svg>
 		</div>
 
-		<ExpandingImage />
+		<ThoughtBlob />
+		<ExpandingImage image={mainImage.image_url} />
 	</main>
 </Layout>
 
@@ -202,13 +229,55 @@ function shuffle(array: number[]) {
 		mix-blend-mode: difference;
 	}
 
+	:root {
+		font-size: 13px;
+		--color-text: #fff;
+		--color-bg: #000;
+		--color-link: #fff;
+		--color-link-hover: #fff;
+		--img-width: 190px;
+		--img-ratio: 1.1;
+		--img-offset-x: 20px;
+		--img-offset-y: 20px;
+		--img-border-radius: 7px;
+		--color-bg-content: rgba(255,255,255,0.05);
+		--color-bg-demos: rgba(255,255,255,0.05);
+	}
+
+	.artwork {
+		width: var(--img-width);
+		aspect-ratio: var(--img-ratio);
+		border-radius: var(--img-border-radius);
+		position: absolute;
+		top: 0;
+		left: 0;
+		opacity: 0;
+		overflow: hidden;
+		will-change: transform, filter;
+	}
+
+	.artwork-inner {
+		background-position: 50% 50%;
+		width: calc(100% + var(--img-offset-x));
+		height: calc(100% + var(--img-offset-y));
+		background-size: cover;
+		position: absolute;
+		top: calc( -1 * var(--img-offset-y) / 2 );
+		left: calc( -1 * var(--img-offset-x) / 2 );
+	}
+
+
 </style>
 
-<script>
+<script src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script>
+
+<script >
 	import Lenis from '@studio-freight/lenis'
 	import gsap from 'gsap'
 	import ScrollTrigger from 'gsap/ScrollTrigger'
 	import Splitting from 'splitting'
+	import { ImageTrail } from '../utils/ImageTrail'
+	import { preloadImages } from '../utils/helpers'
 
 	Splitting()
 
@@ -226,26 +295,29 @@ function shuffle(array: number[]) {
 	gsap.ticker.lagSmoothing(0)
 	gsap.registerPlugin(ScrollTrigger)
 
-	// const title = document.querySelector('h2')
-	// const chars = title.querySelectorAll('.char')
-			
-	// chars.forEach(char => gsap.set(char.parentNode, { perspective: 500 })); 
+	preloadImages().then(() => {
+    // Once all images are preloaded, remove the 'loading' class from the body element.
+    document.body.classList.remove('loading');
+    
+    // Instantiate a new ImageTrail object, initializing it with the element that has the class 'content'.
+    // The ImageTrail instance starts managing and animating the sequence of images within the specified element, reacting to mouse movements.
+		new ImageTrail(document.querySelector('header'), gsap)
 
-	const timeline = gsap.timeline()
+		const timeline = gsap.timeline()
 	const firstSection = document.querySelector('.first-section')
 	const mainGrid = document.querySelector('#main-grid')
 	const second = document.querySelector('.second')
 	const third = document.querySelector('.third')
-	const items = mainGrid.querySelectorAll('.item')
+	const items = mainGrid.querySelectorAll('.item-left')
 	const itemsRight = mainGrid.querySelectorAll('.item-right')
 	const title = document.querySelector('.what-the')
 	const chars = title.querySelectorAll('.char')
 	chars.forEach(char => gsap.set(char.parentNode, { perspective: 1000 }));
+	items.forEach(item => gsap.set(item, { z: () => gsap.utils.random(-1, 1), scale: () => gsap.utils.random(0.5, 3) }))
+	itemsRight.forEach(item => gsap.set(item, { z: () => gsap.utils.random(-1, 1), scale: () => gsap.utils.random(0.5, 3) }))
 
 	timeline
 		.set(mainGrid, { perspective: 200, perspectiveOrigin: '57.5% 30%' })
-		.set(itemsRight, { z: () => gsap.utils.random(-1, 1), scale: () => gsap.utils.random(0.5, 4) })
-		.set(items, { z: () => gsap.utils.random(-1, 1), scale: () => gsap.utils.random(0.5, 4) })
 		.set('.flash', { opacity: 0 })
 		.set('.second', { perspective: 1000 })
 		.set('.third', { perspective: 1000 })
@@ -255,6 +327,21 @@ function shuffle(array: number[]) {
 		.set('.seventh', { perspective: 1000 })
 		.set('.bad-blob', { scale: 0 })
 		.set('.bad-blob-wrapper', { y: window.innerHeight })
+		.set('.thought-blob', { yPercent: 100 })
+		.fromTo('.thought-blob', {
+			yPercent: 100,
+		}, {
+			yPercent: 0,
+			scrollTrigger: {
+				onEnter: (self) => {
+					self.progress = 1
+				},
+				trigger: '.first',
+				scrub: true,
+				start: 'top top',
+				end: 'bottom-=50%',
+			}
+		})
 		.fromTo(items, {
 			z: () => gsap.utils.random(20, -1),
 			x: () => gsap.utils.random(window.innerHeight * -2, window.innerHeight * -2 - 500),
@@ -278,7 +365,7 @@ function shuffle(array: number[]) {
 		})
 		.fromTo(itemsRight, {
 			z: () => gsap.utils.random(20, -1),
-			x: () => gsap.utils.random(window.innerWidth * 2 + 500, window.innerWidth * 2),
+			x: () => gsap.utils.random(window.innerWidth * 2, window.innerWidth * 2 + 500),
 			y: () => gsap.utils.random(window.innerHeight * 2, -window.innerHeight),
 			filter: 'blur(30px)'
 		}, {
@@ -408,7 +495,7 @@ function shuffle(array: number[]) {
 		.fromTo('.expanding-image', {
 			scale: 1,
 		}, {
-			scale: 0.75,
+			scale: 0.9,
 			scrollTrigger: {
 				pin: third,
 				trigger: third,
@@ -554,7 +641,7 @@ function shuffle(array: number[]) {
 				stagger: 0.0375,
 				scrollTrigger: {
 					trigger: '.seventh',
-					markers: true,
+					// markers: true,
 					start: 'top bottom',
 					end: 'bottom-=75%',
 					scrub: true,
@@ -567,7 +654,7 @@ function shuffle(array: number[]) {
 				r: 200,
 				scrollTrigger: {
 					trigger: '.seventh',
-					markers: true,
+					// markers: true,
 					start: 'top bottom',
 					end: 'bottom-=75%',
 					scrub: true,
@@ -586,12 +673,17 @@ function shuffle(array: number[]) {
 				xPercent: 20,
 				scrollTrigger: {
 					trigger: '.seventh',
-					markers: true,
+					// markers: true,
 					start: 'top bottom',
 					end: 'bottom-=75%',
 					scrub: true,
 				}
       })
+	});
+
+
+
+	
 		// .fromTo('.expanding-image', {
 		// 	height: '100dvh',
 		// 	scale: 1,
@@ -1141,4 +1233,6 @@ function shuffle(array: number[]) {
 			return 'up-right'
 		}
 	}
+
+	// console.log(artworks)
 </script>
