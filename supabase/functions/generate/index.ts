@@ -124,13 +124,24 @@ Deno.serve(async (req) => {
 
   for (let i = 0; i < variants.length; i++) {
     const variant = variants[i];
+    const randomId = Math.random();
 
     await supabaseClient.storage
       .from("variants")
       // TODO: Change "1" to be the actual thought ID
-      .upload(`1/${Math.random()}.jpeg`, base64.toArrayBuffer(variant.image), {
+      .upload(`1/${randomId}.jpeg`, base64.toArrayBuffer(variant.image), {
         contentType: "image/jpeg",
       });
+
+    await supabaseClient.from("artworks").insert({
+      image_url: `${Deno.env.get(
+        "SUPABASE_URL"
+      )}/storage/v1/object/public/1/${randomId}.jpeg`,
+      artist_name: mainImage.artist_name,
+      is_main: false,
+      is_variant: true,
+      thought_id: 1,
+    });
   }
 
   return new Response(JSON.stringify({ main: mainImage }), {
