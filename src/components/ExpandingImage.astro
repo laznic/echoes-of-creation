@@ -1,10 +1,16 @@
 ---
 
+export interface Props {
+	image: string;
+}
+
+const { image } = Astro.props
+
 ---
-<div class="expanding-image fixed top-0 left-0 w-full h-[100dvh] z-10 grid content-center items-center">
+<div class="pointer-events-none expanding-image fixed top-0 left-0 w-full h-[100dvh] z-10 grid content-center items-center">
   <div class="pointer-events-none bg-neutral-100 absolute z-10 w-full h-full mix-blend-color-dodge backdrop-blur-lg top-0" style="mask: url(#hole);" />
   <div  class="pointer-events-none absolute z-10 w-full h-full mix-blend-color-dodge backdrop-blur-lg top-0 grid content-center items-center justify-center"  style="mask: url(#glow);">
-    <img src="https://picsum.photos/800/600" class="actual-expanding-image -z-10 h-full w-full object-cover self-center" />
+    <img src={image} alt="Main art piece" class="actual-expanding-image -z-10 h-full w-full object-cover self-center" />
   </div>
 
   <svg
