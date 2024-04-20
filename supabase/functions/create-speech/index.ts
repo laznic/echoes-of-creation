@@ -28,6 +28,7 @@ Deno.serve(async (req) => {
 
   const { thought_id = 1 } = await req.json();
 
+  // These should be the previous thoughts instead of hardcoded
   const texts = [
     "Ah, there it is—the spark of inspiration! That fleeting moment of clarity when an idea takes shape in my mind. It's exhilarating, like catching a glimpse of something magical.",
     "I can't wait to bring this idea to life! The possibilities seem endless, and my mind is buzzing with anticipation. This is why I love being an artist—the thrill of creation.",
