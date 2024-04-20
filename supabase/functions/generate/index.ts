@@ -24,6 +24,8 @@ Deno.serve(async (req) => {
     return new Response("ok", { headers: corsHeaders });
   }
 
+  supabaseClient.functions.invoke("create-speech", { body: { thought_id: 1 } });
+
   const allObjectIDsResponse = await fetch(
     "https://collectionapi.metmuseum.org/public/collection/v1/objects?departmentIds=11",
     {
