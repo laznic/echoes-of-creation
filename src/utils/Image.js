@@ -21,11 +21,12 @@ export class Image {
    * Constructor for the Image class. Initializes the instance, sets up DOM references, and binds events.
    * @param {HTMLElement} DOM_el - The main DOM element for the image, expected to have a child with class 'content__img-inner'.
    */
-  constructor(DOM_el) {
+  constructor(DOM_el, gsap) {
     // Assign the provided DOM element to the 'el' property of the 'DOM' object.
     this.DOM.el = DOM_el;
     // Find and assign the inner element (with class 'content__img-inner') to the 'inner' property of the 'DOM' object.
     this.DOM.inner = this.DOM.el.querySelector(".artwork-inner");
+    this.gsap = gsap;
 
     // Call the getRect method to calculate and store the size and position of the image element.
     this.getRect();
@@ -42,7 +43,7 @@ export class Image {
     // Define the resize method to reset image styles and recalculate its size and position on window resize.
     this.resize = () => {
       // Reset the image styles to default values using GSAP.
-      gsap.set(this.DOM.el, this.defaultStyle);
+      this.gsap?.set(this.DOM.el, this.defaultStyle);
 
       // Recalculate and update the size and position of the image element.
       this.getRect();

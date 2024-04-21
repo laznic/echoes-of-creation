@@ -44,19 +44,26 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 ---
 <Layout title="Home">
 	<main>
-		<header class="h-[100dvh] relative grid content-center">
+		<div class="intro h-[100dvh] relative grid content-center">
+			<div class="mx-auto max-w-[50vw] relative">
+				<h1 data-splitting class="text-6xl font-black leading-none">Echoes of Creation</h1>
+			</div>
+			<div class="pointer-events-none blurred w-[200vw] h-[200dvh] absolute z-100 bg-black/10"></div>
+
+			<button class="continue-button absolute py-4 px-8 bottom-24 left-0 right-0 w-fit mx-auto cursor-pointer z-50 transition-all hover:scale-110 hover:-translate-y-2">
+				Continue
+			</button>
+		</div>
+
+		<header class="h-[100dvh] relative grid content-center opacity-0">
 			<div class="mx-auto max-w-[50vw] z-50 relative">
-				<h1 data-splitting class="text-lg italic z-100 relative starting-title">
+				<h2 data-splitting class="text-lg italic z-100 relative starting-title">
 					Ah, there it is—<strong>the spark of inspiration</strong>!
 					<br />
 					<br />
 					That fleeting moment of clarity when an idea takes shape in my mind. It's exhilarating, like catching a glimpse of something magical.
-				</h1>
+				</h2>
 			</div>
-
-			<button class="continue-button absolute py-4 px-8 bottom-24 left-0 right-0 w-fit mx-auto cursor-pointer z-50 transition-all hover:scale-110 hover:-translate-y-2 mix-blend-difference">
-				Continue
-			</button>
 
 			{artworks.map((artwork) => (
 				<div class="artwork pointer-events-none z-10">
@@ -69,7 +76,7 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 
 		<div class="first h-[200dvh]"></div>
 
-		<div id="main-grid" class="w-[100vw] h-[200dvh] relative">
+		<div id="main-grid" class="w-[100vw] h-[200dvh] relative opacity-0">
 				{firstHalfArtworks.map((artwork) => (
 					<div class="absolute item-left rounded-md bg-white w-96 h-72 overflow-hidden">
 						<img src={artwork.image_url} alt={artwork.title} class="w-full h-full object-cover" />
@@ -158,7 +165,7 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 			</div>
 		</div>
 
-		<div class="main-images fixed top-0 left-0 w-full h-[100dvh] grid content-center items-center pointer-events-none">
+		<div class="main-images fixed top-0 left-0 w-full h-[100dvh] grid content-center items-center pointer-events-none opacity-0">
 			<img src="https://picsum.photos/800/600" class="main-image h-auto w-full absolute mx-auto max-w-fit left-0 right-0" />
 			<img src="https://picsum.photos/800/600" class="main-image h-auto w-full absolute mx-auto max-w-fit left-0 right-0" />
 			<img src="https://picsum.photos/800/600" class="main-image h-auto w-full absolute mx-auto max-w-fit left-0 right-0" />
@@ -266,6 +273,17 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 		left: calc( -1 * var(--img-offset-x) / 2 );
 	}
 
+	.intro {
+		/* background: radial-gradient(circle, rgba(126,56,119,1) 0%, rgba(173,104,139,1) 50%, rgba(244,156,193,1) 100%); */
+		background: radial-gradient(circle, rgba(10, 10, 10, 1) 0%, rgba(25,25,25,1) 50%, rgba(50,50,50,1) 100%);
+	}
+
+	.blurred {
+		--blur: 10px;
+		mask-image: radial-gradient(circle, rgba(0,0,0,0) 0%,  rgba(0,0,0,1) 50%);
+		filter: blur(var(--blur));
+		backdrop-filter: blur(var(--blur));
+	}
 
 </style>
 
@@ -294,6 +312,28 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 
 	gsap.ticker.lagSmoothing(0)
 	gsap.registerPlugin(ScrollTrigger)
+
+	
+	const intro = document.querySelector('.intro')
+		const introTitle = intro.querySelector('h1')
+		const introTitleChars = introTitle.querySelectorAll('.char')
+		introTitleChars.forEach(char => gsap.set(char.parentNode, { perspective: 1000 }));
+
+		gsap.fromTo(introTitleChars, {
+			'will-change': 'opacity transform filter',
+			opacity: 0,
+			filter: 'blur(50px)',
+			scale: 0
+		}, {
+			opacity: 1,
+			ease: 'circ.out',
+			scale: 1,
+			filter: 'blur(0px)',
+			stagger: 0.05,
+			delay: 1.5,
+			duration: 4
+		})
+
 
 	let mousePos, lastMousePos, cacheMousePos;
 	mousePos = { x: 0, y: 0 }; // current mouse position
@@ -326,6 +366,7 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 		cacheMousePos = { ...mousePos };
 		// Initiate the rendering loop.
 		requestAnimationFrame(() => tiltText());
+		requestAnimationFrame(() => moveBlur());
 		// Remove this mousemove event listener after it runs once to avoid reinitialization.
 		window.removeEventListener("mousemove", onPointerMoveEv);
 		window.removeEventListener("touchmove", onPointerMoveEv);
@@ -342,7 +383,7 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 		const tiltY = (mousePos.y - cacheMousePos.y) / 75;
 		// Apply the tilt effect to the text element.
 		gsap.set("h1", {
-			rotationY: tiltX * -1,
+			rotationY: tiltX,
 			rotationX: tiltY,
 			transformPerspective: 1000,
 			transformOrigin: "center",
@@ -351,448 +392,471 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 		requestAnimationFrame(() => tiltText());
 	}
 
+	function moveBlur(skip = false) {
+		if (!skip) {
+			gsap.to(".blurred", {
+				x: mousePos.x - (window.innerWidth * 2) / 2,
+				y: mousePos.y - (window.innerHeight * 2) / 2,
+				duration: 0.5,
+			});
+		}
+
+		requestAnimationFrame(() => {
+			let skip = false
+			
+			if (
+        mousePos.y + window.scrollY < intro.offsetTop ||
+        mousePos.y + window.scrollY > intro.offsetTop + intro.offsetHeight
+      ) {
+        skip = true;
+      }
+
+			moveBlur(skip)
+		});
+	}
+
 	preloadImages().then(() => {
     // Once all images are preloaded, remove the 'loading' class from the body element.
-    document.body.classList.remove('loading');
+    document.body.classList.remove('overflow-hidden');
     
     // Instantiate a new ImageTrail object, initializing it with the element that has the class 'content'.
     // The ImageTrail instance starts managing and animating the sequence of images within the specified element, reacting to mouse movements.
 		new ImageTrail(document.querySelector('header'), gsap)
-		
-	});
 
 		const timeline = gsap.timeline()
-	const firstSection = document.querySelector('.first-section')
-	const mainGrid = document.querySelector('#main-grid')
-	const second = document.querySelector('.second')
-	const third = document.querySelector('.third')
-	const items = mainGrid.querySelectorAll('.item-left')
-	const itemsRight = mainGrid.querySelectorAll('.item-right')
-	const title = document.querySelector('.what-the')
-	const chars = title.querySelectorAll('.char')
-	const startingTitle = document.querySelector('.starting-title')
-	const startingTitleChars = startingTitle.querySelectorAll('.char')
-	const startingTitleWords = startingTitle.querySelectorAll('.word')
+		const firstSection = document.querySelector('.first-section')
+		const mainGrid = document.querySelector('#main-grid')
+		const second = document.querySelector('.second')
+		const third = document.querySelector('.third')
+		const items = mainGrid.querySelectorAll('.item-left')
+		const itemsRight = mainGrid.querySelectorAll('.item-right')
+		const title = document.querySelector('.what-the')
+		const chars = title.querySelectorAll('.char')
+		const startingTitle = document.querySelector('.starting-title')
+		const startingTitleChars = startingTitle.querySelectorAll('.char')
 
-	chars.forEach(char => gsap.set(char.parentNode, { perspective: 1000 }));
-	items.forEach(item => gsap.set(item, { z: () => gsap.utils.random(-1, 1), scale: () => gsap.utils.random(1, 3) }))
-	itemsRight.forEach(item => gsap.set(item, { z: () => gsap.utils.random(-1, 1), scale: () => gsap.utils.random(1, 3) }))
-	gsap.set('.thought-blob', { yPercent: 50, scale: 0.5 })
-	// gsap.fromTo(startingTitleWords, {
-	// 	'will-change': 'opacity transform filter',
-	// 	opacity: 0,
-	// 	filter: 'blur(35px)',
-	// 	yPercent: 50
-	// }, {
-	// 	ease: 'circ.out',
-	// 	opacity: 1,
-	// 	filter: 'blur(0px)',
-	// 	yPercent: 0,
-	// 	stagger: 0.075,
-	// 	delay: 1.5,
-	// })
-	
-	gsap.fromTo(startingTitleChars, {
-		'will-change': 'opacity transform filter',
-		opacity: 0,
-		filter: 'blur(10px)',
-		yPercent: 50
-	}, {
-		ease: 'circ.out',
-		opacity: 1,
-		filter: 'blur(0px)',
-		yPercent: 0,
-		stagger: 0.025,
-		delay: 1.5,
-	})
+		chars.forEach(char => gsap.set(char.parentNode, { perspective: 1000 }));
+		items.forEach(item => gsap.set(item, { z: () => gsap.utils.random(-1, 1), scale: () => gsap.utils.random(1, 3) }))
+		itemsRight.forEach(item => gsap.set(item, { z: () => gsap.utils.random(-1, 1), scale: () => gsap.utils.random(1, 3) }))
+		gsap.set('.thought-blob', { yPercent: 50, scale: 0.5 })
+		// gsap.fromTo(startingTitleWords, {
+		// 	'will-change': 'opacity transform filter',
+		// 	opacity: 0,
+		// 	filter: 'blur(35px)',
+		// 	yPercent: 50
+		// }, {
+		// 	ease: 'circ.out',
+		// 	opacity: 1,
+		// 	filter: 'blur(0px)',
+		// 	yPercent: 0,
+		// 	stagger: 0.075,
+		// 	delay: 1.5,
+		// })
+		
+		gsap.fromTo(startingTitleChars, {
+			'will-change': 'opacity transform filter',
+			opacity: 0,
+			filter: 'blur(10px)',
+			yPercent: 50
+		}, {
+			ease: 'circ.out',
+			opacity: 1,
+			filter: 'blur(0px)',
+			yPercent: 0,
+			stagger: 0.025,
+			delay: 1.5,
+		})
 
-	gsap.fromTo('.continue-button', {
-		'will-change': 'opacity transform',
-		scale: 0.5,
-		opacity: 0,
-		yPercent: 50
-	}, {
-		scale: 1,
-		opacity: 1,
-		yPercent: 0,
-		delay: 3.5
-	})
+		gsap.fromTo('.continue-button', {
+			'will-change': 'opacity transform',
+			scale: 0.5,
+			opacity: 0,
+			yPercent: 50
+		}, {
+			scale: 1,
+			opacity: 1,
+			yPercent: 0,
+			delay: 3.5
+		})
 
-	gsap.fromTo('.thought-blob', {
-		'will-change': 'opacity transform',
-		opacity: 0,
-		yPercent: 50,
-	}, {
-		yPercent: 35,
-		opacity: 1,
-		delay: 5,
-		duration: 2,
-	})
-
-
-	timeline
-		.set(mainGrid, { perspective: 200, perspectiveOrigin: '57.5% 30%' })
-		.set('.thought-blob', { yPercent: 35, scale: 0.5 })
-		.set('.flash', { opacity: 0 })
-		.set('.second', { perspective: 1000 })
-		.set('.third', { perspective: 1000 })
-		.set('.fourth', { perspective: 1000 })
-		.set('.fifth', { perspective: 1000 })
-		.set('.sixth', { perspective: 1000 })
-		.set('.seventh', { perspective: 1000 })
-		.set('.bad-blob', { scale: 0 })
-		.set('.bad-blob-wrapper', { y: window.innerHeight })
-		.fromTo('.thought-blob', {
+		gsap.fromTo('.thought-blob', {
+			'will-change': 'opacity transform',
+			opacity: 0,
+			yPercent: 50,
+		}, {
 			yPercent: 35,
-			scale: 0.5
-		}, {
-			yPercent: 0,
-			scale: 1,
-			scrollTrigger: {
-				trigger: '.first',
-				scrub: true,
-				start: 'top center',
-				end: 'bottom-=50%',
-			}
-		})
-		.addLabel('start')
-		.fromTo(items, {
-			z: () => gsap.utils.random(20, -1),
-			x: () => gsap.utils.random(window.innerHeight * -2, window.innerHeight * -2 - 500),
-			y: () => gsap.utils.random(window.innerHeight * 2, -window.innerHeight),
-			filter: 'blur(30px)'
-		}, {
-			x: 0,
-			scale: 0,
-			z: -window.innerHeight,
-			y: 0,
-			filter: 'blur(0px)',
-			stagger: 0.02,
-			scrollTrigger: {
-				pin: mainGrid,
-				pinSpacing: false,
-				trigger: mainGrid,
-				scrub: true,
-				start: 'top top',
-				end: 'bottom center',
-			}
-		})
-		.fromTo(itemsRight, {
-			z: () => gsap.utils.random(20, -1),
-			x: () => gsap.utils.random(window.innerWidth * 2, window.innerWidth * 2 + 500),
-			y: () => gsap.utils.random(window.innerHeight * 2, -window.innerHeight),
-			filter: 'blur(30px)'
-		}, {
-			x: 0,
-			scale: 0,
-			z: -window.innerHeight,
-			y: 0,
-			filter: 'blur(0px)',
-			stagger: 0.02,
-			scrollTrigger: {
-				pinSpacing: false,
-				trigger: mainGrid,
-				scrub: true,
-				start: 'top top',
-				end: 'bottom center',
-			}
-		})
-		.fromTo('.blob-circle', {
-			r: 10,
-		}, {
-			r: 0,
-			scrollTrigger: {
-				trigger: mainGrid,
-				pinSpacing: false,
-				scrub: true,
-				start: (self) => self.previous().end,
-				end: 'bottom-=5%',
-			}
-		})
-		.fromTo('.flash', 
-		{
-			opacity: 0
-		},
-		{
-			opacity: 0.5,
-			scrollTrigger: {
-				trigger: '.flash-container',
-				pinSpacing: false,
-				scrub: true,
-				start: (self) => self.previous().end,
-				end: 'bottom-=150%',
-			}
-		})
-		.fromTo('.flash', 
-		{
-			opacity: 0.5
-		},
-		{
-			opacity: 0,
-			scrollTrigger: {
-				trigger: '.flash-container',
-				pinSpacing: false,
-				scrub: true,
-				start: (self) => self.previous().end,
-				end: 'bottom+=1000%',
-			}
-		})
-		.fromTo('.actual-expanding-image', {
-			filter: 'blur(20px)',
-			scale: 5,
-			// y: window.innerHeight * -1.5,
-			// transformOrigin: 'center center'
-		}, {
-			scale: 1,
-			filter: 'blur(0px)',
-			scrollTrigger: {
-				pin: second,
-				trigger: second,
-				scrub: true,
-				start: 'top top',
-				end: 'bottom-=50%',
-			}
-		})
-		.fromTo('.glow-circle', {
-			r: 0,
-			cx: window.innerWidth / 2,
-			cy: window.innerHeight / 2,
-		}, {
-			r: window.innerWidth,
-			scrollTrigger: {
-				pinSpacing: false,
-				trigger: second,
-				scrub: true,
-				start: 'top top',
-				end: 'bottom-=50%',
-			}
-		})
-		.fromTo('.hole-circle', {
-			r: 0,
-			cx: window.innerWidth / 2,
-			cy: window.innerHeight / 2,
-		}, {
-			r: window.innerWidth,
-			scrollTrigger: {
-				trigger: second,
-				pinSpacing: false,
-				scrub: true,
-				start: 'top top',
-				end: 'bottom-=50%',
-			}
-		})
-		.fromTo('.hole-circle', {
-			r: 0,
-		}, {
-			r: window.innerWidth,
-			scrollTrigger: {
-				pin: false,
-				trigger: second,
-				pinSpacing: false,
-				scrub: true,
-				start: 'top top',
-				end: 'bottom-=50%',
-			}
-		})
-		.fromTo('.hole-circle', {
 			opacity: 1,
-		}, {
-			opacity: 0,
-			scrollTrigger: {
-				trigger: second,
-				pinSpacing: true,
-				scrub: true,
-				start: (self) => self.previous().end,
-				end: (self) => self.previous().end,
-			}
+			delay: 5,
+			duration: 2,
 		})
-		.fromTo('.expanding-image', {
-			scale: 1,
-		}, {
-			scale: 0.9,
-			scrollTrigger: {
-				pin: third,
-				trigger: third,
-				scrub: true,
-				start: 'top bottom',
-				end: 'bottom',
-			}
-		})
-		.fromTo('.main-image', {
-			opacity: 0,
-			scale: 0,
-			yPercent: (index) => {
-				const position = index % 3
-
-				if (index === 3) {
-					return 0
-				}
-
-				if (index === 7) {
-					return -75
-				}
-
-				if (index < 3) {
-					if (position === 1) return -75
-					if (position === 0) return 75
-
-					return 0
-				}
-
-				if (position === 1) return 75
-				if (position === 0) return -75
-				return 75
-
-			},
-			xPercent: (index) => {
-				const position = index % 3
-
-				if (index === 3) {
-					return -75
-				}
-
-				if (index === 7) {
-					return 75
-				}
-
-				if (index < 3) {
-					if (position === 1) return -75
-					if (position === 0) return 0
-					return 75
-				}
 
 
-				if (position === 1) return -75
-				if (position === 0) return 0
-				return 75
-			},
-		}, {
-			opacity: 1,
-			scale: 0.75,
-			stagger: 0.2,
-			scrollTrigger: {
-				pin: '.fourth',
-				trigger: '.fourth',
-				scrub: true,
-				start: 'top top',
-				end: 'bottom-=50%',
-			}
-		})
-		.fromTo('.bad-blob', {
-			scale: 0,
-		}, {
-			scale: 2.5,
-			stagger: 0.05,
-			scrollTrigger: {
-				pin: '.fifth',
-				trigger: '.fifth',
-				scrub: true,
-				start: 'top top',
-				end: 'bottom+=100%',
-			}
-		})
-		.fromTo('.bad-blob-wrapper', {
-			y: window.innerHeight,
-			x: 'random(200, 800)'
-		}, {
-			y: 'random(200, 500)',
-			stagger: 0.5,
-			scrollTrigger: {
-				trigger: '.fifth',
-				scrub: true,
-				start: 'top top',
-				end: 'bottom+=100%',
-			}
-		})
-		.fromTo('.expanding-image', {
-			yPercent: 0,
-		}, {
-			yPercent: -110,
-			scrollTrigger: {
-				trigger: '.sixth',
-				scrub: true,
-				start: 'top bottom',
-				end: 'bottom-=70%'
-			}
-		})
-		.fromTo('.main-images', {
-			yPercent: 0,
-		}, {
-			yPercent: -110,
-			scrollTrigger: {
-				trigger: '.sixth',
-				scrub: true,
-				start: 'top bottom',
-				end: 'bottom-=70%',
-			}
-		})
-		.fromTo(title, {
-				'will-change': 'transform',
-				xPercent: 30
+		timeline
+			.set(mainGrid, { perspective: 200, perspectiveOrigin: '57.5% 30%' })
+			.set('.thought-blob', { yPercent: 35, scale: 0.5 })
+			.set('.flash', { opacity: 0 })
+			.set('.second', { perspective: 1000 })
+			.set('.third', { perspective: 1000 })
+			.set('.fourth', { perspective: 1000 })
+			.set('.fifth', { perspective: 1000 })
+			.set('.sixth', { perspective: 1000 })
+			.set('.seventh', { perspective: 1000 })
+			.set('.bad-blob', { scale: 0 })
+			.set('.bad-blob-wrapper', { y: window.innerHeight })
+			.fromTo('.thought-blob', {
+				yPercent: 35,
+				scale: 0.5
 			}, {
-				ease: 'none',
-				xPercent: -10,
+				yPercent: 0,
+				scale: 1,
 				scrollTrigger: {
-					trigger: '.seventh',
-					// markers: true,
+					trigger: '.first',
 					scrub: true,
-					start: 'top bottom',
+					start: 'top center',
 					end: 'bottom-=50%',
 				}
 			})
-			.fromTo(chars, {
-				'will-change': 'opacity, transform', 
-				transformOrigin: '50% 50% -50px',
-				rotationZ: 0,
-				rotationX: 0,
-				opacity: 1,
-			},
-			{
-				ease: 'expo.inOut',
-				rotationZ: -120,
-				rotationX: 120,
-				opacity: 0,
-				stagger: 0.0375,
-				scrollTrigger: {
-					trigger: '.seventh',
-					// markers: true,
-					start: 'top bottom',
-					end: 'bottom-=75%',
-					scrub: true,
-				}
-      })
-			.fromTo('.black-hole-circle', {
-				r: 50,
-			},
-			{
-				r: 200,
-				scrollTrigger: {
-					trigger: '.seventh',
-					// markers: true,
-					start: 'top bottom',
-					end: 'bottom-=75%',
-					scrub: true,
-				}
-      })
-			.fromTo('.black-hole-wrapper', {
+			.addLabel('start')
+			.fromTo(items, {
+				z: () => gsap.utils.random(20, -1),
+				x: () => gsap.utils.random(window.innerHeight * -2, window.innerHeight * -2 - 500),
+				y: () => gsap.utils.random(window.innerHeight * 2, -window.innerHeight),
+				filter: 'blur(30px)'
+			}, {
+				x: 0,
 				scale: 0,
-				rotateY: 20,
-				rotateX: 10,
-				xPercent: 0
+				z: -window.innerHeight,
+				y: 0,
+				filter: 'blur(0px)',
+				stagger: 0.02,
+				scrollTrigger: {
+					pin: mainGrid,
+					pinSpacing: false,
+					trigger: mainGrid,
+					scrub: true,
+					start: 'top top',
+					end: 'bottom center',
+				}
+			})
+			.fromTo(itemsRight, {
+				z: () => gsap.utils.random(20, -1),
+				x: () => gsap.utils.random(window.innerWidth * 2, window.innerWidth * 2 + 500),
+				y: () => gsap.utils.random(window.innerHeight * 2, -window.innerHeight),
+				filter: 'blur(30px)'
+			}, {
+				x: 0,
+				scale: 0,
+				z: -window.innerHeight,
+				y: 0,
+				filter: 'blur(0px)',
+				stagger: 0.02,
+				scrollTrigger: {
+					pinSpacing: false,
+					trigger: mainGrid,
+					scrub: true,
+					start: 'top top',
+					end: 'bottom center',
+				}
+			})
+			.fromTo('.blob-circle', {
+				r: 10,
+			}, {
+				r: 0,
+				scrollTrigger: {
+					trigger: mainGrid,
+					pinSpacing: false,
+					scrub: true,
+					start: (self) => self.previous().end,
+					end: 'bottom-=5%',
+				}
+			})
+			.fromTo('.flash', 
+			{
+				opacity: 0
 			},
 			{
-				scale: 1,
-				rotateY: 90,
-				rotateX: 40,
-				xPercent: 20,
+				opacity: 0.5,
 				scrollTrigger: {
-					trigger: '.seventh',
-					// markers: true,
-					start: 'top bottom',
-					end: 'bottom-=75%',
+					trigger: '.flash-container',
+					pinSpacing: false,
 					scrub: true,
+					start: (self) => self.previous().end,
+					end: 'bottom-=150%',
 				}
-      })
+			})
+			.fromTo('.flash', 
+			{
+				opacity: 0.5
+			},
+			{
+				opacity: 0,
+				scrollTrigger: {
+					trigger: '.flash-container',
+					pinSpacing: false,
+					scrub: true,
+					start: (self) => self.previous().end,
+					end: 'bottom+=1000%',
+				}
+			})
+			.fromTo('.actual-expanding-image', {
+				filter: 'blur(20px)',
+				scale: 5,
+				// y: window.innerHeight * -1.5,
+				// transformOrigin: 'center center'
+			}, {
+				scale: 1,
+				filter: 'blur(0px)',
+				scrollTrigger: {
+					pin: second,
+					trigger: second,
+					scrub: true,
+					start: 'top top',
+					end: 'bottom-=50%',
+				}
+			})
+			.fromTo('.glow-circle', {
+				r: 0,
+				cx: window.innerWidth / 2,
+				cy: window.innerHeight / 2,
+			}, {
+				r: window.innerWidth,
+				scrollTrigger: {
+					pinSpacing: false,
+					trigger: second,
+					scrub: true,
+					start: 'top top',
+					end: 'bottom-=50%',
+				}
+			})
+			.fromTo('.hole-circle', {
+				r: 0,
+				cx: window.innerWidth / 2,
+				cy: window.innerHeight / 2,
+			}, {
+				r: window.innerWidth,
+				scrollTrigger: {
+					trigger: second,
+					pinSpacing: false,
+					scrub: true,
+					start: 'top top',
+					end: 'bottom-=50%',
+				}
+			})
+			.fromTo('.hole-circle', {
+				r: 0,
+			}, {
+				r: window.innerWidth,
+				scrollTrigger: {
+					pin: false,
+					trigger: second,
+					pinSpacing: false,
+					scrub: true,
+					start: 'top top',
+					end: 'bottom-=50%',
+				}
+			})
+			.fromTo('.hole-circle', {
+				opacity: 1,
+			}, {
+				opacity: 0,
+				scrollTrigger: {
+					trigger: second,
+					pinSpacing: true,
+					scrub: true,
+					start: (self) => self.previous().end,
+					end: (self) => self.previous().end,
+				}
+			})
+			.fromTo('.expanding-image', {
+				scale: 1,
+			}, {
+				scale: 0.9,
+				scrollTrigger: {
+					pin: third,
+					trigger: third,
+					scrub: true,
+					start: 'top bottom',
+					end: 'bottom',
+				}
+			})
+			.fromTo('.main-image', {
+				opacity: 0,
+				scale: 0,
+				yPercent: (index) => {
+					const position = index % 3
+
+					if (index === 3) {
+						return 0
+					}
+
+					if (index === 7) {
+						return -75
+					}
+
+					if (index < 3) {
+						if (position === 1) return -75
+						if (position === 0) return 75
+
+						return 0
+					}
+
+					if (position === 1) return 75
+					if (position === 0) return -75
+					return 75
+
+				},
+				xPercent: (index) => {
+					const position = index % 3
+
+					if (index === 3) {
+						return -75
+					}
+
+					if (index === 7) {
+						return 75
+					}
+
+					if (index < 3) {
+						if (position === 1) return -75
+						if (position === 0) return 0
+						return 75
+					}
+
+
+					if (position === 1) return -75
+					if (position === 0) return 0
+					return 75
+				},
+			}, {
+				opacity: 1,
+				scale: 0.75,
+				stagger: 0.2,
+				scrollTrigger: {
+					pin: '.fourth',
+					trigger: '.fourth',
+					scrub: true,
+					start: 'top top',
+					end: 'bottom-=50%',
+				}
+			})
+			.fromTo('.bad-blob', {
+				scale: 0,
+			}, {
+				scale: 2.5,
+				stagger: 0.05,
+				scrollTrigger: {
+					pin: '.fifth',
+					trigger: '.fifth',
+					scrub: true,
+					start: 'top top',
+					end: 'bottom+=100%',
+				}
+			})
+			.fromTo('.bad-blob-wrapper', {
+				y: window.innerHeight,
+				x: 'random(200, 800)'
+			}, {
+				y: 'random(200, 500)',
+				stagger: 0.5,
+				scrollTrigger: {
+					trigger: '.fifth',
+					scrub: true,
+					start: 'top top',
+					end: 'bottom+=100%',
+				}
+			})
+			.fromTo('.expanding-image', {
+				yPercent: 0,
+			}, {
+				yPercent: -110,
+				scrollTrigger: {
+					trigger: '.sixth',
+					scrub: true,
+					start: 'top bottom',
+					end: 'bottom-=70%'
+				}
+			})
+			.fromTo('.main-images', {
+				yPercent: 0,
+			}, {
+				yPercent: -110,
+				scrollTrigger: {
+					trigger: '.sixth',
+					scrub: true,
+					start: 'top bottom',
+					end: 'bottom-=70%',
+				}
+			})
+			.fromTo(title, {
+					'will-change': 'transform',
+					xPercent: 30
+				}, {
+					ease: 'none',
+					xPercent: -10,
+					scrollTrigger: {
+						trigger: '.seventh',
+						// markers: true,
+						scrub: true,
+						start: 'top bottom',
+						end: 'bottom-=50%',
+					}
+				})
+				.fromTo(chars, {
+					'will-change': 'opacity, transform', 
+					transformOrigin: '50% 50% -50px',
+					rotationZ: 0,
+					rotationX: 0,
+					opacity: 1,
+				},
+				{
+					ease: 'expo.inOut',
+					rotationZ: -120,
+					rotationX: 120,
+					opacity: 0,
+					stagger: 0.0375,
+					scrollTrigger: {
+						trigger: '.seventh',
+						// markers: true,
+						start: 'top bottom',
+						end: 'bottom-=75%',
+						scrub: true,
+					}
+				})
+				.fromTo('.black-hole-circle', {
+					r: 50,
+				},
+				{
+					r: 200,
+					scrollTrigger: {
+						trigger: '.seventh',
+						// markers: true,
+						start: 'top bottom',
+						end: 'bottom-=75%',
+						scrub: true,
+					}
+				})
+				.fromTo('.black-hole-wrapper', {
+					scale: 0,
+					rotateY: 20,
+					rotateX: 10,
+					xPercent: 0
+				},
+				{
+					scale: 1,
+					rotateY: 90,
+					rotateX: 40,
+					xPercent: 20,
+					scrollTrigger: {
+						trigger: '.seventh',
+						// markers: true,
+						start: 'top bottom',
+						end: 'bottom-=75%',
+						scrub: true,
+					}
+				})
+	});
+
+		
 
 
 

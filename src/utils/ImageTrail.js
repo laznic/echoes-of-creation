@@ -48,7 +48,7 @@ export class ImageTrail {
 
     // Create and store Image objects for each image element found within the parent DOM element.
     this.images = [...this.DOM.el.querySelectorAll(".artwork")].map(
-      (img) => new Image(img)
+      (img) => new Image(img, gsap)
     );
 
     // Store the total number of images.
