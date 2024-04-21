@@ -97,11 +97,13 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 
 		<div class="third h-[200dvh]"></div>
 
+		<div class="fourth h-[100dvh]"></div>
+
 <!-- 		
 
 
 
-		<div class="fourth h-[100dvh]"></div>
+
 
 		<div class="fifth h-[150dvh] z-20"></div>
 
@@ -806,17 +808,16 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 					end: (self) => self.previous().end,
 				}
 			})
-			// .fromTo('.main-image-title', {
-			// 	opacity: 0,
-			// }, {
-			// 	opacity: 1,
-			// 	scrollTrigger: {
-			// 		trigger: third,
-			// 		scrub: true,
-			// 		start: 'top bottom',
-			// 		end: 'bottom',
-			// 	}
-			// })
+			.fromTo('.main-image-title', {
+				opacity: 0,
+			}, {
+				opacity: 1,
+				scrollTrigger: {
+					start: 'top bottom',
+					end: 'bottom',
+					trigger: '.satisfaction'
+				}
+			})
 			.add(() => {
 				gsap.fromTo(satisfactionTextChars, {
 					'will-change': 'opacity transform filter',
@@ -892,7 +893,6 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 				stagger: 0.2,
 				scrollTrigger: {
 					pin: '.third',
-					markers: true,
 					trigger: '.third',
 					scrub: true,
 					start: 'top+=100% top',
@@ -994,39 +994,39 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 				},
 				filter: 'blur(0px)',
 				scrollTrigger: {
-					trigger: '.third',
+					trigger: '.fourth',
 					scrub: true,
-					start: 'top+=100% top',
-					end: 'bottom+=100%',
+					start: 'top top',
+					end: 'bottom',
 				}
 			})
-			// .fromTo('.actual-expanding-image', {
-			// 	opacity: 1,
-			// 	y: 0
-			// }, {
-			// 	y: 10,
-			// 	scrollTrigger: {
-			// 		trigger: '.fifth',
-			// 		scrub: true,
-			// 		start: 'top top',
-			// 		end: 'bottom',
-			// 	}
-			// })
-			// .fromTo('.expanding-image-wrapper', {
-			// 	scale: 1,
-			// 	opacity: 1,
-			// 	filter: 'blur(0px)',
-			// }, {
-			// 	scale: 0.75,
-			// 	opacity: 0.1,
-			// 	filter: 'blur(5px)',
-			// 	scrollTrigger: {
-			// 		trigger: '.fifth',
-			// 		scrub: true,
-			// 		start: 'top top',
-			// 		end: 'bottom',
-			// 	}
-			// })
+			.fromTo('.actual-expanding-image', {
+				opacity: 1,
+				y: 0
+			}, {
+				y: 10,
+				scrollTrigger: {
+					trigger: '.fourth',
+					scrub: true,
+					start: 'top top',
+					end: 'bottom',
+				}
+			})
+			.fromTo('.expanding-image-wrapper', {
+				scale: 1,
+				opacity: 1,
+				filter: 'blur(0px)',
+			}, {
+				scale: 0.75,
+				opacity: 0.1,
+				filter: 'blur(5px)',
+				scrollTrigger: {
+					trigger: '.fourth',
+					scrub: true,
+					start: 'top top',
+					end: 'bottom',
+				}
+			})
 			// .fromTo('.expanding-image', {
 			// 	yPercent: 0,
 			// }, {
