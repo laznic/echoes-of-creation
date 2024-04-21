@@ -54,7 +54,7 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 			))}
 		</header>
 
-		<div class="first h-[100dvh] grid justify-end">
+		<div class="first h-[200dvh] grid justify-end">
 			<div class="mx-auto max-w-[25vw] z-50 relative mr-24">
 				<h2>
 					FLOW
@@ -82,7 +82,7 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 			 <div class="flash w-full h-full fixed top-0 bg-white opacity-0"></div>
 		</div>
 
-		<div class="second h-[100dvh]"></div>
+		<div class="second h-[200dvh]"></div>
 
 		<div class="satisfaction h-[200dvh] grid justify-start">
 			<div class="mx-auto max-w-[25vw] z-50 relative ml-24">
@@ -100,25 +100,6 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 		<div class="fourth h-[100dvh]"></div>
 
 		<div class="bad-thoughts h-[200dvh]"></div>
-
-		<div class="fixed top-0 h-[100dvh] w-full z-50">
-			<BadBlob text="Why is this happening? Who created this technology? They're taking away the essence of what it means to be an artist. Years of dedication, practice, and now it feels like it's all for nothing. I won't stand for it." />
-			<BadBlob text="What does this mean for me? Will I become obsolete? Will people prefer AI-generated art over mine? How will I survive? The uncertainty is terrifying. I can't lose my identity as an artist." />
-			<BadBlob text="What is this? AI that paints like me? How can that be? It's like my skills are being copied, replicated effortlessly. Is my art not unique anymore?" />
-		</div>
-
-
-<!-- 		
-
-
-
-
-
-		<div class="fifth h-[150dvh] z-20"></div>
-
-		<div class="sixth h-[100dvh] z-50"></div>
-
-
 
 		<div class="stacked-variants h-[200dvh] z-50 grid grid-cols-8">
 			<div class="stacked-variant-image z-[8] h-auto w-full mx-auto max-w-fit">
@@ -146,6 +127,20 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 				<img src="https://picsum.photos/480/620" />
 			</div>
 		</div>
+
+<!-- 		
+
+
+
+
+
+		<div class="fifth h-[150dvh] z-20"></div>
+
+		<div class="sixth h-[100dvh] z-50"></div>
+
+
+
+
 
 		<div class="seventh h-[400dvh]">
 			<div class="relative">
@@ -210,6 +205,12 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 
 			</div>
 		</div> -->
+
+		<div class="fixed top-0 h-[100dvh] w-full z-50 bad-blobs">
+			<BadBlob text="Why is this happening? Who created this technology? They're taking away the essence of what it means to be an artist. Years of dedication, practice, and now it feels like it's all for nothing. I won't stand for it." />
+			<BadBlob text="What does this mean for me? Will I become obsolete? Will people prefer AI-generated art over mine? How will I survive? The uncertainty is terrifying. I can't lose my identity as an artist." />
+			<BadBlob text="What is this? AI that paints like me? How can that be? It's like my skills are being copied, replicated effortlessly. Is my art not unique anymore?" />
+		</div>
 
 		<div class="main-images fixed top-0 left-0 w-full h-[100dvh] grid content-center items-center pointer-events-none">
 			<div class="main-image z-[100] h-auto w-full absolute mx-auto max-w-fit left-0 right-0 border-4 border-black">
@@ -690,8 +691,8 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 				stagger: 0.02,
 				scrollTrigger: {
 					pin: mainGrid,
-					trigger: mainGrid,
 					scrub: true,
+					trigger: mainGrid,
 					start: 'top top',
 					end: 'bottom center',
 				}
@@ -819,6 +820,7 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 				opacity: 1,
 				scrollTrigger: {
 					start: 'top bottom',
+					scrub: true,
 					end: 'bottom',
 					trigger: '.satisfaction'
 				}
@@ -1061,32 +1063,43 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 				y: 0,
 				stagger: 0.1,
 				scrollTrigger: {
-					markers: true,
 					trigger: '.bad-thoughts',
 					scrub: true,
 					start: 'top top',
 					end: 'bottom+=100%'
 				}
 			})
-			// .fromTo('.stacked-variant-image', {
-			// 	xPercent: (index) => -100 * index,
-			// 	rotateY: 0,
-			// 	rotateX: 0,
-			// 	rotateZ: 0,
-			// 	yPercent: 0
-			// }, {
-			// 	xPercent: (index) => 90 * index,
-			// 	rotateY: (index) => 10 * index,
-			// 	rotateX: (index) => -10 * index,
-			// 	rotateZ: (index) => 5 * index,
-			// 	yPercent: (index) => 5 * index,
-			// 	scrollTrigger: {
-			// 		trigger: '.stacked-variants',
-			// 		scrub: true,
-			// 		start: 'top bottom',
-			// 		end: 'bottom+=10%',
-			// 	}
-			// })
+			.fromTo('.bad-blobs', {
+				y: 0,
+			}, {
+				y: -window.innerHeight,
+				scrollTrigger: {
+					trigger: '.bad-thoughts',
+					scrub: true,
+					start: 'bottom+=200% top',
+					end: 'bottom+=300%',
+				}
+			})
+			.fromTo('.stacked-variant-image', {
+				xPercent: (index) => -100 * index,
+				rotateY: 0,
+				rotateX: 0,
+				rotateZ: 0,
+				yPercent: 0
+			}, {
+				xPercent: (index) => 90 * index,
+				rotateY: (index) => 10 * index,
+				rotateX: (index) => -10 * index,
+				rotateZ: (index) => 5 * index,
+				yPercent: (index) => 5 * index,
+				scrollTrigger: {
+					markers: true,
+					trigger: '.bad-thoughts',
+					scrub: true,
+					start: 'bottom+=210% top',
+					end: 'bottom+=350%',
+				}
+			})
 			// .fromTo(title, {
 			// 		'will-change': 'transform',
 			// 		xPercent: 30
