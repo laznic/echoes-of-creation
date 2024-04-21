@@ -65,8 +65,8 @@ Deno.serve(async (req) => {
         VoiceId: voice,
         Bitrate: "192k",
         Speed: "0",
-        Pitch: voice === "Dan" || voice === "Will" ? "0.92" : "1.0",
-        TimestampType: "sentence",
+        Pitch: voice === "Dan" || voice === "Will" ? "0.96" : "1.0",
+        TimestampType: "word",
       }),
     };
 
@@ -77,6 +77,16 @@ Deno.serve(async (req) => {
 
     const voiceResponseJson = await voiceResponse.json();
     const blob = await fetch(voiceResponseJson.OutputUri).then((r) => r.blob());
+    const jsonBlob = await fetch(voiceResponseJson.TimestampsUri).then((r) =>
+      r.blob()
+    );
+
+    await supabaseClient.storage
+      .from("speeches")
+      // TODO: Change "1" to be the actual thought ID
+      .upload(`${thought_id}/${i}.json`, jsonBlob, {
+        contentType: "application/json",
+      });
 
     await supabaseClient.storage
       .from("speeches")

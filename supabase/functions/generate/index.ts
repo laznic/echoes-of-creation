@@ -66,6 +66,7 @@ Deno.serve(async (req) => {
     listOfArtworks.push({
       image_url: artwork.primaryImageSmall,
       artist_name: artwork.artistDisplayName,
+      title: artwork.title,
       is_main: listOfArtworks.length === 0,
       is_variant: false,
       // TODO: Change "1" to be the actual thought ID
