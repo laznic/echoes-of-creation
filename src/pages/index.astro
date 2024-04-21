@@ -78,8 +78,8 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 			))}
 		</div>
 		
-		<div class="flash-container h-12 opacity-0">
-			 <div class="flash w-full h-[100dvh] fixed top-0 bg-white opacity-0"></div>
+		<div class="flash-container h-[100dvh] opacity-0">
+			 <div class="flash w-full h-full fixed top-0 bg-white opacity-0"></div>
 		</div>
 
 		<div class="second h-[100dvh]"></div>
@@ -99,6 +99,15 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 
 		<div class="fourth h-[100dvh]"></div>
 
+		<div class="bad-thoughts h-[200dvh]"></div>
+
+		<div class="fixed top-0 h-[100dvh] w-full z-50">
+			<BadBlob text="Why is this happening? Who created this technology? They're taking away the essence of what it means to be an artist. Years of dedication, practice, and now it feels like it's all for nothing. I won't stand for it." />
+			<BadBlob text="What does this mean for me? Will I become obsolete? Will people prefer AI-generated art over mine? How will I survive? The uncertainty is terrifying. I can't lose my identity as an artist." />
+			<BadBlob text="What is this? AI that paints like me? How can that be? It's like my skills are being copied, replicated effortlessly. Is my art not unique anymore?" />
+		</div>
+
+
 <!-- 		
 
 
@@ -109,11 +118,7 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 
 		<div class="sixth h-[100dvh] z-50"></div>
 
-		<div class="bad-thoughts h-[200dvh] z-50">
-			<BadBlob text="Why is this happening? Who created this technology? They're taking away the essence of what it means to be an artist. Years of dedication, practice, and now it feels like it's all for nothing. I won't stand for it." />
-			<BadBlob text="What does this mean for me? Will I become obsolete? Will people prefer AI-generated art over mine? How will I survive? The uncertainty is terrifying. I can't lose my identity as an artist." />
-			<BadBlob text="What is this? AI that paints like me? How can that be? It's like my skills are being copied, replicated effortlessly. Is my art not unique anymore?" />
-		</div>
+
 
 		<div class="stacked-variants h-[200dvh] z-50 grid grid-cols-8">
 			<div class="stacked-variant-image z-[8] h-auto w-full mx-auto max-w-fit">
@@ -634,8 +639,8 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 		gsap.set('.fifth', { perspective: 1000 })
 		gsap.set('.sixth', { perspective: 1000 })
 		gsap.set('.seventh', { perspective: 1000 })
-		gsap.set('.bad-blob', { scale: 0 })
-		gsap.set('.bad-blob-wrapper', { y: window.innerHeight })
+		// gsap.set('.bad-blob', { scale: 0 })
+		// gsap.set('.bad-blob-wrapper', { y: window.innerHeight })
 
 		timeline
 			.add(() => {
@@ -1027,53 +1032,42 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 					end: 'bottom',
 				}
 			})
-			// .fromTo('.expanding-image', {
-			// 	yPercent: 0,
-			// }, {
-			// 	yPercent: -125,
-			// 	scrollTrigger: {
-			// 		trigger: '.bad-thoughts',
-			// 		scrub: true,
-			// 		start: 'top top',
-			// 		end: 'bottom+=100%'
-			// 	}
-			// })
-			// .fromTo('.main-images', {
-			// 	yPercent: 0,
-			// }, {
-			// 	yPercent: -125,
-			// 	scrollTrigger: {
-			// 		trigger: '.bad-thoughts',
-			// 		scrub: true,
-			// 		start: 'top top',
-			// 		end: 'bottom+=100%',
-			// 	}
-			// })
-			// .fromTo('.bad-blob', {
-			// 	scale: 0,
-			// }, {
-			// 	scale: 2.5,
-			// 	stagger: 0.5,
-			// 	scrollTrigger: {
-			// 		trigger: '.bad-thoughts',
-			// 		scrub: true,
-			// 		start: 'top top',
-			// 		end: 'bottom+=100%'
-			// 	}
-			// })
-			// .fromTo('.bad-blob-wrapper', {
-			// 	y: window.innerHeight,
-			// 	x: 'random(200, 800)'
-			// }, {
-			// 	y: 'random(200, 500)',
-			// 	stagger: 0.5,
-			// 	scrollTrigger: {
-			// 		trigger: '.bad-thoughts',
-			// 		scrub: true,
-			// 		start: 'top top',
-			// 		end: 'bottom+=100%'
-			// 	}
-			// })
+			.fromTo('.expanding-image', {
+				yPercent: 0,
+			}, {
+				yPercent: -125,
+				scrollTrigger: {
+					trigger: '.bad-thoughts',
+					scrub: true,
+					start: 'top top',
+					end: 'bottom+=100%'
+				}
+			})
+			.fromTo('.main-images', {
+				yPercent: 0,
+			}, {
+				yPercent: -125,
+				scrollTrigger: {
+					trigger: '.bad-thoughts',
+					scrub: true,
+					start: 'top top',
+					end: 'bottom+=100%',
+				}
+			})
+			.fromTo('.bad-blob-wrapper', {
+				y: window.innerHeight,
+				x: () => gsap.utils.random(window.innerWidth * 0.25, window.innerWidth * 0.75),
+			}, {
+				y: 0,
+				stagger: 0.1,
+				scrollTrigger: {
+					markers: true,
+					trigger: '.bad-thoughts',
+					scrub: true,
+					start: 'top top',
+					end: 'bottom+=100%'
+				}
+			})
 			// .fromTo('.stacked-variant-image', {
 			// 	xPercent: (index) => -100 * index,
 			// 	rotateY: 0,
