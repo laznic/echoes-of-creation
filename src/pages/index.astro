@@ -94,9 +94,12 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 				</p>
 			</div>
 		</div>
+
+		<div class="third h-[200dvh]"></div>
+
 <!-- 		
 
-		<div class="third h-[150dvh]"></div>
+
 
 		<div class="fourth h-[100dvh]"></div>
 
@@ -201,7 +204,7 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 			</div>
 		</div> -->
 
-		<!-- <div class="main-images fixed top-0 left-0 w-full h-[100dvh] grid content-center items-center pointer-events-none">
+		<div class="main-images fixed top-0 left-0 w-full h-[100dvh] grid content-center items-center pointer-events-none">
 			<div class="main-image z-[100] h-auto w-full absolute mx-auto max-w-fit left-0 right-0 border-4 border-black">
 				<img src="https://picsum.photos/480/620" />
 			</div>
@@ -269,7 +272,7 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 					</feMorphology>
 				</filter>
 			</svg>
-		</div> -->
+		</div>
 
 		<ThoughtBlob />
 		<ExpandingImage image={mainImage.image_url} title={mainImage.title} />
@@ -829,172 +832,174 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 					scrollTrigger: {
 						pin: '.satisfaction',
 						start: 'top center',
-						end: 'bottom+=100%',
+						end: 'bottom',
 						trigger: '.satisfaction'
 					}
 				})
 			})
-			// .fromTo('.main-image', {
-			// 	opacity: 0,
-			// 	scale: 0,
-			// 	filter: 'blur(25px)',
-			// 	yPercent: (index) => {
-			// 		const position = index % 3
+			.fromTo('.main-image', {
+				opacity: 0,
+				scale: 0,
+				filter: 'blur(25px)',
+				yPercent: (index) => {
+					const position = index % 3
 
-			// 		if (index === 3) {
-			// 			return 0
-			// 		}
+					if (index === 3) {
+						return 0
+					}
 
-			// 		if (index === 7) {
-			// 			return -125
-			// 		}
+					if (index === 7) {
+						return -125
+					}
 
-			// 		if (index < 3) {
-			// 			if (position === 1) return -125
-			// 			if (position === 0) return 125
+					if (index < 3) {
+						if (position === 1) return -125
+						if (position === 0) return 125
 
-			// 			return 0
-			// 		}
+						return 0
+					}
 
-			// 		if (position === 1) return 125
-			// 		if (position === 0) return -125
-			// 		return 125
+					if (position === 1) return 125
+					if (position === 0) return -125
+					return 125
 
-			// 	},
-			// 	xPercent: (index) => {
-			// 		const position = index % 3
+				},
+				xPercent: (index) => {
+					const position = index % 3
 
-			// 		if (index === 3) {
-			// 			return -125
-			// 		}
+					if (index === 3) {
+						return -125
+					}
 
-			// 		if (index === 7) {
-			// 			return 125
-			// 		}
+					if (index === 7) {
+						return 125
+					}
 
-			// 		if (index < 3) {
-			// 			if (position === 1) return -125
-			// 			if (position === 0) return 0
-			// 			return 125
-			// 		}
-
-
-			// 		if (position === 1) return -125
-			// 		if (position === 0) return 0
-			// 		return 125
-			// 	},
-			// }, {
-			// 	opacity: 1,
-			// 	scale: 1,
-			// 	stagger: 0.2,
-			// 	scrollTrigger: {
-			// 		trigger: '.fourth',
-			// 		scrub: true,
-			// 		start: 'top top',
-			// 		end: 'bottom-=50%',
-			// 	}
-			// })
-			// .fromTo('.main-image', {
-			// 	filter: 'blur(25px)',
-			// 	yPercent: (index) => {
-			// 		const position = index % 3
-
-			// 		if (index === 3) {
-			// 			return 0
-			// 		}
-
-			// 		if (index === 7) {
-			// 			return -125
-			// 		}
-
-			// 		if (index < 3) {
-			// 			if (position === 1) return -125
-			// 			if (position === 0) return 125
-
-			// 			return 0
-			// 		}
-
-			// 		if (position === 1) return 125
-			// 		if (position === 0) return -125
-			// 		return 125
-
-			// 	},
-			// 	xPercent: (index) => {
-			// 		const position = index % 3
-
-			// 		if (index === 3) {
-			// 			return -125
-			// 		}
-
-			// 		if (index === 7) {
-			// 			return 125
-			// 		}
-
-			// 		if (index < 3) {
-			// 			if (position === 1) return -125
-			// 			if (position === 0) return 0
-			// 			return 125
-			// 		}
+					if (index < 3) {
+						if (position === 1) return -125
+						if (position === 0) return 0
+						return 125
+					}
 
 
-			// 		if (position === 1) return -125
-			// 		if (position === 0) return 0
-			// 		return 125
-			// 	},
-			// }, {
-			// 	yPercent: (index) => {
-			// 		const position = index % 3
+					if (position === 1) return -125
+					if (position === 0) return 0
+					return 125
+				},
+			}, {
+				opacity: 1,
+				scale: 1,
+				stagger: 0.2,
+				scrollTrigger: {
+					pin: '.third',
+					markers: true,
+					trigger: '.third',
+					scrub: true,
+					start: 'top+=100% top',
+					end: 'bottom+=100%',
+				}
+			})
+			.fromTo('.main-image', {
+				filter: 'blur(25px)',
+				yPercent: (index) => {
+					const position = index % 3
 
-			// 		if (index === 3) {
-			// 			return 0
-			// 		}
+					if (index === 3) {
+						return 0
+					}
 
-			// 		if (index === 7) {
-			// 			return -100
-			// 		}
+					if (index === 7) {
+						return -125
+					}
 
-			// 		if (index < 3) {
-			// 			if (position === 1) return -100
-			// 			if (position === 0) return 100
+					if (index < 3) {
+						if (position === 1) return -125
+						if (position === 0) return 125
 
-			// 			return 0
-			// 		}
+						return 0
+					}
 
-			// 		if (position === 1) return 100
-			// 		if (position === 0) return -100
-			// 		return 100
+					if (position === 1) return 125
+					if (position === 0) return -125
+					return 125
 
-			// 	},
-			// 	xPercent: (index) => {
-			// 		const position = index % 3
+				},
+				xPercent: (index) => {
+					const position = index % 3
 
-			// 		if (index === 3) {
-			// 			return -100
-			// 		}
+					if (index === 3) {
+						return -125
+					}
 
-			// 		if (index === 7) {
-			// 			return 100
-			// 		}
+					if (index === 7) {
+						return 125
+					}
 
-			// 		if (index < 3) {
-			// 			if (position === 1) return -100
-			// 			if (position === 0) return 0
-			// 			return 100
-			// 		}
+					if (index < 3) {
+						if (position === 1) return -125
+						if (position === 0) return 0
+						return 125
+					}
 
 
-			// 		if (position === 1) return -100
-			// 		if (position === 0) return 0
-			// 		return 100
-			// 	},
-			// 	filter: 'blur(0px)',
-			// 	scrollTrigger: {
-			// 		trigger: '.fifth',
-			// 		scrub: true,
-			// 		start: 'top top',
-			// 		end: 'bottom',
-			// 	}
-			// })
+					if (position === 1) return -125
+					if (position === 0) return 0
+					return 125
+				},
+			}, {
+				yPercent: (index) => {
+					const position = index % 3
+
+					if (index === 3) {
+						return 0
+					}
+
+					if (index === 7) {
+						return -100
+					}
+
+					if (index < 3) {
+						if (position === 1) return -100
+						if (position === 0) return 100
+
+						return 0
+					}
+
+					if (position === 1) return 100
+					if (position === 0) return -100
+					return 100
+
+				},
+				xPercent: (index) => {
+					const position = index % 3
+
+					if (index === 3) {
+						return -100
+					}
+
+					if (index === 7) {
+						return 100
+					}
+
+					if (index < 3) {
+						if (position === 1) return -100
+						if (position === 0) return 0
+						return 100
+					}
+
+
+					if (position === 1) return -100
+					if (position === 0) return 0
+					return 100
+				},
+				filter: 'blur(0px)',
+				scrollTrigger: {
+					trigger: '.third',
+					scrub: true,
+					start: 'top+=100% top',
+					end: 'bottom+=100%',
+				}
+			})
 			// .fromTo('.actual-expanding-image', {
 			// 	opacity: 1,
 			// 	y: 0
