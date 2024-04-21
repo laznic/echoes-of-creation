@@ -3,69 +3,69 @@
 ---
 
 <div class="thought-blob w-[100vw] h-[100dvh] opacity-0 fixed shrink-0 z-10 grid content-center justify-center top-0 pointer-events-none">
-    <svg
-      width="100vw"
-      height="100dvh"
-      viewBox={`0 0 240 240`}
-      xmlns="http://www.w3.org/2000/svg"
-      >
-      <defs>
-        <radialGradient id="blobGradient">
-          <stop offset="50%" stop-color="rgba(255,255,255,1)" />
-          <stop offset="100%" stop-color="rgba(255,255,255,0)" />
-        </radialGradient>
+  <svg
+    width="100vw"
+    height="100dvh"
+    viewBox={`0 0 240 240`}
+    xmlns="http://www.w3.org/2000/svg"
+    >
+    <defs>
+      <radialGradient id="blobGradient">
+        <stop offset="50%" stop-color="rgba(255,255,255,1)" />
+        <stop offset="100%" stop-color="rgba(255,255,255,0)" />
+      </radialGradient>
 
-        <filter id="blobFilter">
-          <feTurbulence
-            type="fractalNoise"
-            numOctaves="2"
-            baseFrequency="0.07"
-            result="turbulence"
-          >
+      <filter id="blobFilter">
+        <feTurbulence
+          type="fractalNoise"
+          numOctaves="2"
+          baseFrequency="0.07"
+          result="turbulence"
+        >
+        <animate
+          attributeName="baseFrequency"
+          values="0.07;0.03;0.07"
+          dur="5s"
+          repeatCount="indefinite"
+          
+        />
+        </feTurbulence>
+  
+        <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="5">
           <animate
-            attributeName="baseFrequency"
-            values="0.07;0.03;0.07"
+            attributeName="scale"
+            values="5;10;5"
             dur="5s"
             repeatCount="indefinite"
-            
           />
-          </feTurbulence>
+        </feDisplacementMap>
+      </filter>
+  
+      <filter id="filter3">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="10" />
+        <feTurbulence
+          type="fractalNoise"
+          numOctaves="5"
+          result="turbulence"
+        >
+          <animate
+            attributeName="baseFrequency"
+            values="0.02;0.05;0.02"
+            dur="5s"
+            repeatCount="indefinite"
+          />
+        </feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="20" />
+      </filter>
+    </defs>
     
-          <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="5">
-            <animate
-              attributeName="scale"
-              values="5;10;5"
-              dur="5s"
-              repeatCount="indefinite"
-            />
-          </feDisplacementMap>
-        </filter>
-    
-        <filter id="filter3">
-          <feGaussianBlur in="SourceGraphic" stdDeviation="10" />
-          <feTurbulence
-            type="fractalNoise"
-            numOctaves="5"
-            result="turbulence"
-          >
-            <animate
-              attributeName="baseFrequency"
-              values="0.02;0.05;0.02"
-              dur="5s"
-              repeatCount="indefinite"
-            />
-          </feTurbulence>
-          <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="20" />
-        </filter>
-      </defs>
-      
-      <circle
-        class="blob-circle"
-        cx="50%"
-        cy="54%"
-        r="10"
-        fill="url(#blobGradient)"
-        filter="url(#blobFilter)"
-      />
-    </svg>
+    <circle
+      class="blob-circle"
+      cx="50%"
+      cy="54%"
+      r="10"
+      fill="url(#blobGradient)"
+      filter="url(#blobFilter)"
+    />
+  </svg>
 </div>

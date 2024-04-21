@@ -3,34 +3,10 @@ import Layout from "../layouts/Layout.astro";
 
 import "splitting/dist/splitting.css";
 import "splitting/dist/splitting-cells.css";
-import ImageWithHole from "../components/ImageWithHole.astro";
-import ImageWithCuts from "../components/ImageWithCuts.astro";
 import ThoughtBlob from "../components/ThoughtBlob.astro";
 import ExpandingImage from "../components/ExpandingImage.astro";
 import BadBlob from "../components/BadBlob.astro";
 import supabase from "../utils/supabase";
-
-const gridOrder = [1, 2, 3, 4, 5, 6, 7, 8, 9] 
-const shuffled = [...gridOrder]
-shuffle(shuffled)
-
-const testing = new Array(64).fill(null)
-
-function shuffle(array: number[]) {
-  let currentIndex = array.length;
-
-  // While there remain elements to shuffle...
-  while (currentIndex != 0) {
-
-    // Pick a remaining element...
-    let randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex--;
-
-    // And swap it with the current element.
-    [array[currentIndex], array[randomIndex]] = [
-      array[randomIndex], array[currentIndex]];
-  }
-}
 
 const { data: artworks } = await supabase
 	.from('artworks')
@@ -70,7 +46,7 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 			</button>
 
 			{artworks.map((artwork) => (
-				<div class="artwork pointer-events-none z-10">
+				<div class="artwork pointer-events-none z-10 absolute">
 					<div class="artwork-inner">
 						<img src={artwork.image_url} alt={artwork.title} class="w-full h-full object-cover" />
 					</div>
@@ -78,7 +54,7 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 			))}
 		</header>
 
-		<div class="first h-[300dvh] grid justify-end">
+		<div class="first h-[100dvh] grid justify-end">
 			<div class="mx-auto max-w-[25vw] z-50 relative mr-24">
 				<h2>
 					FLOW
@@ -90,27 +66,25 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 		</div>
 
 		<div id="main-grid" class="w-[100vw] h-[200dvh] relative">
-				{firstHalfArtworks.map((artwork) => (
-					<div class="absolute item-left rounded-md bg-white w-96 h-72 overflow-hidden">
-						<img src={artwork.image_url} alt={artwork.title} class="w-full h-full object-cover" />
-					</div>
-				))}
-				{secondHalfArtWorks.map((artwork) => (
-					<div class="absolute item-right rounded-md bg-white w-96 h-72 overflow-hidden image-container">
-						<img src={artwork.image_url} alt={artwork.title} class="w-full h-full object-cover" />
-					</div>
-				))}
+			{firstHalfArtworks.map((artwork) => (
+				<div class="absolute item-left rounded-md bg-white w-96 h-72 overflow-hidden">
+					<img src={artwork.image_url} alt={artwork.title} class="w-full h-full object-cover" />
+				</div>
+			))}
+			{secondHalfArtWorks.map((artwork) => (
+				<div class="absolute item-right rounded-md bg-white w-96 h-72 overflow-hidden image-container">
+					<img src={artwork.image_url} alt={artwork.title} class="w-full h-full object-cover" />
+				</div>
+			))}
 		</div>
 		
-		<div class="flash-container h-12">
+		<div class="flash-container h-12 opacity-0">
 			 <div class="flash w-full h-[100dvh] fixed top-0 bg-white opacity-0"></div>
 		</div>
 
 		<div class="second h-[100dvh]"></div>
 
-		<div class="third h-[50dvh]"></div>
-
-		<div class="satisfaction h-[100dvh] grid content-center justify-start">
+		<div class="satisfaction h-[200dvh] grid justify-start">
 			<div class="mx-auto max-w-[25vw] z-50 relative ml-24">
 				<h2>
 					SATISFACTION
@@ -120,6 +94,9 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 				</p>
 			</div>
 		</div>
+<!-- 		
+
+		<div class="third h-[150dvh]"></div>
 
 		<div class="fourth h-[100dvh]"></div>
 
@@ -133,7 +110,32 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 			<BadBlob text="What is this? AI that paints like me? How can that be? It's like my skills are being copied, replicated effortlessly. Is my art not unique anymore?" />
 		</div>
 
-		<div class="break h-[200dvh] z-50"></div>
+		<div class="stacked-variants h-[200dvh] z-50 grid grid-cols-8">
+			<div class="stacked-variant-image z-[8] h-auto w-full mx-auto max-w-fit">
+				<img src="https://picsum.photos/480/620" />
+			</div>
+			<div class="stacked-variant-image z-[7] h-auto w-full mx-auto max-w-fit">
+				<img src="https://picsum.photos/480/620" />
+			</div>
+			<div class="stacked-variant-image z-[6] h-auto w-full mx-auto max-w-fit">
+				<img src="https://picsum.photos/480/620" />
+			</div>
+			<div class="stacked-variant-image z-[5] h-auto w-full mx-auto max-w-fit">
+				<img src="https://picsum.photos/480/620" />
+			</div>
+			<div class="stacked-variant-image z-[4] h-auto w-full mx-auto max-w-fit">
+				<img src="https://picsum.photos/480/620" />
+			</div>
+			<div class="stacked-variant-image z-[3] h-auto w-full mx-auto max-w-fit">
+				<img src="https://picsum.photos/480/620" />
+			</div>
+			<div class="stacked-variant-image z-[2] h-auto w-full mx-auto max-w-fit">
+				<img src="https://picsum.photos/480/620" />
+			</div>
+			<div class="stacked-variant-image z-[1] h-auto w-full mx-auto max-w-fit">
+				<img src="https://picsum.photos/480/620" />
+			</div>
+		</div>
 
 		<div class="seventh h-[400dvh]">
 			<div class="relative">
@@ -146,7 +148,7 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 				<h2 data-splitting class="what-the text-2xl font-bold">What the hell</h2>
 
 				<div class="black-hole-wrapper absolute -top-1/2 left-12 w-72 h-60">
-					<div class="w-1/2 h-1/2 rounded-full bg-indigo-300 absolute mix-blend-overlay blur-xl" />
+					<div class="w-1/2 h-1/2 rounded-full bg-indigo-300 absolute mix-blend-overlay blur-xl"></div>
 					<svg class="overflow-visible w-full h-full" >
 						<defs>
 							<radialGradient id="black-hole-gradient" >
@@ -197,9 +199,9 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 				</div>
 
 			</div>
-		</div>
+		</div> -->
 
-		<div class="main-images fixed top-0 left-0 w-full h-[100dvh] grid content-center items-center pointer-events-none">
+		<!-- <div class="main-images fixed top-0 left-0 w-full h-[100dvh] grid content-center items-center pointer-events-none">
 			<div class="main-image z-[100] h-auto w-full absolute mx-auto max-w-fit left-0 right-0 border-4 border-black">
 				<img src="https://picsum.photos/480/620" />
 			</div>
@@ -267,7 +269,7 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 					</feMorphology>
 				</filter>
 			</svg>
-		</div>
+		</div> -->
 
 		<ThoughtBlob />
 		<ExpandingImage image={mainImage.image_url} title={mainImage.title} />
@@ -348,6 +350,8 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 	import { ImageTrail } from '../utils/ImageTrail'
 	import { preloadImages } from '../utils/helpers'
 	import { Howl } from 'howler';
+
+	window.scrollTo(0, 0)
 
 	Splitting()
 
@@ -481,6 +485,7 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 	startButton?.addEventListener('click', () => {
 		gsap.to(intro, { opacity: 0, duration: 5 });
 		document.body.classList.remove('overflow-hidden');
+		window.scrollTo(0, 0)
 
 		const introMusic = new Howl({
 			src: ['/intro-music.mp3'],
@@ -503,7 +508,7 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 		}, 6000)
 		
 		setTimeout(() => {
-			intro?.classList.add('hidden')
+			intro?.classList.add('pointer-events-none')
 			introMusic.play()
 			introMusic.fade(0, 0.15, 2000)
 		}, 5250)
@@ -561,8 +566,10 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
     // Instantiate a new ImageTrail object, initializing it with the element that has the class 'content'.
     // The ImageTrail instance starts managing and animating the sequence of images within the specified element, reacting to mouse movements.
 		new ImageTrail(document.querySelector('header'), gsap)
+	});
 
-		const timeline = gsap.timeline({
+
+	const timeline = gsap.timeline({
 			scrollTrigger: {
 				snap: {
 					snapTo: 'labels'
@@ -576,15 +583,18 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 		const third = document.querySelector('.third')
 		const items = mainGrid.querySelectorAll('.item-left')
 		const itemsRight = mainGrid.querySelectorAll('.item-right')
-		const title = document.querySelector('.what-the')
-		const chars = title.querySelectorAll('.char')
+		// const title = document.querySelector('.what-the')
+		// const chars = title.querySelectorAll('.char')
 		const flowTextChars = document.querySelector('.flow-text').querySelectorAll('.char')
 		const satisfactionTextChars = document.querySelector('.satisfaction-text').querySelectorAll('.char')
+		const stackedVariantImages = document.querySelectorAll('.stacked-variant-image')
 
-		chars.forEach(char => gsap.set(char.parentNode, { perspective: 1000 }));
+		// chars.forEach(char => gsap.set(char.parentNode, { perspective: 1000 }));
 		items.forEach(item => gsap.set(item, { z: () => gsap.utils.random(-1, 1), scale: () => gsap.utils.random(1, 3) }))
 		itemsRight.forEach(item => gsap.set(item, { z: () => gsap.utils.random(-1, 1), scale: () => gsap.utils.random(1, 3) }))
+		stackedVariantImages.forEach(image => gsap.set(image, { perspective: 1000 }))
 		gsap.set('.thought-blob', { yPercent: 50, scale: 0.5 })
+		gsap.set('.flash', { opacity: 0 })
 		// gsap.fromTo(startingTitleWords, {
 		// 	'will-change': 'opacity transform filter',
 		// 	opacity: 0,
@@ -611,18 +621,18 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 		// 	delay: 3.5
 		// })
 
+		gsap.set(mainGrid, { perspective: 200, perspectiveOrigin: '57.5% 30%' })
+		gsap.set('.thought-blob', { yPercent: 35, scale: 0.5 })
+		gsap.set('.second', { perspective: 1000 })
+		gsap.set('.third', { perspective: 1000 })
+		gsap.set('.fourth', { perspective: 1000 })
+		gsap.set('.fifth', { perspective: 1000 })
+		gsap.set('.sixth', { perspective: 1000 })
+		gsap.set('.seventh', { perspective: 1000 })
+		gsap.set('.bad-blob', { scale: 0 })
+		gsap.set('.bad-blob-wrapper', { y: window.innerHeight })
+
 		timeline
-			.set(mainGrid, { perspective: 200, perspectiveOrigin: '57.5% 30%' })
-			.set('.thought-blob', { yPercent: 35, scale: 0.5 })
-			.set('.flash', { opacity: 0 })
-			.set('.second', { perspective: 1000 })
-			.set('.third', { perspective: 1000 })
-			.set('.fourth', { perspective: 1000 })
-			.set('.fifth', { perspective: 1000 })
-			.set('.sixth', { perspective: 1000 })
-			.set('.seventh', { perspective: 1000 })
-			.set('.bad-blob', { scale: 0 })
-			.set('.bad-blob-wrapper', { y: window.innerHeight })
 			.add(() => {
 				gsap.fromTo(flowTextChars, {
 					'will-change': 'opacity transform filter',
@@ -670,7 +680,6 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 				stagger: 0.02,
 				scrollTrigger: {
 					pin: mainGrid,
-					pinSpacing: false,
 					trigger: mainGrid,
 					scrub: true,
 					start: 'top top',
@@ -690,7 +699,6 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 				filter: 'blur(0px)',
 				stagger: 0.02,
 				scrollTrigger: {
-					pinSpacing: false,
 					trigger: mainGrid,
 					scrub: true,
 					start: 'top top',
@@ -703,54 +711,48 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 				r: 0,
 				scrollTrigger: {
 					trigger: mainGrid,
-					pinSpacing: false,
 					scrub: true,
 					start: (self) => self.previous().end,
 					end: 'bottom-=5%',
 				}
 			})
-			.fromTo('.flash', 
+			.fromTo('.flash-container', 
 			{
 				opacity: 0
 			},
 			{
-				opacity: 0.5,
+				opacity: 0.75,
 				scrollTrigger: {
 					trigger: '.flash-container',
-					pinSpacing: false,
 					scrub: true,
 					start: (self) => self.previous().end,
-					end: 'bottom-=150%',
-				}
-			})
-			.fromTo('.flash', 
-			{
-				opacity: 0.5
-			},
-			{
-				opacity: 0,
-				scrollTrigger: {
-					trigger: '.flash-container',
-					pinSpacing: false,
-					scrub: true,
-					start: (self) => self.previous().end,
-					end: 'bottom+=1000%',
+					end: 'bottom',
 				}
 			})
 			.fromTo('.actual-expanding-image', {
 				filter: 'blur(20px)',
 				scale: 5,
-				// y: window.innerHeight * -1.5,
-				// transformOrigin: 'center center'
 			}, {
 				scale: 1,
 				filter: 'blur(0px)',
 				scrollTrigger: {
-					pin: second,
 					trigger: second,
 					scrub: true,
 					start: 'top top',
 					end: 'bottom-=50%',
+				}
+			})
+			.fromTo('.flash', 
+			{
+				opacity: 1
+			},
+			{
+				opacity: 0,
+				scrollTrigger: {
+					trigger: second,
+					scrub: true,
+					start: 'top bottom',
+					end: 'bottom',
 				}
 			})
 			.fromTo('.glow-circle', {
@@ -760,7 +762,6 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 			}, {
 				r: window.innerWidth,
 				scrollTrigger: {
-					pinSpacing: false,
 					trigger: second,
 					scrub: true,
 					start: 'top top',
@@ -775,7 +776,6 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 				r: window.innerWidth,
 				scrollTrigger: {
 					trigger: second,
-					pinSpacing: false,
 					scrub: true,
 					start: 'top top',
 					end: 'bottom-=50%',
@@ -786,9 +786,7 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 			}, {
 				r: window.innerWidth,
 				scrollTrigger: {
-					pin: false,
 					trigger: second,
-					pinSpacing: false,
 					scrub: true,
 					start: 'top top',
 					end: 'bottom-=50%',
@@ -800,24 +798,22 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 				opacity: 0,
 				scrollTrigger: {
 					trigger: second,
-					pinSpacing: true,
 					scrub: true,
 					start: (self) => self.previous().end,
 					end: (self) => self.previous().end,
 				}
 			})
-			.fromTo('.main-image-title', {
-				opacity: 0,
-			}, {
-				opacity: 1,
-				scrollTrigger: {
-					trigger: third,
-					scrub: true,
-					pinSpacing: false,
-					start: 'top bottom',
-					end: 'bottom',
-				}
-			})
+			// .fromTo('.main-image-title', {
+			// 	opacity: 0,
+			// }, {
+			// 	opacity: 1,
+			// 	scrollTrigger: {
+			// 		trigger: third,
+			// 		scrub: true,
+			// 		start: 'top bottom',
+			// 		end: 'bottom',
+			// 	}
+			// })
 			.add(() => {
 				gsap.fromTo(satisfactionTextChars, {
 					'will-change': 'opacity transform filter',
@@ -832,316 +828,333 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 					stagger: 0.025,
 					scrollTrigger: {
 						pin: '.satisfaction',
-						start: (self) => self.previous().end,
-						end: 'bottom+=50%',
+						start: 'top center',
+						end: 'bottom+=100%',
+						trigger: '.satisfaction'
 					}
 				})
 			})
-			.fromTo('.main-image', {
-				opacity: 0,
-				scale: 0,
-				filter: 'blur(25px)',
-				yPercent: (index) => {
-					const position = index % 3
+			// .fromTo('.main-image', {
+			// 	opacity: 0,
+			// 	scale: 0,
+			// 	filter: 'blur(25px)',
+			// 	yPercent: (index) => {
+			// 		const position = index % 3
 
-					if (index === 3) {
-						return 0
-					}
+			// 		if (index === 3) {
+			// 			return 0
+			// 		}
 
-					if (index === 7) {
-						return -125
-					}
+			// 		if (index === 7) {
+			// 			return -125
+			// 		}
 
-					if (index < 3) {
-						if (position === 1) return -125
-						if (position === 0) return 125
+			// 		if (index < 3) {
+			// 			if (position === 1) return -125
+			// 			if (position === 0) return 125
 
-						return 0
-					}
+			// 			return 0
+			// 		}
 
-					if (position === 1) return 125
-					if (position === 0) return -125
-					return 125
+			// 		if (position === 1) return 125
+			// 		if (position === 0) return -125
+			// 		return 125
 
-				},
-				xPercent: (index) => {
-					const position = index % 3
+			// 	},
+			// 	xPercent: (index) => {
+			// 		const position = index % 3
 
-					if (index === 3) {
-						return -125
-					}
+			// 		if (index === 3) {
+			// 			return -125
+			// 		}
 
-					if (index === 7) {
-						return 125
-					}
+			// 		if (index === 7) {
+			// 			return 125
+			// 		}
 
-					if (index < 3) {
-						if (position === 1) return -125
-						if (position === 0) return 0
-						return 125
-					}
-
-
-					if (position === 1) return -125
-					if (position === 0) return 0
-					return 125
-				},
-			}, {
-				opacity: 1,
-				scale: 1,
-				stagger: 0.2,
-				scrollTrigger: {
-					trigger: '.fourth',
-					scrub: true,
-					start: 'top top',
-					end: 'bottom-=50%',
-				}
-			})
-			.fromTo('.main-image', {
-				filter: 'blur(25px)',
-				yPercent: (index) => {
-					const position = index % 3
-
-					if (index === 3) {
-						return 0
-					}
-
-					if (index === 7) {
-						return -125
-					}
-
-					if (index < 3) {
-						if (position === 1) return -125
-						if (position === 0) return 125
-
-						return 0
-					}
-
-					if (position === 1) return 125
-					if (position === 0) return -125
-					return 125
-
-				},
-				xPercent: (index) => {
-					const position = index % 3
-
-					if (index === 3) {
-						return -125
-					}
-
-					if (index === 7) {
-						return 125
-					}
-
-					if (index < 3) {
-						if (position === 1) return -125
-						if (position === 0) return 0
-						return 125
-					}
+			// 		if (index < 3) {
+			// 			if (position === 1) return -125
+			// 			if (position === 0) return 0
+			// 			return 125
+			// 		}
 
 
-					if (position === 1) return -125
-					if (position === 0) return 0
-					return 125
-				},
-			}, {
-				yPercent: (index) => {
-					const position = index % 3
+			// 		if (position === 1) return -125
+			// 		if (position === 0) return 0
+			// 		return 125
+			// 	},
+			// }, {
+			// 	opacity: 1,
+			// 	scale: 1,
+			// 	stagger: 0.2,
+			// 	scrollTrigger: {
+			// 		trigger: '.fourth',
+			// 		scrub: true,
+			// 		start: 'top top',
+			// 		end: 'bottom-=50%',
+			// 	}
+			// })
+			// .fromTo('.main-image', {
+			// 	filter: 'blur(25px)',
+			// 	yPercent: (index) => {
+			// 		const position = index % 3
 
-					if (index === 3) {
-						return 0
-					}
+			// 		if (index === 3) {
+			// 			return 0
+			// 		}
 
-					if (index === 7) {
-						return -100
-					}
+			// 		if (index === 7) {
+			// 			return -125
+			// 		}
 
-					if (index < 3) {
-						if (position === 1) return -100
-						if (position === 0) return 100
+			// 		if (index < 3) {
+			// 			if (position === 1) return -125
+			// 			if (position === 0) return 125
 
-						return 0
-					}
+			// 			return 0
+			// 		}
 
-					if (position === 1) return 100
-					if (position === 0) return -100
-					return 100
+			// 		if (position === 1) return 125
+			// 		if (position === 0) return -125
+			// 		return 125
 
-				},
-				xPercent: (index) => {
-					const position = index % 3
+			// 	},
+			// 	xPercent: (index) => {
+			// 		const position = index % 3
 
-					if (index === 3) {
-						return -100
-					}
+			// 		if (index === 3) {
+			// 			return -125
+			// 		}
 
-					if (index === 7) {
-						return 100
-					}
+			// 		if (index === 7) {
+			// 			return 125
+			// 		}
 
-					if (index < 3) {
-						if (position === 1) return -100
-						if (position === 0) return 0
-						return 100
-					}
+			// 		if (index < 3) {
+			// 			if (position === 1) return -125
+			// 			if (position === 0) return 0
+			// 			return 125
+			// 		}
 
 
-					if (position === 1) return -100
-					if (position === 0) return 0
-					return 100
-				},
-				filter: 'blur(0px)',
-				scrollTrigger: {
-					trigger: '.fifth',
-					scrub: true,
-					start: 'top top',
-					end: 'bottom',
-				}
-			})
-			.fromTo('.actual-expanding-image', {
-				opacity: 1,
-				y: 0
-			}, {
-				y: 10,
-				scrollTrigger: {
-					trigger: '.fifth',
-					scrub: true,
-					start: 'top top',
-					end: 'bottom',
-				}
-			})
-			.fromTo('.expanding-image-wrapper', {
-				scale: 1,
-				opacity: 1,
-				filter: 'blur(0px)',
-			}, {
-				scale: 0.75,
-				opacity: 0.1,
-				filter: 'blur(5px)',
-				scrollTrigger: {
-					trigger: '.fifth',
-					scrub: true,
-					start: 'top top',
-					end: 'bottom',
-				}
-			})
-			.fromTo('.bad-blob', {
-				scale: 0,
-			}, {
-				scale: 2.5,
-				stagger: 0.5,
-				scrollTrigger: {
-					pin: '.bad-thoughts',
-					trigger: '.bad-thoughts',
-					scrub: true,
-					start: 'top top',
-					end: 'bottom+=100%'
-				}
-			})
-			.fromTo('.bad-blob-wrapper', {
-				y: window.innerHeight,
-				x: 'random(200, 800)'
-			}, {
-				y: 'random(200, 500)',
-				stagger: 0.5,
-				scrollTrigger: {
-					trigger: '.bad-thoughts',
-					scrub: true,
-					start: 'top top',
-					end: 'bottom+=100%'
-				}
-			})
-			.fromTo('.expanding-image', {
-				yPercent: 0,
-			}, {
-				yPercent: -50,
-				scrollTrigger: {
-					trigger: '.sixth',
-					scrub: true,
-					start: 'top top',
-					end: 'bottom'
-				}
-			})
-			.fromTo('.main-images', {
-				yPercent: 0,
-			}, {
-				yPercent: -50,
-				scrollTrigger: {
-					trigger: '.sixth',
-					scrub: true,
-					start: 'top top',
-					end: 'bottom',
-				}
-			})
-			.fromTo(title, {
-					'will-change': 'transform',
-					xPercent: 30
-				}, {
-					ease: 'none',
-					xPercent: -10,
-					scrollTrigger: {
-						trigger: '.seventh',
-						// markers: true,
-						scrub: true,
-						start: 'top bottom',
-						end: 'bottom-=50%',
-					}
-				})
-				.fromTo(chars, {
-					'will-change': 'opacity, transform', 
-					transformOrigin: '50% 50% -50px',
-					rotationZ: 0,
-					rotationX: 0,
-					opacity: 1,
-				},
-				{
-					ease: 'expo.inOut',
-					rotationZ: -120,
-					rotationX: 120,
-					opacity: 0,
-					stagger: 0.0375,
-					scrollTrigger: {
-						trigger: '.seventh',
-						// markers: true,
-						start: 'top bottom',
-						end: 'bottom-=75%',
-						scrub: true,
-					}
-				})
-				.fromTo('.black-hole-circle', {
-					r: 50,
-				},
-				{
-					r: 200,
-					scrollTrigger: {
-						trigger: '.seventh',
-						// markers: true,
-						start: 'top bottom',
-						end: 'bottom-=75%',
-						scrub: true,
-					}
-				})
-				.fromTo('.black-hole-wrapper', {
-					scale: 0,
-					rotateY: 20,
-					rotateX: 10,
-					xPercent: 0
-				},
-				{
-					scale: 1,
-					rotateY: 90,
-					rotateX: 40,
-					xPercent: 20,
-					scrollTrigger: {
-						trigger: '.seventh',
-						// markers: true,
-						start: 'top bottom',
-						end: 'bottom-=75%',
-						scrub: true,
-					}
-				})
-	});
+			// 		if (position === 1) return -125
+			// 		if (position === 0) return 0
+			// 		return 125
+			// 	},
+			// }, {
+			// 	yPercent: (index) => {
+			// 		const position = index % 3
 
+			// 		if (index === 3) {
+			// 			return 0
+			// 		}
+
+			// 		if (index === 7) {
+			// 			return -100
+			// 		}
+
+			// 		if (index < 3) {
+			// 			if (position === 1) return -100
+			// 			if (position === 0) return 100
+
+			// 			return 0
+			// 		}
+
+			// 		if (position === 1) return 100
+			// 		if (position === 0) return -100
+			// 		return 100
+
+			// 	},
+			// 	xPercent: (index) => {
+			// 		const position = index % 3
+
+			// 		if (index === 3) {
+			// 			return -100
+			// 		}
+
+			// 		if (index === 7) {
+			// 			return 100
+			// 		}
+
+			// 		if (index < 3) {
+			// 			if (position === 1) return -100
+			// 			if (position === 0) return 0
+			// 			return 100
+			// 		}
+
+
+			// 		if (position === 1) return -100
+			// 		if (position === 0) return 0
+			// 		return 100
+			// 	},
+			// 	filter: 'blur(0px)',
+			// 	scrollTrigger: {
+			// 		trigger: '.fifth',
+			// 		scrub: true,
+			// 		start: 'top top',
+			// 		end: 'bottom',
+			// 	}
+			// })
+			// .fromTo('.actual-expanding-image', {
+			// 	opacity: 1,
+			// 	y: 0
+			// }, {
+			// 	y: 10,
+			// 	scrollTrigger: {
+			// 		trigger: '.fifth',
+			// 		scrub: true,
+			// 		start: 'top top',
+			// 		end: 'bottom',
+			// 	}
+			// })
+			// .fromTo('.expanding-image-wrapper', {
+			// 	scale: 1,
+			// 	opacity: 1,
+			// 	filter: 'blur(0px)',
+			// }, {
+			// 	scale: 0.75,
+			// 	opacity: 0.1,
+			// 	filter: 'blur(5px)',
+			// 	scrollTrigger: {
+			// 		trigger: '.fifth',
+			// 		scrub: true,
+			// 		start: 'top top',
+			// 		end: 'bottom',
+			// 	}
+			// })
+			// .fromTo('.expanding-image', {
+			// 	yPercent: 0,
+			// }, {
+			// 	yPercent: -125,
+			// 	scrollTrigger: {
+			// 		trigger: '.bad-thoughts',
+			// 		scrub: true,
+			// 		start: 'top top',
+			// 		end: 'bottom+=100%'
+			// 	}
+			// })
+			// .fromTo('.main-images', {
+			// 	yPercent: 0,
+			// }, {
+			// 	yPercent: -125,
+			// 	scrollTrigger: {
+			// 		trigger: '.bad-thoughts',
+			// 		scrub: true,
+			// 		start: 'top top',
+			// 		end: 'bottom+=100%',
+			// 	}
+			// })
+			// .fromTo('.bad-blob', {
+			// 	scale: 0,
+			// }, {
+			// 	scale: 2.5,
+			// 	stagger: 0.5,
+			// 	scrollTrigger: {
+			// 		trigger: '.bad-thoughts',
+			// 		scrub: true,
+			// 		start: 'top top',
+			// 		end: 'bottom+=100%'
+			// 	}
+			// })
+			// .fromTo('.bad-blob-wrapper', {
+			// 	y: window.innerHeight,
+			// 	x: 'random(200, 800)'
+			// }, {
+			// 	y: 'random(200, 500)',
+			// 	stagger: 0.5,
+			// 	scrollTrigger: {
+			// 		trigger: '.bad-thoughts',
+			// 		scrub: true,
+			// 		start: 'top top',
+			// 		end: 'bottom+=100%'
+			// 	}
+			// })
+			// .fromTo('.stacked-variant-image', {
+			// 	xPercent: (index) => -100 * index,
+			// 	rotateY: 0,
+			// 	rotateX: 0,
+			// 	rotateZ: 0,
+			// 	yPercent: 0
+			// }, {
+			// 	xPercent: (index) => 90 * index,
+			// 	rotateY: (index) => 10 * index,
+			// 	rotateX: (index) => -10 * index,
+			// 	rotateZ: (index) => 5 * index,
+			// 	yPercent: (index) => 5 * index,
+			// 	scrollTrigger: {
+			// 		trigger: '.stacked-variants',
+			// 		scrub: true,
+			// 		start: 'top bottom',
+			// 		end: 'bottom+=10%',
+			// 	}
+			// })
+			// .fromTo(title, {
+			// 		'will-change': 'transform',
+			// 		xPercent: 30
+			// 	}, {
+			// 		ease: 'none',
+			// 		xPercent: -10,
+			// 		scrollTrigger: {
+			// 			trigger: '.seventh',
+			// 			// markers: true,
+			// 			scrub: true,
+			// 			start: 'top bottom',
+			// 			end: 'bottom-=50%',
+			// 		}
+			// 	})
+			// 	.fromTo(chars, {
+			// 		'will-change': 'opacity, transform', 
+			// 		transformOrigin: '50% 50% -50px',
+			// 		rotationZ: 0,
+			// 		rotationX: 0,
+			// 		opacity: 1,
+			// 	},
+			// 	{
+			// 		ease: 'expo.inOut',
+			// 		rotationZ: -120,
+			// 		rotationX: 120,
+			// 		opacity: 0,
+			// 		stagger: 0.0375,
+			// 		scrollTrigger: {
+			// 			trigger: '.seventh',
+			// 			// markers: true,
+			// 			start: 'top bottom',
+			// 			end: 'bottom-=75%',
+			// 			scrub: true,
+			// 		}
+			// 	})
+			// 	.fromTo('.black-hole-circle', {
+			// 		r: 50,
+			// 	},
+			// 	{
+			// 		r: 200,
+			// 		scrollTrigger: {
+			// 			trigger: '.seventh',
+			// 			// markers: true,
+			// 			start: 'top bottom',
+			// 			end: 'bottom-=75%',
+			// 			scrub: true,
+			// 		}
+			// 	})
+			// 	.fromTo('.black-hole-wrapper', {
+			// 		scale: 0,
+			// 		rotateY: 20,
+			// 		rotateX: 10,
+			// 		xPercent: 0
+			// 	},
+			// 	{
+			// 		scale: 1,
+			// 		rotateY: 90,
+			// 		rotateX: 40,
+			// 		xPercent: 20,
+			// 		scrollTrigger: {
+			// 			trigger: '.seventh',
+			// 			// markers: true,
+			// 			start: 'top bottom',
+			// 			end: 'bottom-=75%',
+			// 			scrub: true,
+			// 		}
+			// 	})
 		
 
 
