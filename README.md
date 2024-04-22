@@ -20,6 +20,7 @@ Built with
 - [Stable Audio](https://stableaudio.com)
 - [Replicate](https://replicate.com/)
 - [Codrops](https://tympanus.net/codrops)
+- [Metropolitan Museum of Art](https://metmuseum.github.io/)
 
 ## How it works
 
@@ -28,6 +29,17 @@ The steps are simple:
 2. Wait for images to load (or the page the re-generate)
 3. Click start
 4. Scroll through the experience
+
+Technical side:
+- pg_cron job runs every hour, creates a new "thought"
+- Inserts trigger webhook calls to Edge Functions
+- In Edge Functions we
+  - Fetch the "European Paintings" pieces from the MET Museum API
+  - Pick 80 random pieces, one which is the "main" art piece
+  - Generate 8 variants for the main art piece via Stable Diffusion based on a description by Meta's LLama 3 model used via Replicate
+  - Store this info in Storage and Database
+  - Generate different text variants for "thoughts" that happen in the story
+  - Generate AI Speeches for all these texts
 
 List of Supabase features used:
 - Database
