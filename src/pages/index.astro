@@ -8,18 +8,40 @@ import ExpandingImage from "../components/ExpandingImage.astro";
 import BadBlob from "../components/BadBlob.astro";
 import supabase from "../utils/supabase";
 
-const { data: artworks } = await supabase
-	.from('artworks')
-	.select('*')
-	.eq('thought_id', 1)
+const { data: thought } = await supabase
+	.from('thoughts')
+	.select(`
+		id,
+		created_at,
+		current,
+		thought_texts(
+			index,
+			audio_url,
+			text
+		),
+		artworks(
+			is_main,
+			is_variant,
+			image_url,
+			artist_name,
+			title
+		)
+	`)
+	.eq('current', true)
+	.single()
 
-const firstHalfArtworks = artworks.slice(0, Math.ceil(artworks.length / 2))
-const secondHalfArtWorks = artworks.slice(Math.ceil(artworks.length / 2), artworks.length)
+const { artworks, thought_texts } = thought
+
+const actualArtworks = artworks.filter((artwork) => !artwork.is_variant)
+const firstHalfArtworks = actualArtworks.slice(0, Math.ceil(actualArtworks.length / 2))
+const secondHalfArtWorks = actualArtworks.slice(Math.ceil(actualArtworks.length / 2), actualArtworks.length)
 const mainImage = artworks?.find((artwork) => artwork.is_main)
+const variants = artworks?.filter((artwork) => artwork.is_variant)
+const texts = thought_texts.sort((a, b) => a.index - b.index)
 
 ---
 <Layout title="Home">
-	<main>
+	<main data-sounds={texts.map((text) => text.audio_url)}>
 		<div class="intro h-[100dvh] w-[100vw] fixed grid content-center z-[1000]">
 			<div class="mx-auto max-w-[50vw] relative">
 				<h1 data-splitting class="text-5xl font-black leading-none">Echoes of Creation</h1>
@@ -34,10 +56,7 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 		<header class="h-[100dvh] relative grid content-center">
 			<div class="mx-auto max-w-[50vw] z-50 relative">
 				<h2 data-splitting class="text-lg italic z-100 relative starting-title">
-					Ah, there it is—<strong>the spark of inspiration</strong>!
-					<br />
-					<br />
-					That fleeting moment of clarity when an idea takes shape in my mind. It's exhilarating, like catching a glimpse of something magical.
+					{texts[0].text}
 				</h2>
 			</div>
 
@@ -45,7 +64,7 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 				Scroll down
 			</button>
 
-			{artworks.map((artwork) => (
+			{actualArtworks.map((artwork) => (
 				<div class="artwork pointer-events-none z-10 absolute">
 					<div class="artwork-inner">
 						<img src={artwork.image_url} alt={artwork.title} class="w-full h-full object-cover" />
@@ -55,12 +74,12 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 		</header>
 
 		<div class="first h-[200dvh] grid justify-end">
-			<div class="mx-auto max-w-[25vw] z-50 relative mr-24">
+			<div class="mx-auto max-w-[25vw] z-50 relative mr-[10vw]">
 				<!-- <h2>
 					FLOW
 				</h2> -->
-				<h2 data-splitting class="text-md italic z-100 relative flow-text">
-					Time seems to melt away as I lose myself in the creative process. It's like being in a state of flow, where everything else fades into the background and only the art matters. It's pure magic.
+				<h2 data-splitting class="text-lg italic z-100 relative flow-text">
+					{texts[1].text}
 				</h2>
 			</div>
 		</div>
@@ -85,12 +104,12 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 		<div class="second h-[200dvh]"></div>
 
 		<div class="satisfaction h-[200dvh] grid justify-start">
-			<div class="mx-auto max-w-[25vw] z-50 relative ml-24">
+			<div class="mx-auto max-w-[25vw] z-50 relative ml-[10vw]">
 				<!-- <h2>
 					SATISFACTION
 				</h2> -->
-				<h2 data-splitting class="text-md italic z-100 relative satisfaction-text">
-					Stepping back and admiring the finished piece, there's a sense of satisfaction unlike anything else. It's a tangible manifestation of my imagination, a piece of myself laid bare for the world to see.
+				<h2 data-splitting class="text-lg italic z-100 relative satisfaction-text">
+					{texts[2].text}
 				</h2>
 			</div>
 		</div>
@@ -102,30 +121,11 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 		<div class="bad-thoughts h-[200dvh]"></div>
 
 		<div class="stacked-variants h-[200dvh] z-50 grid grid-cols-8">
-			<div class="stacked-variant-image z-[8] h-auto w-full mx-auto max-w-fit">
-				<img src="https://picsum.photos/480/620" />
-			</div>
-			<div class="stacked-variant-image z-[7] h-auto w-full mx-auto max-w-fit">
-				<img src="https://picsum.photos/480/620" />
-			</div>
-			<div class="stacked-variant-image z-[6] h-auto w-full mx-auto max-w-fit">
-				<img src="https://picsum.photos/480/620" />
-			</div>
-			<div class="stacked-variant-image z-[5] h-auto w-full mx-auto max-w-fit">
-				<img src="https://picsum.photos/480/620" />
-			</div>
-			<div class="stacked-variant-image z-[4] h-auto w-full mx-auto max-w-fit">
-				<img src="https://picsum.photos/480/620" />
-			</div>
-			<div class="stacked-variant-image z-[3] h-auto w-full mx-auto max-w-fit">
-				<img src="https://picsum.photos/480/620" />
-			</div>
-			<div class="stacked-variant-image z-[2] h-auto w-full mx-auto max-w-fit">
-				<img src="https://picsum.photos/480/620" />
-			</div>
-			<div class="stacked-variant-image z-[1] h-auto w-full mx-auto max-w-fit">
-				<img src="https://picsum.photos/480/620" />
-			</div>
+			{variants.map((artwork) => (
+				<div class="stacked-variant-image z-[10] h-auto w-full mx-auto max-w-fit">
+					<img src={artwork.image_url} alt={artwork.title} />
+				</div>
+			))}
 		</div>
 
 
@@ -139,10 +139,10 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 				</h2>
 			</div>
 
-			{['https://picsum.photos/480/620', 'https://picsum.photos/480/620', 'https://picsum.photos/480/620', 'https://picsum.photos/480/620', 'https://picsum.photos/480/620', 'https://picsum.photos/480/620', 'https://picsum.photos/480/620', 'https://picsum.photos/480/620'].map((artwork) => (
+			{variants.concat(firstHalfArtworks).map((artwork) => (
 				<div class="raising-artwork pointer-events-none z-10 absolute">
 					<div class="raising-artwork-inner">
-						<img src={artwork} alt={artwork} class="w-24 h-auto object-contain" />
+						<img src={artwork.image_url} alt={artwork.title} class="w-24 h-auto object-contain" />
 					</div>
 				</div>
 			))}
@@ -157,36 +157,17 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 		</div>
 
 		<div class="fixed top-0 h-[100dvh] w-full z-50 bad-blobs">
-			<BadBlob text="Why is this happening? Who created this technology? They're taking away the essence of what it means to be an artist. Years of dedication, practice, and now it feels like it's all for nothing. I won't stand for it." />
-			<BadBlob text="What does this mean for me? Will I become obsolete? Will people prefer AI-generated art over mine? How will I survive? The uncertainty is terrifying. I can't lose my identity as an artist." />
-			<BadBlob text="What is this? AI that paints like me? How can that be? It's like my skills are being copied, replicated effortlessly. Is my art not unique anymore?" />
+			<BadBlob text={texts[3].text} />
+			<BadBlob text={texts[4].text} />
+			<BadBlob text={texts[5].text} />
 		</div>
 
 		<div class="main-images fixed top-0 left-0 w-full h-[100dvh] grid content-center items-center pointer-events-none">
-			<div class="main-image z-[100] h-auto w-full absolute mx-auto max-w-fit left-0 right-0 border-4 border-black">
-				<img src="https://picsum.photos/480/620" />
-			</div>
-			<div class="main-image z-[100] h-auto w-full absolute mx-auto max-w-fit left-0 right-0 border-4 border-black">
-				<img src="https://picsum.photos/480/620" />
-			</div>
-			<div class="main-image z-[100] h-auto w-full absolute mx-auto max-w-fit left-0 right-0 border-4 border-black">
-				<img src="https://picsum.photos/480/620" />
-			</div>
-			<div class="main-image z-[100] h-auto w-full absolute mx-auto max-w-fit left-0 right-0 border-4 border-black">
-				<img src="https://picsum.photos/480/620" />
-			</div>
-			<div class="main-image z-[100] h-auto w-full absolute mx-auto max-w-fit left-0 right-0 border-4 border-black">
-				<img src="https://picsum.photos/480/620" />
-			</div>
-			<div class="main-image z-[100] h-auto w-full absolute mx-auto max-w-fit left-0 right-0 border-4 border-black">
-				<img src="https://picsum.photos/480/620" />
-			</div>
-			<div class="main-image z-[100] h-auto w-full absolute mx-auto max-w-fit left-0 right-0 border-4 border-black">
-				<img src="https://picsum.photos/480/620" />
-			</div>
-			<div class="main-image z-[100] h-auto w-full absolute mx-auto max-w-fit left-0 right-0 border-4 border-black">
-				<img src="https://picsum.photos/480/620" />
-			</div>
+			{variants.map((artwork) => (
+				<div class="main-image z-[100] h-auto w-full absolute mx-auto max-w-fit left-0 right-0 border-4 border-black">
+					<img src={artwork.image_url} />
+				</div>
+			))}
 
 			<svg>
 				<filter id="pixelate" x="0" y="0">
@@ -329,6 +310,7 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 	gsap.ticker.lagSmoothing(0)
 	gsap.registerPlugin(ScrollTrigger, ScrollToPlugin)
 
+	const sounds = document.querySelector('main').dataset.sounds.split(',')
 	
 	const intro = document.querySelector('.intro')
 	const startButton = document.querySelector('.start-button')
@@ -360,7 +342,21 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 	}
 
 
-	let mousePos, cacheMousePos;
+	const introMusic = new Howl({
+		src: ['/intro-music.mp3'],
+		autoplay: false,
+		loop: true,
+		volume: 0,
+	})
+
+	const outroMusic = new Howl({
+		src: ['/outro-music.mp3'],
+		autoplay: false,
+		loop: true,
+		volume: 0,
+	})
+
+	let mousePos, lastMousePos, cacheMousePos;
 	mousePos = { x: 0, y: 0 }; // current mouse position
 	cacheMousePos = { ...mousePos }; // previous mouse position
 	lastMousePos = { ...mousePos }; // stores the position of the mouse at the time the most recent image was displayed, serving as a reference point for calculating the distance the cursor has moved in subsequent frames
@@ -450,15 +446,8 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 		document.body.classList.remove('overflow-hidden');
 		window.scrollTo(0, 0)
 
-		const introMusic = new Howl({
-			src: ['/intro-music.mp3'],
-			autoplay: false,
-			loop: true,
-			volume: 0,
-		})
-
 		const voiceOver = new Howl({
-			src: ['/voiceover1.mp3'],
+			src: [sounds[0]],
 			autoplay: false,
 			loop: false,
 			onseek: console.log,
@@ -527,6 +516,18 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 		const flowTextChars = document.querySelector('.flow-text').querySelectorAll('.char')
 		const satisfactionTextChars = document.querySelector('.satisfaction-text').querySelectorAll('.char')
 		const stackedVariantImages = document.querySelectorAll('.stacked-variant-image')
+		const badBlobs = document.querySelectorAll('.bad-blob')
+
+		let badBlobCharacters = []
+
+		badBlobs.forEach((blob) => {
+			const characters = blob.querySelectorAll('.char')
+			characters.forEach(char =>
+				gsap.set(char.parentNode, { perspective: 1000 })
+			)
+
+			badBlobCharacters.push(characters)
+		})
 
 		plummetTitleChars.forEach(char => gsap.set(char.parentNode, { perspective: 1000 }));
 		plummetTitle2Chars.forEach(char => gsap.set(char.parentNode, { perspective: 1000 }));
@@ -561,7 +562,13 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 					yPercent: 0,
 					stagger: 0.025,
 					onStart: () => {
-
+						new Howl({
+							src: [sounds[1]],
+							autoplay: true,
+							loop: false,
+							onseek: console.log,
+							volume: 0.5,
+						})
 					},
 					scrollTrigger: {
 						pin: '.first',
@@ -744,6 +751,15 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 					filter: 'blur(0px)',
 					yPercent: 0,
 					stagger: 0.025,
+					onStart: () => {
+						new Howl({
+							src: [sounds[2]],
+							autoplay: true,
+							loop: false,
+							onseek: console.log,
+							volume: 0.5,
+						})
+					},
 					scrollTrigger: {
 						pin: '.satisfaction',
 						start: 'top center',
@@ -969,6 +985,52 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 			}, {
 				y: 0,
 				stagger: 0.1,
+				onStart: () => {
+					introMusic.fade(0.15, 0, 2000)
+					outroMusic.play()
+					outroMusic.fade(0, 0.15, 2000)
+
+					gsap.fromTo(badBlobCharacters, {
+						'will-change': 'opacity transform filter',
+						opacity: 0,
+						filter: 'blur(10px)',
+						yPercent: 50
+					}, {
+						ease: 'circ.out',
+						opacity: 1,
+						filter: 'blur(0px)',
+						yPercent: 0,
+						stagger: 0.025,
+					})
+
+					new Howl({
+						src: [sounds[3]],
+						autoplay: true,
+						loop: false,
+						onseek: console.log,
+						volume: 0.5,
+					})
+
+					setTimeout(() => {
+						new Howl({
+							src: [sounds[4]],
+							autoplay: true,
+							loop: false,
+							onseek: console.log,
+							volume: 0.5,
+						})
+					}, 1000)
+
+					setTimeout(() => {
+						new Howl({
+							src: [sounds[5]],
+							autoplay: true,
+							loop: false,
+							onseek: console.log,
+							volume: 0.5,
+						})
+					}, 2000)
+				},
 				scrollTrigger: {
 					trigger: '.bad-thoughts',
 					scrub: true,
