@@ -14,6 +14,7 @@ const { data: thought } = await supabase
 		id,
 		created_at,
 		current,
+		generating,
 		thought_texts(
 			index,
 			audio_url,
@@ -30,7 +31,7 @@ const { data: thought } = await supabase
 	.eq('current', true)
 	.single()
 
-const { artworks, thought_texts } = thought
+const { artworks, thought_texts, generating } = thought
 
 const actualArtworks = artworks.filter((artwork) => !artwork.is_variant)
 const firstHalfArtworks = actualArtworks.slice(0, Math.ceil(actualArtworks.length / 2))
@@ -48,8 +49,8 @@ const texts = thought_texts.sort((a, b) => a.index - b.index)
 			</div>
 			<div class="pointer-events-none blurred w-[200vw] h-[200dvh] absolute z-100 bg-black/10"></div>
 
-			<button class="start-button rounded-full border border-white absolute py-4 px-8 bottom-24 left-0 right-0 w-fit mx-auto cursor-pointer z-50 transition-all hover:scale-110 hover:-translate-y-2 hover:bg-white hover:text-black">
-				Loading all images
+			<button data-generating={generating ? 'true' : 'false'} class="start-button rounded-full border border-white absolute py-4 px-8 bottom-24 left-0 right-0 w-fit mx-auto cursor-pointer z-50 transition-all hover:scale-110 hover:-translate-y-2 hover:bg-white hover:text-black">
+				{generating ? 'Generating, come back soon' : 'Loading all images'}
 			</button>
 		</div>
 
@@ -501,6 +502,10 @@ const texts = thought_texts.sort((a, b) => a.index - b.index)
     // Instantiate a new ImageTrail object, initializing it with the element that has the class 'content'.
     // The ImageTrail instance starts managing and animating the sequence of images within the specified element, reacting to mouse movements.
 		new ImageTrail(document.querySelector('header'), gsap)
+		const generating = startButton.dataset.generating
+
+		if (generating === 'true') return
+
 		startButton.innerHTML = 'Start'
 		imagesLoaded = true
 	});
