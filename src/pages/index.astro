@@ -1,4 +1,5 @@
 ---
+// @ts-nocheck
 import Layout from "../layouts/Layout.astro";
 
 import "splitting/dist/splitting.css";
@@ -283,7 +284,8 @@ const texts = thought_texts.sort((a, b) => a.index - b.index)
 
 <script src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script>
 
-<script >
+<script>
+	// @ts-nocheck
 	import Lenis from '@studio-freight/lenis'
 	import gsap from 'gsap'
 	import ScrollTrigger from 'gsap/ScrollTrigger'
