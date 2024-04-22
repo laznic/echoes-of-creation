@@ -158,6 +158,11 @@ Deno.serve(async (req) => {
     });
   }
 
+  await supabaseClient
+    .from("thoughts")
+    .update({ generating: false })
+    .eq("id", thought_id);
+
   return new Response(JSON.stringify({ main: mainImage }), {
     headers: { "Content-Type": "application/json", ...corsHeaders },
   });
