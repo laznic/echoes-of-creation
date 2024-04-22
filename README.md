@@ -1,47 +1,58 @@
-# Astro Starter Kit: Minimal
 
-```sh
-npm create astro@latest -- --template minimal
-```
+# Echoes of Creation
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/minimal)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/minimal)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/minimal/devcontainer.json)
+## A digital experience
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Echoes of Creation is a digital experience that portrays the excitement and struggles artists have with their creative processes.
 
-## 🚀 Project Structure
+[[https://doorsofabyss.com](https://echoes-of-creation.pages.dev/)](https://echoes-of-creation.pages.dev/)
 
-Inside of your Astro project, you'll see the following folders and files:
+> **Note**
+>
+> This project is optimized for desktop devices
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+Built with
+- [Supabase](https://supabase.com)
+- [Astro](https://astro.build/)
+- [Unreal Speech](https://unrealspeech.com/)
+- [GSAP](https://gsap.com/)
+- [Stable Diffusion](https://stability.ai/stable-diffusion)
+- [Stable Audio](https://stableaudio.com)
+- [Replicate](https://replicate.com/)
+- [Codrops](https://tympanus.net/codrops)
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## How it works
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+The steps are simple:
+1. Open web page
+2. Wait for images to load (or the page the re-generate)
+3. Click start
+4. Scroll through the experience
 
-Any static assets, like images, can be placed in the `public/` directory.
+List of Supabase features used:
+- Database
+  - storing all the data, obviously
+- Functions
+  - generates new imagery, text, and audio
+- Storage
+  - storing images, texts, audio
 
-## 🧞 Commands
+## Motivation
 
-All commands are run from the root of the project, from a terminal:
+We've had this idea to make a website that re-creates itself until the end of time, and heavily tied to the AI theme, for over a year. Now we had time to actually do it, even though it's more of a draft version at the moment. It's a good base to build on!
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+## Ideas for the future
 
-## 👀 Want to learn more?
+- Improve code quality
+- Improve design elements
+- Rewrite scrolling as it's buggy
+- Add interactive elements that could use realtime features
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## The team / contributors
+- Niklas Lepistö ([GitHub](https://github.com/laznic), [Twitter](https://twitter.com/laznic))
+- Jani Reijonen ([Twitter](https://twitter.com/janireijonen))
+
+## Credits
+- Amazing folks at [Codrops](https://tympanus.net/codrops), keep building and sharing those demos as they give so much inspiration to our work.
+  - We'll credit few people directly here later as e.g. the mouse trail effect is a direct code grab from the demo GitHub repo with few adjustments. Just need to take a nap and submit the project first!
+
