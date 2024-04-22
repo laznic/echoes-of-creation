@@ -128,6 +128,28 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 			</div>
 		</div>
 
+
+		<div class="seventh h-[400dvh]">
+			<div class="relative flex items-center justify-center gap-8">
+				<h2 data-splitting class="plummet text-3xl font-black" style="text-orientation: upright; writing-mode: vertical-lr;">
+					PLUMMET THE
+				</h2>
+				<h2 data-splitting class="plummet2 text-3xl font-black" style="text-orientation: upright; writing-mode: vertical-lr;">
+					INTO DARKNESS
+				</h2>
+			</div>
+			{['https://picsum.photos/480/620', 'https://picsum.photos/480/620', 'https://picsum.photos/480/620', 'https://picsum.photos/480/620', 'https://picsum.photos/480/620', 'https://picsum.photos/480/620', 'https://picsum.photos/480/620', 'https://picsum.photos/480/620'].map((artwork) => (
+				<div class="raising-artwork pointer-events-none z-10 absolute">
+					<div class="raising-artwork-inner">
+						<img src={artwork} alt={artwork} class="w-24 h-auto object-contain" />
+					</div>
+				</div>
+			))}
+		</div>
+
+		<div class="raising-stuff h-[200dvh] z-50 grid grid-cols-8">
+
+		</div>
 <!-- 		
 
 
@@ -142,13 +164,7 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 
 
 
-		<div class="seventh h-[400dvh]">
-			<div class="relative">
-				<h2 class="plummet text-7xl font-black" style="text-orientation: upright; writing-mode: vertical-lr;">
-					Plummet into
-					<br />
-					the Darkness
-				</h2>	
+		
 
 				<h2 data-splitting class="what-the text-2xl font-bold">What the hell</h2>
 
@@ -389,6 +405,10 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 	introTitleChars?.forEach(char => gsap.set(char.parentNode, { perspective: 1000 }));
 	const startingTitle = document.querySelector('.starting-title')
 	const startingTitleChars = startingTitle?.querySelectorAll('.char')
+	const plummetTitle = document.querySelector('.plummet')
+	const plummetTitle2 = document.querySelector('.plummet2')
+	const plummetTitleChars = plummetTitle?.querySelectorAll('.char')
+	const plummetTitle2Chars = plummetTitle2?.querySelectorAll('.char')
 
 	if (introTitleChars) {
 		gsap.fromTo(introTitleChars, {
@@ -579,7 +599,6 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 		new ImageTrail(document.querySelector('header'), gsap)
 	});
 
-
 	const timeline = gsap.timeline({
 			scrollTrigger: {
 				snap: {
@@ -594,6 +613,7 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 		const third = document.querySelector('.third')
 		const items = mainGrid.querySelectorAll('.item-left')
 		const itemsRight = mainGrid.querySelectorAll('.item-right')
+		const raisingItems = document.querySelectorAll('.raising-artwork')
 		// const title = document.querySelector('.what-the')
 		// const chars = title.querySelectorAll('.char')
 		const flowTextChars = document.querySelector('.flow-text').querySelectorAll('.char')
@@ -601,7 +621,10 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 		const stackedVariantImages = document.querySelectorAll('.stacked-variant-image')
 
 		// chars.forEach(char => gsap.set(char.parentNode, { perspective: 1000 }));
+		plummetTitleChars.forEach(char => gsap.set(char.parentNode, { perspective: 1000 }));
+		plummetTitle2Chars.forEach(char => gsap.set(char.parentNode, { perspective: 1000 }));
 		items.forEach(item => gsap.set(item, { z: () => gsap.utils.random(-1, 1), scale: () => gsap.utils.random(1, 3) }))
+		raisingItems.forEach(item => gsap.set(item, { z: () => gsap.utils.random(-1, 1), scale: () => gsap.utils.random(1, 3) }))
 		itemsRight.forEach(item => gsap.set(item, { z: () => gsap.utils.random(-1, 1), scale: () => gsap.utils.random(1, 3) }))
 		stackedVariantImages.forEach(image => gsap.set(image, { perspective: 1000 }))
 		gsap.set('.thought-blob', { yPercent: 50, scale: 0.5 })
@@ -640,6 +663,7 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 		gsap.set('.fifth', { perspective: 1000 })
 		gsap.set('.sixth', { perspective: 1000 })
 		gsap.set('.seventh', { perspective: 1000 })
+		gsap.set('.raising-stuff', { perspective: 1000 })
 		// gsap.set('.bad-blob', { scale: 0 })
 		// gsap.set('.bad-blob-wrapper', { y: window.innerHeight })
 
@@ -1093,12 +1117,81 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 				rotateZ: (index) => 5 * index,
 				yPercent: (index) => 5 * index,
 				scrollTrigger: {
-					markers: true,
 					trigger: '.bad-thoughts',
 					scrub: true,
 					start: 'bottom+=210% top',
-					end: 'bottom+=350%',
+					end: 'bottom+=300%',
 				}
+			})
+			.fromTo(plummetTitleChars, {
+				scale: 2,
+				opacity: 0.25,
+				rotateX: 10,
+				rotateY: -25,
+				rotateZ: 10,
+				yPercent: -400,
+				xPercent: -5,
+				filter: 'blur(2px)',
+			}, {
+				scale: 1,
+				rotateX: 0,
+				rotateY: 0,
+				rotateZ: 0,
+				opacity: 1,
+				xPercent: 0,
+				filter: 'blur(0px)',
+				stagger: 0.2,
+				scrollTrigger: {
+					trigger: '.bad-thoughts',
+					scrub: true,
+					start: 'bottom+=320% center',
+					end: 'bottom+=400%',
+				}
+			})
+			.fromTo(plummetTitle2Chars, {
+				scale: 2,
+				opacity: 0.25,
+				rotateX: -10,
+				rotateY: 25,
+				rotateZ: -10,
+				xPercent: 5,
+				filter: 'blur(2px)',
+			}, {
+				scale: 1,
+				rotateX: 0,
+				rotateY: 0,
+				rotateZ: 0,
+				opacity: 1,
+				xPercent: 0,
+				stagger: 0.2,
+				filter: 'blur(0px)',
+				scrollTrigger: {
+					trigger: '.bad-thoughts',
+					scrub: true,
+					start: 'bottom+=320% center',
+					end: 'bottom+=400%',
+				}
+			})
+		
+		const raisingTimeline = gsap.timeline({
+			scrollTrigger: {
+				trigger: '.raising-stuff',
+				scrub: true,
+				start: 'top center',
+				end: 'bottom',
+			}
+		})
+
+		raisingTimeline.fromTo(raisingItems, {
+				x: () => gsap.utils.random(window.innerWidth * 0.1, window.innerWidth * 0.9),
+				yPercent: () => gsap.utils.random(500, 2000),
+				rotateY: 'random(-15, 15)',
+				filter: 'brightness(200%)'
+			},
+			{
+				ease: 'power2',
+				yPercent: () => gsap.utils.random(-2000, -500),
+				filter: 'brightness(0%)',
 			})
 			// .fromTo(title, {
 			// 		'will-change': 'transform',
