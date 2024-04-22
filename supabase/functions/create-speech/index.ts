@@ -27,7 +27,8 @@ Deno.serve(async (req) => {
     size: 1,
   })[0];
 
-  const { thought_id = 1 } = await req.json();
+  const { record } = await req.json();
+  const thought_id = record.id;
   const thoughtIdToUse = thought_id === 1 ? thought_id : thought_id - 1;
 
   const { data: thought } = await supabaseClient

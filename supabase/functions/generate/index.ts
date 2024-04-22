@@ -35,8 +35,6 @@ Deno.serve(async (req) => {
     });
   }
 
-  supabaseClient.functions.invoke("create-speech", { body: { thought_id } });
-
   const allObjectIDsResponse = await fetch(
     "https://collectionapi.metmuseum.org/public/collection/v1/objects?departmentIds=11",
     {
