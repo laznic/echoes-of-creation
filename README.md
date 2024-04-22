@@ -3,7 +3,7 @@
 
 ## A digital experience
 
-Echoes of Creation is a digital experience that portrays the excitement and struggles artists have with their creative processes.
+Echoes of Creation is a digital experience that portrays the excitement and struggles artists have with their creative processes. The experience/site is re-created every hour.
 
 [https://echoes-of-creation.pages.dev/](https://echoes-of-creation.pages.dev/)
 
