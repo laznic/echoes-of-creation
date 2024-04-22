@@ -5,7 +5,7 @@
 
 Echoes of Creation is a digital experience that portrays the excitement and struggles artists have with their creative processes.
 
-[[https://doorsofabyss.com](https://echoes-of-creation.pages.dev/)](https://echoes-of-creation.pages.dev/)
+[https://echoes-of-creation.pages.dev/](https://echoes-of-creation.pages.dev/)
 
 > **Note**
 >
