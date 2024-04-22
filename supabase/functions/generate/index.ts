@@ -150,7 +150,7 @@ Deno.serve(async (req) => {
     await supabaseClient.from("artworks").insert({
       image_url: `${Deno.env.get(
         "SUPABASE_URL"
-      )}/storage/v1/object/public/${thought_id}/${randomId}.jpeg`,
+      )}/storage/v1/object/public/variants/${thought_id}/${randomId}.jpeg`,
       artist_name: mainImage.artist_name,
       is_main: false,
       is_variant: true,
