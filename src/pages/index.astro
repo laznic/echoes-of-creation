@@ -41,8 +41,8 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 				</h2>
 			</div>
 
-			<button class="continue-button rounded-full border border-white absolute py-4 px-8 bottom-24 left-0 right-0 w-fit mx-auto cursor-pointer z-50 transition-all hover:scale-110 hover:-translate-y-2 mix-blend-difference hover:bg-white hover:text-black">
-				Continue
+			<button class="continue-button rounded-full border border-white absolute py-4 px-8 bottom-24 left-0 right-0 w-fit mx-auto z-50 mix-blend-difference">
+				Scroll down
 			</button>
 
 			{artworks.map((artwork) => (
@@ -56,12 +56,12 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 
 		<div class="first h-[200dvh] grid justify-end">
 			<div class="mx-auto max-w-[25vw] z-50 relative mr-24">
-				<h2>
+				<!-- <h2>
 					FLOW
-				</h2>
-				<p data-splitting class="text-md italic z-100 relative flow-text">
+				</h2> -->
+				<h2 data-splitting class="text-md italic z-100 relative flow-text">
 					Time seems to melt away as I lose myself in the creative process. It's like being in a state of flow, where everything else fades into the background and only the art matters. It's pure magic.
-				</p>
+				</h2>
 			</div>
 		</div>
 
@@ -86,12 +86,12 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 
 		<div class="satisfaction h-[200dvh] grid justify-start">
 			<div class="mx-auto max-w-[25vw] z-50 relative ml-24">
-				<h2>
+				<!-- <h2>
 					SATISFACTION
-				</h2>
-				<p data-splitting class="text-md italic z-100 relative satisfaction-text">
+				</h2> -->
+				<h2 data-splitting class="text-md italic z-100 relative satisfaction-text">
 					Stepping back and admiring the finished piece, there's a sense of satisfaction unlike anything else. It's a tangible manifestation of my imagination, a piece of myself laid bare for the world to see.
-				</p>
+				</h2>
 			</div>
 		</div>
 
@@ -138,6 +138,7 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 					INTO DARKNESS
 				</h2>
 			</div>
+
 			{['https://picsum.photos/480/620', 'https://picsum.photos/480/620', 'https://picsum.photos/480/620', 'https://picsum.photos/480/620', 'https://picsum.photos/480/620', 'https://picsum.photos/480/620', 'https://picsum.photos/480/620', 'https://picsum.photos/480/620'].map((artwork) => (
 				<div class="raising-artwork pointer-events-none z-10 absolute">
 					<div class="raising-artwork-inner">
@@ -150,77 +151,10 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 		<div class="raising-stuff h-[200dvh] z-50 grid grid-cols-8">
 
 		</div>
-<!-- 		
 
-
-
-
-
-		<div class="fifth h-[150dvh] z-20"></div>
-
-		<div class="sixth h-[100dvh] z-50"></div>
-
-
-
-
-
-		
-
-				<h2 data-splitting class="what-the text-2xl font-bold">What the hell</h2>
-
-				<div class="black-hole-wrapper absolute -top-1/2 left-12 w-72 h-60">
-					<div class="w-1/2 h-1/2 rounded-full bg-indigo-300 absolute mix-blend-overlay blur-xl"></div>
-					<svg class="overflow-visible w-full h-full" >
-						<defs>
-							<radialGradient id="black-hole-gradient" >
-								<stop offset="10%" stop-color="#a5b4fc" />
-								<stop offset="50%" stop-color="transparent" />
-								<stop offset="75%" stop-color="#cbd5e1" />
-								<stop offset="100%" stop-color="transparent" />
-							</radialGradient>
-	
-							<filter id="black-hole-filter">
-								<feDiffuseLighting in="SourceGraphic" result="light" lighting-color="white">
-									<fePointLight x="25" y="20" z="10" />
-								</feDiffuseLighting>
-						
-								<feComposite
-									in="SourceGraphic"
-									in2="light"
-									operator="arithmetic"
-									k1="1"
-									k2="0"
-									k3="0"
-									k4="0"
-									result="lighting"
-									/>
-
-								<feTurbulence baseFrequency="0.02" numOctaves="1" type="fractalNoise" result="turbulence">
-									<animate
-										attributeName="baseFrequency"
-										values="0.1; 0.05; 0.03; 0.05; 0.1"
-										dur="5s"
-										repeatCount="indefinite"
-										/>
-								</feTurbulence>
-								<feDisplacementMap in="lighting" in2="turbulence" scale="10" result="displacement">
-									<animate
-										attributeName="scale"
-										values="50; 25; 50"
-										dur="5s"
-										repeatCount="indefinite"
-										/>
-								</feDisplacementMap>
-								<feMorphology operator="dilate" radius="0.5" />
-							</filter>
-						</defs>
-	
-						<circle class="black-hole-circle overflow-visible" cx="100" cy="50" r="50" fill="url(#black-hole-gradient)" filter="url(#black-hole-filter)" />
-					</svg>
-				</div>
-
-			</div>
-		</div> -->
+		<div class="countdown h-[100dvh]">
+			
+		</div>
 
 		<div class="fixed top-0 h-[100dvh] w-full z-50 bad-blobs">
 			<BadBlob text="Why is this happening? Who created this technology? They're taking away the essence of what it means to be an artist. Years of dedication, practice, and now it feels like it's all for nothing. I won't stand for it." />
@@ -353,7 +287,6 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 	}
 
 	.intro {
-		/* background: radial-gradient(circle, rgba(126,56,119,1) 0%, rgba(173,104,139,1) 50%, rgba(244,156,193,1) 100%); */
 		background: radial-gradient(circle, rgba(10, 10, 10, 1) 0%, rgba(25,25,25,1) 50%, rgba(50,50,50,1) 100%);
 	}
 
@@ -401,7 +334,6 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 	const startButton = document.querySelector('.start-button')
 	const introTitle = intro?.querySelector('h1')
 	const introTitleChars = introTitle?.querySelectorAll('.char')
-	const introTitleWords = introTitle?.querySelectorAll('.word')
 	introTitleChars?.forEach(char => gsap.set(char.parentNode, { perspective: 1000 }));
 	const startingTitle = document.querySelector('.starting-title')
 	const startingTitleChars = startingTitle?.querySelectorAll('.char')
@@ -428,7 +360,7 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 	}
 
 
-	let mousePos, lastMousePos, cacheMousePos;
+	let mousePos, cacheMousePos;
 	mousePos = { x: 0, y: 0 }; // current mouse position
 	cacheMousePos = { ...mousePos }; // previous mouse position
 	lastMousePos = { ...mousePos }; // stores the position of the mouse at the time the most recent image was displayed, serving as a reference point for calculating the distance the cursor has moved in subsequent frames
@@ -529,7 +461,6 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 			src: ['/voiceover1.mp3'],
 			autoplay: false,
 			loop: false,
-			onplay: (id: number) => requestAnimationFrame(() => highlightText(id)),
 			onseek: console.log,
 			volume: 0.5,
 		})
@@ -570,26 +501,6 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 		})
 	})
 
-	// const currentTime = audioPlayer.currentTime
-	// 	// Toggle the "active" class for each span tag based on the current time
-	// 	syncData.forEach((item, index) => {
-	// 		const spanTag = lyricsContainer.children[index]
-
-	// 		if (currentTime >= item.start) {
-	// 			spanTag.classList.add("active")
-	// 		}
-	// 	})
-
-	function highlightText(id: number) {
-		// Determine our current seek position.
-		// const seek = Howler.seek(undefined, id)
-		// console.log(seek)
-		// console.log(Howler)
-		// If the sound is still playing, continue stepping.
-		// if (sound.playing()) {
-			requestAnimationFrame(() => highlightText(id));
-		// }
-	}
 
 	preloadImages().then(() => {
     // Once all images are preloaded, remove the 'loading' class from the body element.
@@ -607,20 +518,16 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 			}
 		})
 
-		const firstSection = document.querySelector('.first-section')
 		const mainGrid = document.querySelector('#main-grid')
 		const second = document.querySelector('.second')
-		const third = document.querySelector('.third')
 		const items = mainGrid.querySelectorAll('.item-left')
 		const itemsRight = mainGrid.querySelectorAll('.item-right')
 		const raisingItems = document.querySelectorAll('.raising-artwork')
-		// const title = document.querySelector('.what-the')
-		// const chars = title.querySelectorAll('.char')
+
 		const flowTextChars = document.querySelector('.flow-text').querySelectorAll('.char')
 		const satisfactionTextChars = document.querySelector('.satisfaction-text').querySelectorAll('.char')
 		const stackedVariantImages = document.querySelectorAll('.stacked-variant-image')
 
-		// chars.forEach(char => gsap.set(char.parentNode, { perspective: 1000 }));
 		plummetTitleChars.forEach(char => gsap.set(char.parentNode, { perspective: 1000 }));
 		plummetTitle2Chars.forEach(char => gsap.set(char.parentNode, { perspective: 1000 }));
 		items.forEach(item => gsap.set(item, { z: () => gsap.utils.random(-1, 1), scale: () => gsap.utils.random(1, 3) }))
@@ -629,31 +536,6 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 		stackedVariantImages.forEach(image => gsap.set(image, { perspective: 1000 }))
 		gsap.set('.thought-blob', { yPercent: 50, scale: 0.5 })
 		gsap.set('.flash', { opacity: 0 })
-		// gsap.fromTo(startingTitleWords, {
-		// 	'will-change': 'opacity transform filter',
-		// 	opacity: 0,
-		// 	filter: 'blur(35px)',
-		// 	yPercent: 50
-		// }, {
-		// 	ease: 'circ.out',
-		// 	opacity: 1,
-		// 	filter: 'blur(0px)',
-		// 	yPercent: 0,
-		// 	stagger: 0.075,
-		// 	delay: 1.5,
-		// })
-		
-		// gsap.fromTo('.continue-button', {
-		// 	'will-change': 'opacity transform',
-		// 	scale: 0.5,
-		// 	opacity: 0,
-		// 	yPercent: 50
-		// }, {
-		// 	scale: 1,
-		// 	opacity: 1,
-		// 	yPercent: 0,
-		// 	delay: 3.5
-		// })
 
 		gsap.set(mainGrid, { perspective: 200, perspectiveOrigin: '57.5% 30%' })
 		gsap.set('.thought-blob', { yPercent: 35, scale: 0.5 })
@@ -664,8 +546,6 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 		gsap.set('.sixth', { perspective: 1000 })
 		gsap.set('.seventh', { perspective: 1000 })
 		gsap.set('.raising-stuff', { perspective: 1000 })
-		// gsap.set('.bad-blob', { scale: 0 })
-		// gsap.set('.bad-blob-wrapper', { y: window.innerHeight })
 
 		timeline
 			.add(() => {
@@ -680,6 +560,9 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 					filter: 'blur(0px)',
 					yPercent: 0,
 					stagger: 0.025,
+					onStart: () => {
+
+					},
 					scrollTrigger: {
 						pin: '.first',
 						trigger: '.first',
@@ -687,7 +570,7 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 						end: 'bottom',
 					}
 				})
-			})
+			}, 0)
 			.fromTo('.thought-blob', {
 				yPercent: 35,
 				scale: 0.5
@@ -1183,637 +1066,15 @@ const mainImage = artworks?.find((artwork) => artwork.is_main)
 		})
 
 		raisingTimeline.fromTo(raisingItems, {
-				x: () => gsap.utils.random(window.innerWidth * 0.1, window.innerWidth * 0.9),
-				yPercent: () => gsap.utils.random(500, 2000),
-				rotateY: 'random(-15, 15)',
-				filter: 'brightness(200%)'
-			},
-			{
-				ease: 'power2',
-				yPercent: () => gsap.utils.random(-2000, -500),
-				filter: 'brightness(0%)',
-			})
-			// .fromTo(title, {
-			// 		'will-change': 'transform',
-			// 		xPercent: 30
-			// 	}, {
-			// 		ease: 'none',
-			// 		xPercent: -10,
-			// 		scrollTrigger: {
-			// 			trigger: '.seventh',
-			// 			// markers: true,
-			// 			scrub: true,
-			// 			start: 'top bottom',
-			// 			end: 'bottom-=50%',
-			// 		}
-			// 	})
-			// 	.fromTo(chars, {
-			// 		'will-change': 'opacity, transform', 
-			// 		transformOrigin: '50% 50% -50px',
-			// 		rotationZ: 0,
-			// 		rotationX: 0,
-			// 		opacity: 1,
-			// 	},
-			// 	{
-			// 		ease: 'expo.inOut',
-			// 		rotationZ: -120,
-			// 		rotationX: 120,
-			// 		opacity: 0,
-			// 		stagger: 0.0375,
-			// 		scrollTrigger: {
-			// 			trigger: '.seventh',
-			// 			// markers: true,
-			// 			start: 'top bottom',
-			// 			end: 'bottom-=75%',
-			// 			scrub: true,
-			// 		}
-			// 	})
-			// 	.fromTo('.black-hole-circle', {
-			// 		r: 50,
-			// 	},
-			// 	{
-			// 		r: 200,
-			// 		scrollTrigger: {
-			// 			trigger: '.seventh',
-			// 			// markers: true,
-			// 			start: 'top bottom',
-			// 			end: 'bottom-=75%',
-			// 			scrub: true,
-			// 		}
-			// 	})
-			// 	.fromTo('.black-hole-wrapper', {
-			// 		scale: 0,
-			// 		rotateY: 20,
-			// 		rotateX: 10,
-			// 		xPercent: 0
-			// 	},
-			// 	{
-			// 		scale: 1,
-			// 		rotateY: 90,
-			// 		rotateX: 40,
-			// 		xPercent: 20,
-			// 		scrollTrigger: {
-			// 			trigger: '.seventh',
-			// 			// markers: true,
-			// 			start: 'top bottom',
-			// 			end: 'bottom-=75%',
-			// 			scrub: true,
-			// 		}
-			// 	})
-		
+			x: () => gsap.utils.random(window.innerWidth * 0.1, window.innerWidth * 0.9),
+			yPercent: () => gsap.utils.random(500, 2000),
+			rotateY: 'random(-15, 15)',
+			filter: 'brightness(200%)'
+		},
+		{
+			ease: 'power2',
+			yPercent: () => gsap.utils.random(-2000, -500),
+			filter: 'brightness(0%)',
+		})
 
-
-
-	
-		// .fromTo('.expanding-image', {
-		// 	height: '100dvh',
-		// 	scale: 1,
-		// 	// y: window.innerHeight * -1.5,
-		// 	// transformOrigin: 'center center'
-		// }, {
-		// 	height: window.innerHeight * 0.75,
-		// 	scale: 0.5,
-		// 	scrollTrigger: {
-		// 		pin: second,
-		// 		markers: true,
-		// 		trigger: second,
-		// 		scrub: true,
-		// 		start: (self) => self.previous().end,
-		// 		end: 'bottom',
-		// 	}
-		// })
-		// .fromTo('.expanding-image', {
-		// 	opacity: 1,
-		// }, {
-		// 	opacity: 0,
-		// 	scrollTrigger: {
-		// 		markers: true,
-		// 		trigger: third,
-		// 		scrub: true,
-		// 		start: (self) => self.previous().end,
-		// 		end: (self) => self.previous().end,
-		// 	}
-		// })
-		// .fromTo('.main-image', {
-		// 	opacity: 0,
-		// 	scale: 0
-		// }, {
-		// 	opacity: 1,
-		// 	scale: 0.5,
-		// 	scrollTrigger: {
-		// 		// markers: true,
-		// 		pin: third,
-		// 		pinSpacing: true,
-		// 		trigger: third,
-		// 		scrub: true,
-		// 		start: 'top top',
-		// 		end: 'bottom-=50%'
-		// 	}
-		// })
-		// .fromTo('.top-images', {
-		// 	opacity: 0,
-		// }, {
-		// 	opacity: 1,
-		// 	scrollTrigger: {
-		// 		trigger: third,
-		// 		scrub: true,
-		// 		start: (self) => self.previous().end,
-		// 		end: 'bottom+=100%',
-		// 	}
-		// })
-		// .fromTo('.bottom-images', {
-		// 	opacity: 0,
-		// }, {
-		// 	opacity: 1,
-		// 	scrollTrigger: {
-		// 		trigger: third,
-		// 		scrub: true,
-		// 		start: (self) => self.previous().end,
-		// 		end: 'bottom+=100%',
-		// 	}
-		// })
-
-	// const sections = document.querySelectorAll('section')
-	// const act1Title = document.querySelector('.act-1-title')
-	// const act1TitleChars = act1Title?.querySelectorAll('.char')
-	
-	// act1TitleChars?.forEach(char => gsap.set(char.parentNode, { perspective: 500 }));
-
-	// const sectionContent = document.querySelectorAll('.content')
-
-	// document.addEventListener('pointermove', handleContentTilting)
-
-	// function handleContentTilting(e: PointerEvent) {
-	// 	const { clientX, clientY } = e
-	// 	const centerX = window.innerWidth / 2
-	// 	const centerY = window.innerHeight / 2
-
-	// 	sectionContent.forEach((content) => {
-	// 		const rect = content.getBoundingClientRect()
-	// 		const cardX = rect.left + rect.width / 2
-	// 		const cardY = rect.top + rect.height / 2
-	// 		const dx = clientX - cardX
-	// 		const dy = clientY - cardY
-	// 		const tiltX = -(dy / centerY)
-	// 		const tiltY = (dx / centerX)
-
-	// 		gsap.to(content, {
-	// 			rotateX: tiltX,
-	// 			rotateY: tiltY,
-	// 			x: tiltY,
-	// 			y: tiltX,
-	// 			ease: 'power2.out'
-	// 		})
-	// 	})
-	// }
-
-	// sections.forEach((section, index, sectionsArray) => {
-		// position sections in random order in a 9 point grid based in window size
-		// each grid cell is the full width and height of the window
-		// 1 2 3
-		// 4 5 6
-		// 7 8 9
-		// data-attributes to determine order in the grid
-		// e.g. if first section is 5, it will be in the middle
-		// if second section is 1, it will be in the top left corner
-		// check where the next section is positioned in relation to the current/previous one
-		// e.g. if current section is 5 and next section is 1, it will be in the top left corner
-		// if current section is 5 and next section is 6, it will be in the middle right
-		// get the direction of the next section in relation to the current one
-
-		// const cell = parseInt(section.dataset.cell)
-		// const nextCell = parseInt(sectionsArray[index + 1]?.dataset.cell)
-		// // get the direction of the next section in relation to the current one
-		// // should be one of the following: down, up, left, right, down-left, down-right, up-left, up-right
-		// const nextDirection = getNextDirection(cell, nextCell)
-		// const nextCellElement = sectionsArray[index + 1]
-		// console.log('nextDirection', cell, nextDirection)
-		
-
-		// if (index === 0) {
-		// 	timeline
-		// 	.fromTo(act1TitleChars, {
-		// 		'will-change': 'opacity transform filter',
-		// 		opacity: 0,
-		// 		filter: 'blur(15px)',
-		// 		yPercent: 50
-		// 	}, {
-		// 		opacity: 1,
-		// 		filter: 'blur(0px)',
-		// 		yPercent: 0,
-		// 		stagger: 0.05,
-		// 		scrollTrigger: {
-		// 			scrub: true,
-		// 			start: window.innerHeight / 3,
-		// 			end: window.innerHeight + 600,
-		// 		}
-		// 	})
-		// 	.fromTo(section, {
-		// 		'will-change': 'transform opacity',
-		// 		y: 0,
-		// 	}, {
-		// 		ease: 'none',
-		// 		y: -window.innerHeight,
-		// 		scrollTrigger: {
-		// 			scrub: true,
-		// 			start: (self) => self.previous().end,
-		// 			end: (self) => {
-		// 				return self.previous().end + section.clientHeight 
-		// 			},
-		// 		}
-		// 	})
-			// .fromTo(section, {
-			// 	'will-change': 'transform opacity',
-			// 	opacity: 1,
-			// 	rotateX: -30,
-			// }, {
-			// 	ease: 'none',
-			// 	opacity: 1,
-			// 	rotateX: 0,
-			// 	scrollTrigger: {
-			// 		scrub: true,
-			// 		start: 100,
-			// 		end: window.innerHeight + 100,
-			// 	}
-			// }, '<')
-
-			// .fromTo(section, {
-			// 	'will-change': 'transform opacity',
-			// 	y: -window.innerHeight,
-			// }, {
-			// 	ease: 'none',
-			// 	y: -window.innerHeight * 2,
-			// 	scrollTrigger: {
-			// 		scrub: true,
-			// 		start: (self) => window.innerHeight * 2 + 100,
-			// 		end: (window.innerHeight + 100)  * 3,
-			// 	}
-			// })
-		// }
-
-		
-		// if (nextDirection === 'up') {
-		// 	timeline.fromTo(section, {
-		// 		'will-change': 'scale opacity transform',
-		// 		scale: 1,
-		// 		opacity: 1,
-		// 		rotateX: 0,
-		// 		yPercent: 0,
-		// 	}, {
-		// 		ease: 'none',
-		// 		scale: 2,
-		// 		opacity: 0,
-		// 		rotateX: 90,
-		// 		yPercent: -20,
-		// 		scrollTrigger: {
-		// 			scrub: true,
-		// 			start: (self) => section.clientHeight * (index + 1), // self.previous().end,
-		// 			end: '+=100%',
-		// 		}
-		// 	}, '<')
-		// 	.fromTo(nextCellElement, {
-		// 		'will-change': 'scale opacity transform',
-		// 		scale: 0,
-		// 		opacity: 0,
-		// 		rotateX: 90,
-		// 		yPercent: -20,
-		// 	}, {
-		// 		ease: 'none',
-		// 		scale: 1,
-		// 		opacity: 1,
-		// 		rotateX: 0,
-		// 		yPercent: 0,
-		// 		scrollTrigger: {
-		// 			scrub: true,
-		// 			start: (self) => section.clientHeight * (index + 1), // self.previous().end,
-		// 			end: '+=100%',
-		// 		}
-		// 	}, '<')
-		// }
-
-		// if (nextDirection === 'up-right') {
-		// 	timeline.fromTo(section, {
-		// 		'will-change': 'transform scale opacity',
-		// 		xPercent: 0,
-		// 		yPercent: 0,
-		// 		rotateX: 0,
-		// 		rotateY: 0,
-		// 		rotateZ: 0,
-		// 		opacity: 1
-		// 	}, {
-		// 		ease: 'none',
-		// 		xPercent: -100,
-		// 		yPercent: 100,
-		// 		rotateX: 90,
-		// 		rotateY: 120,
-		// 		rotateZ: -45,
-		// 		opacity: 0,
-		// 		scrollTrigger: {
-		// 			scrub: true,
-		// 			start: (self) => section.clientHeight * (index + 1), // self.previous().end,
-		// 			end: '+=100%',
-		// 		}
-		// 	}, '<')
-		// 	.fromTo(nextCellElement, {
-		// 		'will-change': 'transform scale opacity',
-		// 		xPercent: 100,
-		// 		opacity: 0,
-		// 		scale: 0.5,
-		// 		yPercent: -100,
-		// 		rotateX: -90,
-		// 		rotateY: -120,
-		// 		rotateZ: 45,
-		// 	}, {
-		// 		ease: 'none',
-		// 		xPercent: 0,
-		// 		yPercent: 0,
-		// 		rotateX: 0,
-		// 		rotateY: 0,
-		// 		rotateZ: 0,
-		// 		scale: 1,
-		// 		opacity: 1,
-		// 		scrollTrigger: {
-		// 			scrub: true,
-		// 			start: (self) => section.clientHeight * (index + 1), // self.previous().end,
-		// 			end: '+=100%',
-		// 		}
-		// 	}, '<')
-		// }
-
-		// if (nextDirection === 'up-left') {
-		// 	timeline
-		// 	.fromTo(section, {
-		// 		'will-change': 'transform scale opacity',
-		// 		xPercent: 0,
-		// 		yPercent: 0,
-		// 		rotateX: 0,
-		// 		rotateY: 0,
-		// 		rotateZ: 0,
-		// 		opacity: 1
-		// 	}, {
-		// 		ease: 'none',
-		// 		xPercent: 100,
-		// 		yPercent: 100,
-		// 		rotateX: 90,
-		// 		rotateY: -120,
-		// 		rotateZ: 45,
-		// 		opacity: 0,
-		// 		scrollTrigger: {
-		// 			scrub: true,
-		// 			start: (self) => section.clientHeight * (index + 1), // self.previous().end,
-		// 			end: '+=100%',
-		// 		}
-		// 	}, '<')
-		// 	.fromTo(nextCellElement, {
-		// 		'will-change': 'transform scale opacity',
-		// 		xPercent: -100,
-		// 		opacity: 0,
-		// 		scale: 0.5,
-		// 		yPercent: -100,
-		// 		rotateX: -90,
-		// 		rotateY: 120,
-		// 		rotateZ: -45,
-		// 	}, {
-		// 		ease: 'none',
-		// 		xPercent: 0,
-		// 		yPercent: 0,
-		// 		rotateX: 0,
-		// 		rotateY: 0,
-		// 		rotateZ: 0,
-		// 		scale: 1,
-		// 		opacity: 1,
-		// 		scrollTrigger: {
-		// 			scrub: true,
-		// 			start: (self) => section.clientHeight * (index + 1), // self.previous().end,
-		// 			end: '+=100%'
-		// 		}
-		// 	}, '<')
-		// }
-
-		// if (nextDirection === 'down') {
-		// 	timeline.fromTo(section, {
-		// 			'will-change': 'transform opacity',
-		// 			yPercent: 0,
-		// 			opacity: 1
-		// 		}, {
-		// 			ease: 'none',
-		// 			yPercent: -100,
-		// 			opacity: 0,
-		// 			scrollTrigger: {
-		// 				scrub: true,
-		// 				start: (self) => section.clientHeight * (index + 1), // self.previous().end,
-		// 				end: '+=100%',
-		// 			}
-		// 		}, '<')
-		// 		.fromTo(nextCellElement, {
-		// 			'will-change': 'transform opacity',
-		// 			yPercent: 100,
-		// 			opacity: 0,
-		// 		}, {
-		// 			ease: 'none',
-		// 			yPercent: 0,
-		// 			opacity: 1,
-		// 			scrollTrigger: {
-		// 				scrub: true,
-		// 				start: (self) => section.clientHeight * (index + 1), // self.previous().end,
-		// 				end: '+=100%',
-		// 			}
-		// 		}, '<')
-		// }
-
-		// if (nextDirection === 'down-right') {
-		// 	timeline.fromTo(section, {
-		// 		'will-change': 'transform opacity',
-		// 		xPercent: 0,
-		// 		yPercent: 0,
-		// 		opacity: 1,
-		// 		rotateX: 0,
-		// 		rotateY: 0,
-		// 		rotateZ: 0,
-		// 	}, {
-		// 		ease: 'none',
-		// 		xPercent: -100,
-		// 		opacity: 0,
-		// 		yPercent: -100,
-		// 		rotateX: -90,
-		// 		rotateY: 120,
-		// 		rotateZ: -45,
-		// 		scrollTrigger: {
-		// 			scrub: true,
-		// 			start: (self) => section.clientHeight * (index + 1), // self.previous().end,
-		// 			end: '+=100%',
-		// 		}
-		// 	}, '<')
-		// 	.fromTo(nextCellElement, {
-		// 		'will-change': 'transform opacity',
-		// 		xPercent: 100,
-		// 		opacity: 0,
-		// 		yPercent: 100,
-		// 		rotateX: 90,
-		// 		rotateY: -120,
-		// 		rotateZ: 45,
-		// 	}, {
-		// 		ease: 'none',
-		// 		xPercent: 0,
-		// 		opacity: 1,
-		// 		yPercent: 0,
-		// 		rotateX: 0,
-		// 		rotateY: 0,
-		// 		rotateZ: 0,
-		// 		scrollTrigger: {
-		// 			scrub: true,
-		// 			start: (self) => section.clientHeight * (index + 1), // self.previous().end,
-		// 			end: '+=100%'
-		// 		}
-		// 	}, '<')
-		// }
-
-		// if (nextDirection === 'down-left') {
-		// 	timeline.fromTo(section, {
-		// 		'will-change': 'transform opacity',
-		// 		xPercent: 0,
-		// 		yPercent: 0,
-		// 		opacity: 1,
-		// 		rotateX: 0,
-		// 		rotateY: 0,
-		// 		rotateZ: 0,
-		// 	}, {
-		// 		ease: 'none',
-		// 		xPercent: 100,
-		// 		opacity: 0,
-		// 		yPercent: -100,
-		// 		rotateX: 90,
-		// 		rotateY: 120,
-		// 		rotateZ: 45,
-		// 		scrollTrigger: {
-		// 			scrub: true,
-		// 			start: (self) => section.clientHeight * (index + 1), // self.previous().end,
-		// 			end: '+=100%',
-		// 		}
-		// 	}, '<')
-		// 	.fromTo(nextCellElement, {
-		// 		'will-change': 'transform opacity',
-		// 		xPercent: -100,
-		// 		opacity: 0,
-		// 		yPercent: 100,
-		// 		rotateX: 90,
-		// 		rotateY: 120,
-		// 		rotateZ: -45,
-		// 	}, {
-		// 		ease: 'none',
-		// 		xPercent: 0,
-		// 		opacity: 1,
-		// 		yPercent: 0,
-		// 		rotateX: 0,
-		// 		rotateY: 0,
-		// 		rotateZ: 0,
-		// 		scrollTrigger: {
-		// 			scrub: true,
-		// 			start: (self) => section.clientHeight * (index + 1), // self.previous().end,
-		// 			end: '+=100%',
-		// 		}
-		// 	}, '<')
-		// }
-
-		// if (nextDirection === 'left') {
-		// 	timeline.fromTo(section, {
-		// 		'will-change': 'transform opacity',
-		// 		xPercent: 0,
-		// 		rotateY: 0,
-		// 		opacity: 1
-		// 	}, {
-		// 		ease: 'none',
-		// 		xPercent: 100,
-		// 		opacity: 0,
-		// 		rotateY: 120,
-		// 		scrollTrigger: {
-		// 			scrub: true,
-		// 			start: (self) => section.clientHeight * (index + 1), // self.previous().end,
-		// 			end: '+=100%',
-		// 		}
-		// 	}, '<')
-		// 	.fromTo(nextCellElement, {
-		// 		'will-change': 'transform opacity',
-		// 		xPercent: -100,
-		// 		rotateY: -120,
-		// 		opacity: 0,
-		// 	}, {
-		// 		ease: 'none',
-		// 		xPercent: 0,
-		// 		opacity: 1,
-		// 		rotateY: 0,
-		// 		scrollTrigger: {
-		// 			scrub: true,
-		// 			start: (self) => section.clientHeight * (index + 1), // self.previous().end,
-		// 			end: '+=100%',
-		// 		}
-		// 	}, '<')
-		// }
-
-		// if (nextDirection === 'right') {
-		// 	timeline.fromTo(section, {
-		// 		'will-change': 'transform opacity',
-		// 		xPercent: 0,
-		// 		rotateY: 0,
-		// 		opacity: 1
-		// 	}, {
-		// 		ease: 'none',
-		// 		xPercent: -100,
-		// 		opacity: 0,
-		// 		rotateY: -120,
-		// 		scrollTrigger: {
-		// 			scrub: true,
-		// 			start: (self) => section.clientHeight * (index + 1), // self.previous().end,
-		// 			end: '+=100%',
-		// 		}
-		// 	}, '<')
-		// 	.fromTo(nextCellElement, {
-		// 		'will-change': 'transform opacity',
-		// 		xPercent: 100,
-		// 		opacity: 0,
-		// 		rotateY: 120,
-		// 	}, {
-		// 		ease: 'none',
-		// 		xPercent: 0,
-		// 		opacity: 1,
-		// 		rotateY: 0,
-		// 		scrollTrigger: {
-		// 			scrub: true,
-		// 			start: (self) => section.clientHeight * (index + 1), // self.previous().end,
-		// 			end: '+=100%',
-		// 		}
-		// 	}, '<')
-		// }
-
-		// if (index === 0) return
-		// gsap.set(section, { perspective: 500, opacity: 0 })
-	// })
-
-	function getNextDirection (current: number, next: number) {
-		const grid = 3
-		const x = current % grid
-		const y = Math.floor(current / grid)
-		const nextX = next % grid
-		const nextY = Math.floor(next / grid)
-
-		if (nextX > x && nextY === y) {
-			return 'right'
-		} else if (nextX < x && nextY === y) {
-			return 'left'
-		} else if (nextY > y && nextX === x) {
-			return 'down'
-		} else if (nextY < y && nextX === x) {
-			return 'up'
-		} else if (nextX > x && nextY > y) {
-			return 'down-left'
-		} else if (nextX < x && nextY > y) {
-			return 'down-right'
-		} else if (nextX > x && nextY < y) {
-			return 'up-left'
-		} else if (nextX < x && nextY < y) {
-			return 'up-right'
-		}
-	}
-
-	// console.log(artworks)
 </script>
