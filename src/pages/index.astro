@@ -49,7 +49,7 @@ const texts = thought_texts.sort((a, b) => a.index - b.index)
 			<div class="pointer-events-none blurred w-[200vw] h-[200dvh] absolute z-100 bg-black/10"></div>
 
 			<button class="start-button rounded-full border border-white absolute py-4 px-8 bottom-24 left-0 right-0 w-fit mx-auto cursor-pointer z-50 transition-all hover:scale-110 hover:-translate-y-2 hover:bg-white hover:text-black">
-				Start
+				Loading all images
 			</button>
 		</div>
 
@@ -441,8 +441,12 @@ const texts = thought_texts.sort((a, b) => a.index - b.index)
 		});
 	}
 
+	let imagesLoaded = false
+
 	startButton?.addEventListener('click', () => {
-		gsap.to(intro, { opacity: 0, duration: 5 });
+		if (!imagesLoaded) return
+
+		gsap.to(intro, { opacity: 0, duration: 4 });
 		document.body.classList.remove('overflow-hidden');
 		window.scrollTo(0, 0)
 
@@ -456,13 +460,13 @@ const texts = thought_texts.sort((a, b) => a.index - b.index)
 
 		setTimeout(() => {
 			voiceOver.play()
-		}, 6000)
+		}, 5000)
 		
 		setTimeout(() => {
 			intro?.classList.add('pointer-events-none')
 			introMusic.play()
 			introMusic.fade(0, 0.15, 2000)
-		}, 5250)
+		}, 4250)
 
 		gsap.fromTo(startingTitleChars, {
 			'will-change': 'opacity transform filter',
@@ -475,7 +479,7 @@ const texts = thought_texts.sort((a, b) => a.index - b.index)
 			filter: 'blur(0px)',
 			yPercent: 0,
 			stagger: 0.025,
-			delay: 6.5
+			delay: 5.5
 		})
 
 		gsap.fromTo('.thought-blob', {
@@ -485,7 +489,7 @@ const texts = thought_texts.sort((a, b) => a.index - b.index)
 		}, {
 			yPercent: 35,
 			opacity: 1,
-			delay: 7.5,
+			delay: 6.5,
 			duration: 2,
 		})
 	})
@@ -497,6 +501,8 @@ const texts = thought_texts.sort((a, b) => a.index - b.index)
     // Instantiate a new ImageTrail object, initializing it with the element that has the class 'content'.
     // The ImageTrail instance starts managing and animating the sequence of images within the specified element, reacting to mouse movements.
 		new ImageTrail(document.querySelector('header'), gsap)
+		startButton.innerHTML = 'Start'
+		imagesLoaded = true
 	});
 
 	const timeline = gsap.timeline({
