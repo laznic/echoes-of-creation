@@ -25,7 +25,15 @@ Deno.serve(async (req) => {
     return new Response("ok", { headers: corsHeaders });
   }
 
-  const { thought_id = 1 } = await req.json();
+  const { record } = await req.json();
+  const thought_id = record.id;
+
+  if (!thought_id) {
+    return new Response("Missing thought_id", {
+      status: 400,
+      headers: { "Content-Type": "application/json", ...corsHeaders },
+    });
+  }
 
   supabaseClient.functions.invoke("create-speech", { body: { thought_id } });
 
