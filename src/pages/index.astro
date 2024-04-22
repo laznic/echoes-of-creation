@@ -182,53 +182,10 @@ const texts = thought_texts.sort((a, b) => a.index - b.index)
 
 		<div class="main-images fixed top-0 left-0 w-full h-[100dvh] grid content-center items-center pointer-events-none">
 			{variants.map((artwork) => (
-				<div class="main-image z-[100] h-auto w-full absolute mx-auto max-w-fit left-0 right-0 border-4 border-black">
-					<img src={artwork.image_url} />
+				<div class="main-image z-[100] h-auto w-full absolute mx-auto max-h-[480px] max-w-[480px] left-0 right-0 border-4 border-black">
+					<img src={artwork.image_url} class="object-contain w-full h-auto" />
 				</div>
 			))}
-
-			<svg>
-				<filter id="pixelate" x="0" y="0">
-					<feFlood x="4" y="4" height="2" width="2">
-						<animate
-							attributeName="height"
-							values="2; 1; 2"
-							dur="1s"
-							repeatCount="indefinite"
-							/>
-						<animate
-							attributeName="width"
-							values="2; 1; 2"
-							dur="1s"
-							repeatCount="indefinite"
-							/>
-					</feFlood>
-					<feComposite width="10" height="10">
-						<animate
-						attributeName="width"
-						values="10; 1; 10"
-						dur="1s"
-						repeatCount="indefinite"
-						/>
-						<animate
-						attributeName="height"
-						values="10; 1; 10"
-						dur="1s"
-						repeatCount="indefinite"
-						/>
-					</feComposite>
-					<feTile result="a"/>
-					<feComposite in="SourceGraphic" in2="a" operator="in"/>
-					<feMorphology operator="dilate" radius="5">
-						<animate
-						attributeName="radius"
-						values="5; 0; 5"
-						dur="1s"
-						repeatCount="indefinite"
-						/>
-					</feMorphology>
-				</filter>
-			</svg>
 		</div>
 
 		<ThoughtBlob />
