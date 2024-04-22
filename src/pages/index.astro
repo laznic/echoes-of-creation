@@ -375,6 +375,14 @@ const texts = thought_texts.sort((a, b) => a.index - b.index)
 		volume: 0,
 	})
 
+	const voiceOver = new Howl({
+			src: [sounds[0]],
+			autoplay: false,
+			loop: false,
+			onseek: console.log,
+			volume: 0.5,
+		})
+
 	let mousePos, lastMousePos, cacheMousePos;
 	mousePos = { x: 0, y: 0 }; // current mouse position
 	cacheMousePos = { ...mousePos }; // previous mouse position
@@ -469,13 +477,7 @@ const texts = thought_texts.sort((a, b) => a.index - b.index)
 		document.body.classList.remove('overflow-hidden');
 		window.scrollTo(0, 0)
 
-		const voiceOver = new Howl({
-			src: [sounds[0]],
-			autoplay: false,
-			loop: false,
-			onseek: console.log,
-			volume: 0.5,
-		})
+
 
 		setTimeout(() => {
 			voiceOver.play()
