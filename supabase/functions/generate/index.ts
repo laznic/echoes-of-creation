@@ -43,7 +43,7 @@ Deno.serve(async (req) => {
   const listOfArtworks = [];
   const addedIDs: number[] = [];
 
-  while (listOfArtworks.length < 20) {
+  while (listOfArtworks.length < 80) {
     const randomObjectID = randomSample(objectIDs, { size: 1 })[0];
 
     if (addedIDs.includes(randomObjectID)) continue;

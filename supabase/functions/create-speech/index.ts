@@ -47,19 +47,26 @@ Deno.serve(async (req) => {
   );
 
   for (let i = 0; i < thoughtTexts.length; i++) {
-    const input = {
-      prompt: `Write the following differently but keep the style of it being your thought: ${thoughtTexts[i].text}`,
-      temperature: 1.0,
-      frequency_penalty: 1.0,
-      prompt_template:
-        "<|begin_of_text|><|start_header_id|>system<|end_header_id|>\n\nReturn info wrapped as text snippet wrapped in ```. If your suggestion is longer than 150 characters, make it shorter.<|eot_id|><|start_header_id|>user<|end_header_id|>\n\n{prompt}<|eot_id|><|start_header_id|>assistant<|end_header_id|>\n\n",
-    };
+    let newText = thoughtTexts[i].text;
 
-    const textResponse = await replicate.run("meta/meta-llama-3-70b-instruct", {
-      input,
-    });
+    if (thought_id !== 1) {
+      const input = {
+        prompt: `Write the following differently but keep the style of it being your thought: ${thoughtTexts[i].text}`,
+        temperature: 1.0,
+        frequency_penalty: 1.0,
+        prompt_template:
+          "<|begin_of_text|><|start_header_id|>system<|end_header_id|>\n\nReturn info wrapped as text snippet wrapped in ```. If your suggestion is longer than 150 characters, make it shorter.<|eot_id|><|start_header_id|>user<|end_header_id|>\n\n{prompt}<|eot_id|><|start_header_id|>assistant<|end_header_id|>\n\n",
+      };
 
-    const newText = textResponse.join("").replace(/```/g, "");
+      const textResponse = await replicate.run(
+        "meta/meta-llama-3-70b-instruct",
+        {
+          input,
+        }
+      );
+
+      newText = textResponse.join("").replace(/```/g, "");
+    }
 
     const options = {
       method: "POST",
