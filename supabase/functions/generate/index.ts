@@ -24,7 +24,9 @@ Deno.serve(async (req) => {
     return new Response("ok", { headers: corsHeaders });
   }
 
-  supabaseClient.functions.invoke("create-speech", { body: { thought_id: 1 } });
+  const { thought_id = 1 } = await req.json();
+
+  supabaseClient.functions.invoke("create-speech", { body: { thought_id } });
 
   const allObjectIDsResponse = await fetch(
     "https://collectionapi.metmuseum.org/public/collection/v1/objects?departmentIds=11",
@@ -69,8 +71,7 @@ Deno.serve(async (req) => {
       title: artwork.title,
       is_main: listOfArtworks.length === 0,
       is_variant: false,
-      // TODO: Change "1" to be the actual thought ID
-      thought_id: 1,
+      thought_id,
     });
   }
 
@@ -131,19 +132,22 @@ Deno.serve(async (req) => {
 
     await supabaseClient.storage
       .from("variants")
-      // TODO: Change "1" to be the actual thought ID
-      .upload(`1/${randomId}.jpeg`, base64.toArrayBuffer(variant.image), {
-        contentType: "image/jpeg",
-      });
+      .upload(
+        `${thought_id}/${randomId}.jpeg`,
+        base64.toArrayBuffer(variant.image),
+        {
+          contentType: "image/jpeg",
+        }
+      );
 
     await supabaseClient.from("artworks").insert({
       image_url: `${Deno.env.get(
         "SUPABASE_URL"
-      )}/storage/v1/object/public/1/${randomId}.jpeg`,
+      )}/storage/v1/object/public/${thought_id}/${randomId}.jpeg`,
       artist_name: mainImage.artist_name,
       is_main: false,
       is_variant: true,
-      thought_id: 1,
+      thought_id,
     });
   }
 
