@@ -100,7 +100,7 @@ Deno.serve(async (req) => {
   const file = await fetch(mainImage.image_url).then((res) => res.blob());
   const promises = [];
 
-  for (let i = 0; i < 7; i++) {
+  for (let i = 0; i < 8; i++) {
     const body = new FormData();
     body.append(
       "prompt",
