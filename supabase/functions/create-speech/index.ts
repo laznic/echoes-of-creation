@@ -120,6 +120,11 @@ Deno.serve(async (req) => {
     });
   }
 
+  await supabaseClient
+    .from("thoughts")
+    .update({ generating: false })
+    .eq("id", thought_id);
+
   return new Response(JSON.stringify({ check: "database" }), {
     headers: { "Content-Type": "application/json" },
   });
