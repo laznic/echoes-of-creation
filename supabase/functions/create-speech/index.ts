@@ -27,20 +27,28 @@ Deno.serve(async (req) => {
   })[0];
 
   const { thought_id = 1 } = await req.json();
+  const thoughtIdToUse = thought_id === 1 ? thought_id : thought_id - 1;
 
-  // These should be the previous thoughts instead of hardcoded
-  const texts = [
-    "Ah, there it is—the spark of inspiration! That fleeting moment of clarity when an idea takes shape in my mind. It's exhilarating, like catching a glimpse of something magical.",
-    "I can't wait to bring this idea to life! The possibilities seem endless, and my mind is buzzing with anticipation. This is why I love being an artist—the thrill of creation.",
-    "What is this? AI that paints like me? How can that be? It's like my skills are being copied, replicated effortlessly. Is my art not unique anymore?",
-    "No, this can't be real. AI may be good at mimicking, but it can't capture the essence of my creativity. There's more to art than just technique. It's about the soul, about passion. That's something a machine can never have.",
-    "Why is this happening? Who created this technology? They're taking away the essence of what it means to be an artist. Years of dedication, practice, and now it feels like it's all for nothing. I won't stand for it.",
-    "What does this mean for me? Will I become obsolete? Will people prefer AI-generated art over mine? How will I survive? The uncertainty is terrifying. I can't lose my identity as an artist.",
-  ];
+  const { data: thought } = await supabaseClient
+    .from("thoughts")
+    .select(
+      `
+      id,
+      thought_texts(
+        index,
+        text
+      )
+    `
+    )
+    .eq("id", thoughtIdToUse);
 
-  for (let i = 0; i < texts.length; i++) {
+  const thoughtTexts = thought[0].thought_texts.sort(
+    (a, b) => a.index - b.index
+  );
+
+  for (let i = 0; i < thoughtTexts.length; i++) {
     const input = {
-      prompt: `Write the following differently but keep the style of it being your thought: ${texts[i]}`,
+      prompt: `Write the following differently but keep the style of it being your thought: ${thoughtTexts[i].text}`,
       temperature: 1.0,
       frequency_penalty: 1.0,
       prompt_template:
