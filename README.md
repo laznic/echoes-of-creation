@@ -1,5 +1,6 @@
 
 # Echoes of Creation
+![Echoes of Creation cover image](https://github.com/laznic/echoes-of-creation/assets/6230909/65daa071-1812-4653-b579-e0187516d733)
 
 ## A digital experience
 
